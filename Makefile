@@ -1,12 +1,16 @@
-CFLAGS= -ansi -Werror -pedantic -Wextra -g -Wall
+cc=gcc
+CFLAGS= -std=c11 -Werror -pedantic -Wextra -g -Wall
+TARGET=main
+SRCS := $(notdir $(shell find $(SRC_DIR) -maxdepth 1 -name '*.c'))
+OBJS := $(SRCS:%.c=%.o)
 
-all: main
+all: $(TARGET)
 
-main: game_loop.o
-	gcc $(CFLAGS) game_loop.o -o main
+$(TARGET) : $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $@
 
-game_loop.o: game_loop.c
-	gcc $(CFLAGS) -c game_loop.c -o game_loop.o
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm *.o main
+	rm *.o $(TARGET)
