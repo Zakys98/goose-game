@@ -14,11 +14,13 @@
 
 #include "types.h"
 #include "object.h"
+#include "space.h"
+#include <stdio.h>
 
 typedef struct player {
     Id id;
     char name[WORD_SIZE + 1];
-    // location
+    Space lol;
     Object *o;
 } Player;
 

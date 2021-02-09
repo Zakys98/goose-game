@@ -34,13 +34,13 @@ STATUS object_exist(Object *o){
 
 Id object_get_id(Object *o){
     if(!object_exist(o))
-        return;
+        return -1;
     return o->id;
 }
 
 const char* object_get_name(Object *o){
     if(!object_exist(o))
-        return;
+        return NULL;
     return o->name;
 }
 

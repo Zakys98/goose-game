@@ -20,7 +20,9 @@ char *cmd_to_str[N_CMD][N_CMDT] =
      {"", "Unknown"},
      {"e", "Exit"},
      {"n", "Next"},
-     {"b", "Back"}};
+     {"b", "Back"},
+     {"t", "Take"},
+     {"d", "Drop"}};
 
 T_Command get_user_input() {
     T_Command cmd = NO_CMD;
