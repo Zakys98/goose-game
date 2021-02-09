@@ -84,7 +84,7 @@ STATUS game_destroy(Game* game) {
     int i = 0;
 
     for (i = 0; (i < MAX_SPACES) && (game->spaces[i] != NULL); i++) {
-        space_destroy(game->spaces[i]);
+        space_destroy(game->spaces + i);
     }
 
     return OK;

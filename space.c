@@ -1,8 +1,10 @@
+
+#include "space.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "types.h"
-#include "space.h"
+
 
 struct _Space {
   Id id;
@@ -11,7 +13,7 @@ struct _Space {
   Id south;
   Id east;
   Id west;
-  BOOL object;
+  Object* object;
 };
 
 Space* space_create(Id id) {
@@ -35,18 +37,18 @@ Space* space_create(Id id) {
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
 
-  newSpace->object = FALSE;
+  newSpace->object = NULL;
 
   return newSpace;
 }
 
-STATUS space_destroy(Space* space) {
-  if (!space) {
+STATUS space_destroy(Space** space) {
+  if (*space == NULL) {
     return ERROR;
   }
 
-  free(space);
-  space = NULL;
+  free(*space);
+  *space = NULL;
 
   return OK;
 }
@@ -95,7 +97,7 @@ STATUS space_set_west(Space* space, Id id) {
   return OK;
 }
 
-STATUS space_set_object(Space* space, BOOL value) {
+STATUS space_set_object(Space* space, Object* value) {
   if (!space) {
     return ERROR;
   }
@@ -145,7 +147,7 @@ Id space_get_west(Space* space) {
   return space->west;
 }
 
-BOOL space_get_object(Space* space) {
+Object* space_get_object(Space* space) {
   if (!space) {
     return FALSE;
   }
@@ -189,7 +191,7 @@ STATUS space_print(Space* space) {
     fprintf(stdout, "---> No west link.\n");
   }
 
-  if (space_get_object(space)) {
+  if (space_get_object(space) != NULL) {
     fprintf(stdout, "---> Object in the space.\n");
   } else {
     fprintf(stdout, "---> No object in the space.\n");

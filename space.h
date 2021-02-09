@@ -12,6 +12,7 @@
 #define SPACE_H
 
 #include "types.h"
+#include "object.h"
 
 typedef struct _Space Space;
 
@@ -19,7 +20,7 @@ typedef struct _Space Space;
 #define FIRST_SPACE 1
 
 Space* space_create(Id id);
-STATUS space_destroy(Space* space);
+STATUS space_destroy(Space** space);
 Id space_get_id(Space* space);
 STATUS space_set_name(Space* space, char* name);
 const char* space_get_name(Space* space);
@@ -31,8 +32,8 @@ STATUS space_set_east(Space* space, Id id);
 Id space_get_east(Space* space);
 STATUS space_set_west(Space* space, Id id);
 Id space_get_west(Space* space);
-STATUS space_set_object(Space* space, BOOL value);
-BOOL space_get_object(Space* space);
+STATUS space_set_object(Space* space, Object* value);
+Object* space_get_object(Space* space);
 STATUS space_print(Space* space);
 
 #endif
