@@ -14,6 +14,7 @@
 
 #include "command.h"
 #include "space.h"
+#include "game_reader.h"
 
 typedef struct _Game{
   Id player_location;
