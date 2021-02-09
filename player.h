@@ -20,7 +20,7 @@
 typedef struct player {
     Id id;
     char name[WORD_SIZE + 1];
-    Space lol;
+    Space *s;
     Object *o;
 } Player;
 

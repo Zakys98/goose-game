@@ -16,7 +16,7 @@ Player* player_create(Id id){
     if(p == NULL)
         return NULL;
     p->id = id;
-    return OK;
+    return p;
 }
 
 STATUS player_destroy(Player **p){
@@ -24,7 +24,7 @@ STATUS player_destroy(Player **p){
         return FALSE;
     free(*p);
     *p = NULL;
-    return TRUE;
+    return OK;
 }
 
 STATUS player_exist(Player *p){
@@ -33,13 +33,13 @@ STATUS player_exist(Player *p){
 
 Id player_get_id(Player *p){
     if(!player_exist(p))
-        return; 
+        return -1; 
     return p->id;
 }
 
 const char* player_get_name(Player *p){
     if(!player_exist(p))
-        return;
+        return NULL;
     return p->name;
 }
 
@@ -60,7 +60,7 @@ STATUS player_set_object(Player *p, Object *o){
 
 Object* player_get_object(Player *p){
     if(!player_exist(p))
-        return;
+        return NULL;
     return p->o;
 }
 

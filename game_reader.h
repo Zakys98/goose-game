@@ -15,6 +15,7 @@
 #include "game.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 STATUS game_create_from_file(Game* game, char* filename);
 STATUS game_load_spaces(Game* game, char* filename);

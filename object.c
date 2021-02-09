@@ -18,6 +18,7 @@ Object* object_create(Id id){
     o->id = id;
     return o;
 }
+
 STATUS object_destroy(Object **o){
     if(!object_exist(*o))
         return ERROR;
