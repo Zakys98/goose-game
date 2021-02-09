@@ -9,7 +9,7 @@
  * @copyright GNU Public License
  */
 
-#ifndef COMMAND_H
-#define COMMAND_H
+#ifndef GAME_READER_H
+#define GAME_READER_H
 
 #endif
