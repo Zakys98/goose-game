@@ -13,6 +13,13 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+/**
+   Private functions
+*/
+
+STATUS game_add_space(Game* game, Space* space);
 
 STATUS game_load_spaces(Game* game, char* filename) {
     FILE* file = NULL;
@@ -68,4 +75,24 @@ STATUS game_load_spaces(Game* game, char* filename) {
     fclose(file);
 
     return status;
+}
+
+STATUS game_add_space(Game* game, Space* space) {
+    int i = 0;
+
+    if (space == NULL) {
+        return ERROR;
+    }
+
+    while ((i < MAX_SPACES) && (game->spaces[i] != NULL)) {
+        i++;
+    }
+
+    if (i >= MAX_SPACES) {
+        return ERROR;
+    }
+
+    game->spaces[i] = space;
+
+    return OK;
 }

@@ -44,7 +44,7 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
    Private functions
 */
 
-STATUS game_add_space(Game* game, Space* space);
+//STATUS game_add_space(Game* game, Space* space);
 Id game_get_space_id_at(Game* game, int position);
 STATUS game_set_player_location(Game* game, Id id);
 STATUS game_set_object_location(Game* game, Id id);
@@ -90,7 +90,7 @@ STATUS game_destroy(Game* game) {
     return OK;
 }
 
-STATUS game_add_space(Game* game, Space* space) {
+/*STATUS game_add_space(Game* game, Space* space) {
     int i = 0;
 
     if (space == NULL) {
@@ -108,7 +108,7 @@ STATUS game_add_space(Game* game, Space* space) {
     game->spaces[i] = space;
 
     return OK;
-}
+}*/
 
 Id game_get_space_id_at(Game* game, int position) {
     if (position < 0 || position >= MAX_SPACES) {
