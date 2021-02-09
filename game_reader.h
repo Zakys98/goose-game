@@ -10,6 +10,12 @@
  */
 
 #ifndef GAME_READER_H
+
+#include "space.h"
+#include "game.h"
+
+STATUS game_load_spaces(Game* game, char* filename);
+
 #define GAME_READER_H
 
 #endif
