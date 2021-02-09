@@ -24,7 +24,6 @@ Object* object_create(Id);
 STATUS object_destroy(Object **);
 STATUS object_exist(Object *);
 Id object_get_id(Object *);
-void object_set_id(Object *, Id);
 const char* object_get_name(Object *);
 STATUS object_set_name(Object *, const char *);
 void object_print(Object *);
