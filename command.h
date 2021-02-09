@@ -12,7 +12,7 @@
 #define COMMAND_H
 
 #define N_CMDT 2
-#define N_CMD 5
+#define N_CMD 7
 
 typedef enum enum_CmdType {
   CMDS,
@@ -23,7 +23,9 @@ typedef enum enum_Command {
   UNKNOWN,
   EXIT,
   NEXT,
-  BACK} T_Command;
+  BACK,
+  TAKE,
+  DROP} T_Command;
 
 T_Command get_user_input();
 
