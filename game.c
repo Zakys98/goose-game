@@ -140,7 +140,7 @@ STATUS game_set_player_location(Game* game, Id id) {
 }
 
 STATUS game_set_object_location(Game* game, Id id) {
-    //int i = 0;
+    int i = 0;
 
     if (id == NO_ID) {
         return ERROR;
