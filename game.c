@@ -196,9 +196,11 @@ BOOL game_is_over(Game* game) {
 */
 
 void game_callback_unknown(Game* game) {
+    (void)game;
 }
 
 void game_callback_exit(Game* game) {
+    (void)game;
 }
 
 void game_callback_next(Game* game) {
