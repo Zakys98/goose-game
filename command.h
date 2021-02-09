@@ -23,7 +23,9 @@ typedef enum enum_Command {
   UNKNOWN,
   EXIT,
   NEXT,
-  BACK} T_Command;
+  BACK,
+  TAKE,
+  DROP} T_Command;
 
 T_Command get_user_input();
 

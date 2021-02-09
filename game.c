@@ -29,12 +29,16 @@ void game_callback_unknown(Game* game);
 void game_callback_exit(Game* game);
 void game_callback_next(Game* game);
 void game_callback_back(Game* game);
+void game_callback_take(Game* game);
+void game_callback_drop(Game* game);
 
 static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_unknown,
     game_callback_exit,
     game_callback_next,
-    game_callback_back};
+    game_callback_back,
+	game_callback_take,
+	game_callback_drop};
 
 /**
    Private functions
@@ -240,4 +244,12 @@ void game_callback_back(Game* game) {
             return;
         }
     }
+}
+
+void game_callback_take(Game* game) {
+
+}
+
+void game_callback_drop(Game* game) {
+
 }
