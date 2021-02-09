@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define N_CALLBACK 4
+#define N_CALLBACK 6
 
 /**
    Define the function type for the callbacks
@@ -44,10 +44,10 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
    Private functions
 */
 
-//STATUS game_add_space(Game* game, Space* space);
-//Id game_get_space_id_at(Game* game, int position);
-//STATUS game_set_player_location(Game* game, Id id);
-//STATUS game_set_object_location(Game* game, Id id);
+STATUS game_add_space(Game* game, Space* space);
+Id game_get_space_id_at(Game* game, int position);
+STATUS game_set_player_location(Game* game, Id id);
+STATUS game_set_object_location(Game* game, Id id);
 
 /**
    Game interface implementation
@@ -67,7 +67,7 @@ STATUS game_create(Game* game) {
     return OK;
 }
 
-/*STATUS game_create_from_file(Game* game, char* filename) {
+STATUS game_create_from_file(Game* game, char* filename) {
     if (game_create(game) == ERROR)
         return ERROR;
 
@@ -78,7 +78,7 @@ STATUS game_create(Game* game) {
     game_set_object_location(game, game_get_space_id_at(game, 0));
 
     return OK;
-}*/
+}
 
 STATUS game_destroy(Game* game) {
     int i = 0;
