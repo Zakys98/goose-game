@@ -59,7 +59,7 @@ STATUS object_set_name(Object *o, const char *str) {
 }
 
 STATUS object_set_location(Object* o, Id s) {
-	if (!object_exist(o) || s == NO_ID) 
+	if (!object_exist(o)) 
 		return ERROR;
 
 	o->location = s;

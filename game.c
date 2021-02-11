@@ -91,26 +91,6 @@ STATUS game_destroy(Game* game) {
     return OK;
 }
 
-/*STATUS game_add_space(Game* game, Space* space) {
-    int i = 0;
-
-    if (space == NULL) {
-        return ERROR;
-    }
-
-    while ((i < MAX_SPACES) && (game->spaces[i] != NULL)) {
-        i++;
-    }
-
-    if (i >= MAX_SPACES) {
-        return ERROR;
-    }
-
-    game->spaces[i] = space;
-
-    return OK;
-}*/
-
 Id game_get_space_id_at(Game* game, int position) {
     if (position < 0 || position >= MAX_SPACES) {
         return NO_ID;
@@ -240,7 +220,20 @@ void game_callback_back(Game* game) {
 }
 
 void game_callback_take(Game* game) {
-	(void)game;
+	Space* location = game_get_space(game, game_get_player_location(game));
+
+	Object* space_obj = space_get_object(location);
+	if (space_obj == NULL) 
+		return;
+
+	Object* player_obj = player_get_object(game->player);
+	if (player_obj != NULL) {
+		space_set_object(location, NULL);
+		game_callback_drop(game);
+	}
+	
+	player_set_object(game->player, space_obj);
+	object_set_location(space_obj, NO_ID);
 }
 
 void game_callback_drop(Game* game) {
