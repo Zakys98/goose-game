@@ -60,8 +60,8 @@ STATUS game_create(Game* game) {
         game->spaces[i] = NULL;
     }
 
-    game->player_location = NO_ID;
-    game->object_location = NO_ID;
+    player_set_location(game->player, NO_ID);
+    object_set_location(game->obj, NO_ID);
     game->last_cmd = NO_CMD;
 
     return OK;
@@ -134,32 +134,20 @@ Space* game_get_space(Game* game, Id id) {
     return NULL;
 }
 
-STATUS game_set_player_location(Game* game, Id id) {
-    if (id == NO_ID) {
-        return ERROR;
-    }
-
-    game->player_location = id;
+STATUS game_set_player_location(Game* game, Id s) {
+    return player_set_location(game->player, s);
 }
 
-STATUS game_set_object_location(Game* game, Id id) {
-    int i = 0;
-
-    if (id == NO_ID) {
-        return ERROR;
-    }
-
-    game->object_location = id;
-
-    return OK;
+STATUS game_set_object_location(Game* game, Id s) {
+	return object_set_location(game->obj, s);
 }
 
 Id game_get_player_location(Game* game) {
-    return game->player_location;
+    return player_get_location(game->player);
 }
 
 Id game_get_object_location(Game* game) {
-    return game->object_location;
+    return object_get_location(game->obj);
 }
 
 STATUS game_update(Game* game, T_Command cmd) {
@@ -182,12 +170,13 @@ void game_print_data(Game* game) {
         space_print(game->spaces[i]);
     }
 
-    printf("=> Object location: %d\n", (int)game->object_location);
-    printf("=> Player location: %d\n", (int)game->player_location);
+    printf("=> Object location: %ld\n", game_get_object_location(game));
+    printf("=> Player location: %ld\n", game_get_player_location(game));
     printf("prompt:> ");
 }
 
 BOOL game_is_over(Game* game) {
+	(void)game;
     return FALSE;
 }
 
@@ -249,9 +238,9 @@ void game_callback_back(Game* game) {
 }
 
 void game_callback_take(Game* game) {
-
+	(void)game;
 }
 
 void game_callback_drop(Game* game) {
-
+	(void)game;
 }

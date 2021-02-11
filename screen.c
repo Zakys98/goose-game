@@ -121,7 +121,7 @@ void screen_area_puts(Area* area, char *str){
 
   for (ptr = str; ptr < (str + strlen(str)); ptr+=area->width){
     memset(area->cursor, FG_CHAR, area->width);
-    len = (strlen(ptr) < area->width)? strlen(ptr) : area->width;
+    len = (strlen(ptr) < (unsigned)area->width)? (int)strlen(ptr) : area->width;
     memcpy(area->cursor, ptr, len);
     area->cursor += COLUMNS;
   }

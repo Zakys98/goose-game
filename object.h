@@ -12,12 +12,12 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "space.h"
 #include "types.h"
 
 typedef struct obj {
     Id id;
     char name[WORD_SIZE + 1];
+	Id location;
 } Object;
 
 Object *object_create(Id);
@@ -26,6 +26,8 @@ STATUS object_exist(Object *);
 Id object_get_id(Object *);
 const char *object_get_name(Object *);
 STATUS object_set_name(Object *, const char *);
+STATUS object_set_location(Object* , Id);
+Id object_get_location(Object*);
 void object_print(Object *);
 
 #endif

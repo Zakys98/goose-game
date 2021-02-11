@@ -20,6 +20,7 @@ Object *object_create(Id id) {
     if (o == NULL)
         return NULL;
     o->id = id;
+	o->location = NO_ID;
     return o;
 }
 
@@ -55,6 +56,22 @@ STATUS object_set_name(Object *o, const char *str) {
     if (!strcpy(o->name, str))
         return ERROR;
     return OK;
+}
+
+STATUS object_set_location(Object* o, Id s) {
+	if (!object_exist(o) || s == NO_ID) 
+		return ERROR;
+
+	o->location = s;
+	return OK;
+}
+
+
+Id object_get_location(Object* o) {
+	if (!object_exist(o))
+		return NO_ID;
+		
+	return o->location;
 }
 
 void object_print(Object *o) {

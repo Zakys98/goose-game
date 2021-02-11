@@ -12,12 +12,16 @@
 #include "player.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 Player *player_create(Id id) {
     Player *p = (Player *)malloc(sizeof(struct player));
     if (p == NULL)
         return NULL;
     p->id = id;
+	p->location = NO_ID;
+	p->obj = NULL;
     return p;
 }
 
@@ -53,30 +57,30 @@ STATUS player_set_name(Player *p, const char *str) {
     return OK;
 }
 
-STATUS player_set_space(Player *p, Space *s){
-    if (!player_exist(p) || s == NULL)
+STATUS player_set_location(Player *p, Id s){
+    if (!player_exist(p) || s == NO_ID)
         return ERROR;
-    p->pos = s;
+    p->location = s;
     return OK;
 }
 
-Space *player_get_space(Player *p){
+Id player_get_location(Player *p){
     if (!player_exist(p))
-        return NULL;
-    return p->pos;
+        return NO_ID;
+    return p->location;
 }
 
 STATUS player_set_object(Player *p, Object *o) {
     if (!player_exist(p) || !object_exist(o))
         return ERROR;
-    p->o = o;
+    p->obj = o;
     return OK;
 }
 
-Object *player_get_object(Player *p) {
+Object* player_get_object(Player *p) {
     if (!player_exist(p))
         return NULL;
-    return p->o;
+    return p->obj;
 }
 
 void player_print(Player *p) {
