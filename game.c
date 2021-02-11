@@ -59,8 +59,9 @@ STATUS game_create(Game* game) {
     for (i = 0; i < MAX_SPACES; i++) {
         game->spaces[i] = NULL;
     }
-
+    game->player = player_create(NO_ID);
     player_set_location(game->player, NO_ID);
+    game->obj = object_create(NO_ID);
     object_set_location(game->obj, NO_ID);
     game->last_cmd = NO_CMD;
 
@@ -189,7 +190,8 @@ void game_callback_unknown(Game* game) {
 }
 
 void game_callback_exit(Game* game) {
-    (void)game;
+    free(game->obj);
+    free(game->player);
 }
 
 void game_callback_next(Game* game) {
