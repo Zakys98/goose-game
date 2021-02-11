@@ -244,5 +244,11 @@ void game_callback_take(Game* game) {
 }
 
 void game_callback_drop(Game* game) {
-	(void)game;
+    Space *s = game_get_space(game, game_get_player_location(game));
+	if(game->player->obj->id == NO_ID || space_get_object(s) != NULL)
+        return;
+
+    space_set_object(s, game->player->obj);
+    object_set_location(game->player->obj, space_get_id(s));
+    game->player->obj = NULL;
 }
