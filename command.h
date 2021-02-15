@@ -15,17 +15,19 @@
 #define N_CMD 7
 
 typedef enum enum_CmdType {
-  CMDS,
-  CMDL} T_CmdType;
+    CMDS,
+    CMDL
+} T_CmdType;
 
 typedef enum enum_Command {
-  NO_CMD = -1,
-  UNKNOWN,
-  EXIT,
-  NEXT,
-  BACK,
-  TAKE,
-  DROP} T_Command;
+    NO_CMD = -1,
+    UNKNOWN,
+    EXIT,
+    NEXT,
+    BACK,
+    TAKE,
+    DROP
+} T_Command;
 
 T_Command get_user_input();
 
