@@ -1,6 +1,6 @@
 cc=gcc
-CFLAGS= -std=c11 -Werror -pedantic -Wextra -g -Wall
-TARGET=main
+CFLAGS=-std=c11 -Werror -pedantic -Wextra -g -Wall
+TARGET=goose
 SRCS := $(notdir $(shell find $(SRC_DIR) -maxdepth 1 -name '*.c'))
 OBJS := $(SRCS:%.c=%.o)
 

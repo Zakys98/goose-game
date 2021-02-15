@@ -54,9 +54,7 @@ STATUS game_set_object_location(Game* game, Id id);
 */
 
 STATUS game_create(Game* game) {
-    int i;
-
-    for (i = 0; i < MAX_SPACES; i++) {
+    for (int i = 0; i < MAX_SPACES; i++) {
         game->spaces[i] = NULL;
     }
     game->player = player_create(NO_ID);
@@ -77,6 +75,8 @@ STATUS game_create_from_file(Game* game, char* filename) {
 
     game_set_player_location(game, game_get_space_id_at(game, 0));
     game_set_object_location(game, game_get_space_id_at(game, 0));
+    Space *s = game_get_space(game, game_get_space_id_at(game, 0));
+    space_set_object(s, game->obj);
 
     return OK;
 }
@@ -238,7 +238,7 @@ void game_callback_take(Game* game) {
 
 void game_callback_drop(Game* game) {
     Space *s = game_get_space(game, game_get_player_location(game));
-	if(game->player->obj->id == NO_ID || space_get_object(s) != NULL)
+	if(!object_exist(game->player->obj) || space_get_object(s) != NULL)
         return;
 
     space_set_object(s, game->player->obj);
