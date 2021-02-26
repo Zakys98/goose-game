@@ -5,7 +5,7 @@
  * @file game.c
  * @author Eva Moresova
  * @version 1.0 
- * @date 12-02-2021 
+ * @date 17-02-2021 
  * @copyright GNU Public License
  */
 
@@ -25,11 +25,33 @@ typedef void (*callback_fn)(Game* game);
 /**
    List of callbacks for each command in the game 
 */
+
 void game_callback_unknown(Game* game);
 void game_callback_exit(Game* game);
 void game_callback_next(Game* game);
 void game_callback_back(Game* game);
+
+/**
+ * @brief take command, object from space, where player is, is taken. 
+ * If player already has an object, it is dropped and the new object is taken.
+ *
+ * @author Eva Moresova
+ * @date 17-02-2021
+ * 
+ * @param game pointer to game
+ */
 void game_callback_take(Game* game);
+
+/**
+ * @brief callback for drop command, player's object is dropped.
+ * The object can only be dropped if there is no object in the space it should
+ * be dropped to.
+ *
+ * @author Jiri Zak
+ * @date 17-02-2021
+ * 
+ * @param game pointer to game
+ */
 void game_callback_drop(Game* game);
 
 static callback_fn game_callback_fn_list[N_CALLBACK] = {
@@ -51,8 +73,8 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
  * @date 12-02-2021
  * 
  * @param game pointer to game 
- * @param position position to array
- * @return Id of the space
+ * @param position index of position in position array
+ * @return Id of the space at position
  */
 Id game_get_space_id_at(Game* game, int position);
 

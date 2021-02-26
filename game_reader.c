@@ -1,7 +1,7 @@
 /** 
- * @brief It defines game reader for reading from file and create game
+ * @brief It implements the game reader interface
  * 
- * @file game_reader.h
+ * @file game_reader.c
  * @author Eva Moresova
  * @version 1.0 
  * @date 10-02-2021 

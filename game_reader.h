@@ -1,5 +1,5 @@
 /** 
- * @brief It defines game reader for reading from file and create game
+ * @brief It defines an interface for reading the game from a file
  * 
  * @file game_reader.h
  * @author Eva Moresova
