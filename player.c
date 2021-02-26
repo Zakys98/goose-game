@@ -1,11 +1,10 @@
 /** 
- * @brief It defines the game interface
- * for each command
+ * @brief It defines player interface
  * 
- * @file game.h
- * @author Profesores PPROG
+ * @file player.h
+ * @author Jiri Zak
  * @version 1.0 
- * @date 13-01-2015 
+ * @date 12-02-2021 
  * @copyright GNU Public License
  */
 
