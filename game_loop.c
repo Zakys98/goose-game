@@ -2,9 +2,9 @@
  * @brief It defines the game loop
  *
  * @file game_loop.c
- * @author Profesores PPROG
- * @version 2.0
- * @date 13-01-2020
+ * @author Eva Moresova
+ * @version 1.0
+ * @date 10-02-2021
  * @copyright GNU Public License
  */
 
@@ -13,8 +13,40 @@
 
 #include "graphic_engine.h"
 
+// Prototypes
+/**
+ * @brief initialize game and game engine
+ *
+ * @author Eva Moresova
+ * @date 10-02-2021
+ * 
+ * @param game pointer to game, which is initialized
+ * @param gengine double pointer to game engine, which is initialized
+ * @param file_name name of file, which game is initialized 
+ * @return int 0 = OK, 1 = FAIL
+ */
 int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name);
+
+/**
+ * @brief main loop of the game
+ *
+ * @author Eva Moresova
+ * @date 10-02-2021
+ * 
+ * @param game inittialized game
+ * @param gengine pointer to initialized game engine
+ */
 void game_loop_run(Game game, Graphic_engine *gengine);
+
+/**
+ * @brief clean(free) game and game engine
+ *
+ * @author Eva Moresova
+ * @date 10-02-2021
+ * 
+ * @param game inittialized game
+ * @param gengine pointer to initialized game engine
+ */
 void game_loop_cleanup(Game game, Graphic_engine *gengine);
 
 int main(int argc, char *argv[]) {

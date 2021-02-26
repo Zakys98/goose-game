@@ -2,9 +2,9 @@
  * @brief It implements the command interpreter
  * 
  * @file command.c
- * @author Profesores PPROG
- * @version 2.0 
- * @date 13-01-2020 
+ * @author Eva moresova
+ * @version 1.0 
+ * @date 15-02-2021 
  * @copyright GNU Public License
  */
 
@@ -15,6 +15,7 @@
 
 #define CMD_LENGHT 30
 
+// array for comapring user input and commands
 char *cmd_to_str[N_CMD][N_CMDT] =
     {{"", "No command"},
      {"", "Unknown"},

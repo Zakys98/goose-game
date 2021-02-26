@@ -3,7 +3,7 @@
  *
  * @file graphic_engine.h
  * @author Profesores PPROG
- * @version 2.0
+ * @version 1.0
  * @date 07-02-2021
  * @copyright GNU Public License
  */

@@ -1,11 +1,10 @@
 /** 
- * @brief It defines the game interface
- * for each command
+ * @brief It defines game reader for reading from file and create game
  * 
- * @file game.h
- * @author Profesores PPROG
+ * @file game_reader.h
+ * @author Eva Moresova
  * @version 1.0 
- * @date 13-01-2015 
+ * @date 10-02-2021 
  * @copyright GNU Public License
  */
 

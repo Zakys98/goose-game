@@ -1,11 +1,10 @@
 /** 
- * @brief It defines the game interface
- * for each command
+ * @brief It defines game reader for reading from file and create game
  * 
- * @file game.h
+ * @file game_reader.h
  * @author Eva Moresova
  * @version 1.0 
- * @date 13-01-2015 
+ * @date 10-02-2021 
  * @copyright GNU Public License
  */
 
@@ -15,10 +14,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Private functions
 /**
-   Private functions
-*/
-
+ * @brief add space to game
+ *
+ * @author Eva Moresova
+ * @date 10-02-2021
+ * 
+ * @param game pointer to game, where we add space
+ * @param space pointer to space, which is added to game
+ * @return STATUS ERROR = 0, OK = 1
+ */
 STATUS game_add_space(Game* game, Space* space);
 
 STATUS game_load_spaces(Game* game, char* filename) {

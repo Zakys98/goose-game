@@ -3,9 +3,9 @@
  * for each command
  * 
  * @file game.c
- * @author Profesores PPROG
+ * @author Eva Moresova
  * @version 1.0 
- * @date 13-01-2015 
+ * @date 12-02-2021 
  * @copyright GNU Public License
  */
 
@@ -41,12 +41,43 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
 	game_callback_drop};
 
 /**
-   Private functions
+   Private functions prototypes
 */
 
-//STATUS game_add_space(Game* game, Space* space);
+/**
+ * @brief space getter from position
+ *
+ * @author Eva Moresova
+ * @date 12-02-2021
+ * 
+ * @param game pointer to game 
+ * @param position position to array
+ * @return Id of the space
+ */
 Id game_get_space_id_at(Game* game, int position);
+
+/**
+ * @brief player location setter 
+ *
+ * @author Eva Moresova
+ * @date 12-02-2021
+ * 
+ * @param game pointer to game
+ * @param id id of player
+ * @return STATUS ERROR = 0, OK = 1
+ */
 STATUS game_set_player_location(Game* game, Id id);
+
+/**
+ * @brief object location setter 
+ *
+ * @author Eva Moresova
+ * @date 12-02-2021
+ * 
+ * @param game pointer to game
+ * @param id id of object
+ * @return STATUS ERROR = 0, OK = 1
+ */
 STATUS game_set_object_location(Game* game, Id id);
 
 /**

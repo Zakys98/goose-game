@@ -3,9 +3,9 @@
  * for each command
  * 
  * @file game.h
- * @author Profesores PPROG
+ * @author Eva Moresova
  * @version 1.0 
- * @date 13-01-2015 
+ * @date 15-02-2021 
  * @copyright GNU Public License
  */
 

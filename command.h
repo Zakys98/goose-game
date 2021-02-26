@@ -2,9 +2,9 @@
  * @brief It implements the command interpreter
  *
  * @file command.h
- * @author Profesores PPROG
- * @version 2.0
- * @date 13-01-2020
+ * @author Eva Moresova
+ * @version 1.0
+ * @date 15-02-2021
  * @copyright GNU Public License
  */
 
@@ -19,6 +19,7 @@ typedef enum enum_CmdType {
     CMDL
 } T_CmdType;
 
+// enum for commands type
 typedef enum enum_Command {
     NO_CMD = -1,
     UNKNOWN,
@@ -29,6 +30,13 @@ typedef enum enum_Command {
     DROP
 } T_Command;
 
+/**
+ * @brief scan user input and interpret it to command
+ *
+ * @author Eva Moresova
+ * @date 15-02-2021
+ * @return Command type
+ */
 T_Command get_user_input();
 
 #endif
