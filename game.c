@@ -280,11 +280,11 @@ void game_callback_take(Game* game) {
 		return;
 
 	Object* player_obj = player_get_object(game->player);
+	space_set_object(location, NULL);
 	if (player_obj != NULL) {
-		space_set_object(location, NULL);
+		
 		game_callback_drop(game);
 	}
-	
 	player_set_object(game->player, space_obj);
 	object_set_location(space_obj, NO_ID);
 }
