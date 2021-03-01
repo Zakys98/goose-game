@@ -161,6 +161,25 @@ STATUS 	set_delete(Set* s, Id id) {
 	return OK;
 }
 
+void set_print(Set* s, FILE* fp) {
+	if (s == NULL || fp == NULL) 
+		return;
+
+	if (set_is_empty(s)) {
+		fprintf(fp, "Size 0: {}");
+	} else {
+		Vector* v = s->head;
+		fprintf(fp, "Size %d: {%ld", set_get_size(s), v->id);
+		Vector* v = v->next;
+		while (v != NULL) {
+			fprintf(fp, ", %ld", v->id);
+			Vector* v = v->next;
+		}
+		fprintf(fp, "}");
+	}
+}
+
+
 
 
 
