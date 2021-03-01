@@ -161,8 +161,6 @@ STATUS game_create_from_file(Game* game, char* filename) {
 
     game_set_player_location(game, game_get_space_id_at(game, 0));
     game_set_object_location(game, game_get_space_id_at(game, 0));
-    Space* s = game_get_space(game, game_get_space_id_at(game, 0));
-    space_set_object(s, game->obj);
 
     return OK;
 }
@@ -306,7 +304,8 @@ void game_callback_back(Game* game) {
 }
 
 void game_callback_take(Game* game) {
-    Space* location = game_get_space(game, game_get_player_location(game));
+    (void)game;
+    /*Space* location = game_get_space(game, game_get_player_location(game));
 
     Object* space_obj = space_get_object(location);
     if (space_obj == NULL)
@@ -318,17 +317,18 @@ void game_callback_take(Game* game) {
         game_callback_drop(game);
     }
     player_set_object(game->player, space_obj);
-    object_set_location(space_obj, NO_ID);
+    object_set_location(space_obj, NO_ID);*/
 }
 
 void game_callback_drop(Game* game) {
-    Space* s = game_get_space(game, game_get_player_location(game));
+    (void)game;
+    /*Space* s = game_get_space(game, game_get_player_location(game));
     if (!object_exist(game->player->obj) || space_get_object(s) != NULL)
         return;
 
     space_set_object(s, game->player->obj);
     object_set_location(game->player->obj, space_get_id(s));
-    game->player->obj = NULL;
+    game->player->obj = NULL;*/
 }
 
 void game_callback_roll(Game* game) {

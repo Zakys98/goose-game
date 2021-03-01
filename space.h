@@ -32,8 +32,8 @@ STATUS space_set_east(Space* space, Id id);
 Id space_get_east(Space* space);
 STATUS space_set_west(Space* space, Id id);
 Id space_get_west(Space* space);
-STATUS space_set_object(Space* space, Object* value);
-Object* space_get_object(Space* space);
+STATUS space_add_object(Space* space, Id id);
+STATUS space_remove_object(Space* space, Id id);
 STATUS space_print(Space* space);
 
 #endif
