@@ -13,6 +13,8 @@
 
 #include "types.h"
 
+#include <stdio.h>
+
 typedef struct _Set Set;
 
 /**

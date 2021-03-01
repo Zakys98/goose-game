@@ -170,10 +170,10 @@ void set_print(Set* s, FILE* fp) {
 	} else {
 		Vector* v = s->head;
 		fprintf(fp, "Size %d: {%ld", set_get_size(s), v->id);
-		Vector* v = v->next;
+		v = v->next;
 		while (v != NULL) {
 			fprintf(fp, ", %ld", v->id);
-			Vector* v = v->next;
+			v = v->next;
 		}
 		fprintf(fp, "}");
 	}
