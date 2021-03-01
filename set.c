@@ -130,6 +130,7 @@ STATUS set_add(Set* s, Id id) {
 	if (v == NULL) {
 		return ERROR;
 	}
+	v->id = id;
 	v->next = s->head;
 	s->head = v;
 	s->size++;
@@ -166,7 +167,7 @@ void set_print(Set* s, FILE* fp) {
 		return;
 
 	if (set_is_empty(s)) {
-		fprintf(fp, "Size 0: {}");
+		fprintf(fp, "Size 0: {}\n");
 	} else {
 		Vector* v = s->head;
 		fprintf(fp, "Size %d: {%ld", set_get_size(s), v->id);
@@ -175,7 +176,7 @@ void set_print(Set* s, FILE* fp) {
 			fprintf(fp, ", %ld", v->id);
 			v = v->next;
 		}
-		fprintf(fp, "}");
+		fprintf(fp, "}\n");
 	}
 }
 

@@ -1,5 +1,6 @@
 
 #include "space.h"
+#include "set.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +14,7 @@ struct _Space {
   Id south;
   Id east;
   Id west;
-  Object* object;
+  Set *objects;
 };
 
 Space* space_create(Id id) {
@@ -37,7 +38,7 @@ Space* space_create(Id id) {
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
 
-  newSpace->object = NULL;
+  newSpace->objects = set_create();
 
   return newSpace;
 }
@@ -47,6 +48,7 @@ STATUS space_destroy(Space** space) {
     return ERROR;
   }
 
+  set_destroy((*space)->objects);
   free(*space);
   *space = NULL;
 
@@ -97,11 +99,11 @@ STATUS space_set_west(Space* space, Id id) {
   return OK;
 }
 
-STATUS space_set_object(Space* space, Object* value) {
+STATUS space_add_object(Space* space, Id id) {
   if (!space) {
     return ERROR;
   }
-  space->object = value;
+  set_add(space->objects, id);
   return OK;
 }
 
@@ -147,11 +149,11 @@ Id space_get_west(Space* space) {
   return space->west;
 }
 
-Object* space_get_object(Space* space) {
+STATUS space_remove_object(Space* space, Id id) {
   if (!space) {
-    return FALSE;
+    return ERROR;
   }
-  return space->object;
+  return set_delete(space->objects, id);
 }
 
 STATUS space_print(Space* space) {
@@ -189,12 +191,6 @@ STATUS space_print(Space* space) {
     fprintf(stdout, "---> West link: %ld.\n", idaux);
   } else {
     fprintf(stdout, "---> No west link.\n");
-  }
-
-  if (space_get_object(space) != NULL) {
-    fprintf(stdout, "---> Object in the space.\n");
-  } else {
-    fprintf(stdout, "---> No object in the space.\n");
   }
 
   return OK;
