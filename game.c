@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define N_CALLBACK 6
+#define N_CALLBACK 9
 
 /**
    Define the function type for the callbacks
@@ -54,13 +54,46 @@ void game_callback_take(Game* game);
  */
 void game_callback_drop(Game* game);
 
+/**
+ * @brief callback for roll command, player is able to move to left if possible.
+ *
+ * @author Jiri Zak
+ * @date 1-03-2021
+ * 
+ * @param game pointer to game
+ */
+void game_callback_roll(Game* game);
+
+/**
+ * @brief callback for left command, player is able to move to left if possible.
+ *
+ * @author Jiri Zak
+ * @date 1-03-2021
+ * 
+ * @param game pointer to game
+ */
+void game_callback_left(Game* game);
+
+/**
+ * @brief callback for left command, player is able to move to left if possible.
+ *
+ * @author Jiri Zak
+ * @date 1-03-2021
+ * 
+ * @param game pointer to game
+ */
+void game_callback_right(Game* game);
+
 static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_unknown,
     game_callback_exit,
     game_callback_next,
     game_callback_back,
-	game_callback_take,
-	game_callback_drop};
+    game_callback_take,
+    game_callback_drop,
+    game_callback_roll,
+    game_callback_left,
+    game_callback_right};
 
 /**
    Private functions prototypes
@@ -128,7 +161,7 @@ STATUS game_create_from_file(Game* game, char* filename) {
 
     game_set_player_location(game, game_get_space_id_at(game, 0));
     game_set_object_location(game, game_get_space_id_at(game, 0));
-    Space *s = game_get_space(game, game_get_space_id_at(game, 0));
+    Space* s = game_get_space(game, game_get_space_id_at(game, 0));
     space_set_object(s, game->obj);
 
     return OK;
@@ -173,7 +206,7 @@ STATUS game_set_player_location(Game* game, Id s) {
 }
 
 STATUS game_set_object_location(Game* game, Id s) {
-	return object_set_location(game->obj, s);
+    return object_set_location(game->obj, s);
 }
 
 Id game_get_player_location(Game* game) {
@@ -210,7 +243,7 @@ void game_print_data(Game* game) {
 }
 
 BOOL game_is_over(Game* game) {
-	(void)game;
+    (void)game;
     return FALSE;
 }
 
@@ -273,28 +306,47 @@ void game_callback_back(Game* game) {
 }
 
 void game_callback_take(Game* game) {
-	Space* location = game_get_space(game, game_get_player_location(game));
+    Space* location = game_get_space(game, game_get_player_location(game));
 
-	Object* space_obj = space_get_object(location);
-	if (space_obj == NULL) 
-		return;
+    Object* space_obj = space_get_object(location);
+    if (space_obj == NULL)
+        return;
 
-	Object* player_obj = player_get_object(game->player);
-	space_set_object(location, NULL);
-	if (player_obj != NULL) {
-		
-		game_callback_drop(game);
-	}
-	player_set_object(game->player, space_obj);
-	object_set_location(space_obj, NO_ID);
+    Object* player_obj = player_get_object(game->player);
+    space_set_object(location, NULL);
+    if (player_obj != NULL) {
+        game_callback_drop(game);
+    }
+    player_set_object(game->player, space_obj);
+    object_set_location(space_obj, NO_ID);
 }
 
 void game_callback_drop(Game* game) {
-    Space *s = game_get_space(game, game_get_player_location(game));
-	if(!object_exist(game->player->obj) || space_get_object(s) != NULL)
+    Space* s = game_get_space(game, game_get_player_location(game));
+    if (!object_exist(game->player->obj) || space_get_object(s) != NULL)
         return;
 
     space_set_object(s, game->player->obj);
     object_set_location(game->player->obj, space_get_id(s));
     game->player->obj = NULL;
+}
+
+void game_callback_roll(Game* game) {
+    (void)game;
+}
+
+void game_callback_left(Game* game) {
+    Space* location = game_get_space(game, game_get_player_location(game));
+    Id next_location = space_get_west(location);
+    if (next_location == NO_ID)
+        return;
+    game_set_player_location(game, next_location);
+}
+
+void game_callback_right(Game* game) {
+    Space* location = game_get_space(game, game_get_player_location(game));
+    Id next_location = space_get_east(location);
+    if (next_location == NO_ID)
+        return;
+    game_set_player_location(game, next_location);
 }
