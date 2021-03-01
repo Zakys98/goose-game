@@ -15,6 +15,7 @@ struct _Space {
   Id east;
   Id west;
   Set *objects;
+  char gdesc[3][7];
 };
 
 Space* space_create(Id id) {
@@ -39,6 +40,9 @@ Space* space_create(Id id) {
   newSpace->west = NO_ID;
 
   newSpace->objects = set_create();
+  memset(newSpace->gdesc[0], '\0', 7);
+  memset(newSpace->gdesc[1], '\0', 7);
+  memset(newSpace->gdesc[2], '\0', 7);
 
   return newSpace;
 }

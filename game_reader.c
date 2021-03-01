@@ -107,6 +107,7 @@ STATUS game_load_objects(Game* game, char* line) {
 	space = atol(toks);
 
 	Object* obj = object_create(id);
+	object_set_name(obj, name);
 	object_set_location(obj, space);
 	
 	return game_add_object(game, obj);
