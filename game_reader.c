@@ -71,6 +71,8 @@ STATUS game_load_spaces(Game* game, char* filename) {
                 space_set_west(space, west);
                 game_add_space(game, space);
             }
+        } else if(strncmp("#o:", line, 3) == 0){
+
         }
     }
 
