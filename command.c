@@ -23,7 +23,10 @@ char *cmd_to_str[N_CMD][N_CMDT] =
      {"n", "Next"},
      {"b", "Back"},
      {"t", "Take"},
-     {"d", "Drop"}};
+     {"d", "Drop"},
+     {"r1", "Roll"},
+     {"l", "Left"},
+     {"r", "Right"}};
 
 T_Command get_user_input() {
     T_Command cmd = NO_CMD;

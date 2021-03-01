@@ -27,7 +27,10 @@ typedef enum enum_Command {
     NEXT,
     BACK,
     TAKE,
-    DROP
+    DROP,
+    ROLL,
+    LEFT,
+    RIGHT
 } T_Command;
 
 /**
