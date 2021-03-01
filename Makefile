@@ -12,5 +12,8 @@ $(TARGET) : $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+set_test: set_test.c set.c
+	$(cc) $(CFLAGS) -o set_test set_test.c set.c
+
 clean:
 	rm *.o $(TARGET)
