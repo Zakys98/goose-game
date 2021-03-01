@@ -73,5 +73,15 @@ STATUS 	set_add(Set* s, Id id);
  */
 STATUS 	set_delete(Set* s, Id id);
 
+/**
+ * @brief prints the contents of a specified set
+ *
+ * @author Eva Moresova
+ * @date 01-03-2021 
+ * 
+ * @param s pointer to set
+ * @param fp file pointer, set is printed to this file
+ */
+void set_print(Set* s, FILE* fp);
 
 #endif
