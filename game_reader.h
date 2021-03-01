@@ -14,7 +14,4 @@
 #include "space.h"
 #include "game.h"
 
-STATUS game_load_spaces (Game* game, char* line);
-STATUS game_load_objects (Game* game, char* line);
-
 #endif

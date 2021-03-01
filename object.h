@@ -13,6 +13,8 @@
 
 #include "types.h"
 
+#define MAX_OBJECTS 50
+
 /**
  * Structure for Object
  * Id id

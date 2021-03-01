@@ -28,6 +28,9 @@
 STATUS game_add_space(Game* game, Space* space);
 STATUS game_add_object(Game* game, Object* obj);
 
+STATUS game_load_spaces (Game* game, char* line);
+STATUS game_load_objects (Game* game, char* line);
+
 STATUS game_load_game(Game* game, char* filename) {
     FILE* file = NULL;
     char line[WORD_SIZE] = "";
@@ -103,10 +106,10 @@ STATUS game_load_objects(Game* game, char* line) {
 	toks = strtok(NULL, "|");
 	space = atol(toks);
 
-	Object* o = object_create(id);
-	object_set_location(o, space);
+	Object* obj = object_create(id);
+	object_set_location(obj, space);
 	
-	return game_add_object(game, o);
+	return game_add_object(game, obj);
 }
 
 STATUS game_add_space(Game* game, Space* space) {
@@ -130,7 +133,15 @@ STATUS game_add_space(Game* game, Space* space) {
 }
 
 STATUS game_add_object(Game* game, Object* obj) {
-	(void*)game;
-	(void*)obj;
-	return OK;
+
+	Space* space = game_get_space(game, object_get_location(obj));
+	space_add_object(space, object_get_id(obj));
+    
+    for (int i=0; i < MAX_OBJECTS; i++) {
+		if (game->objects[i] == NULL) {
+			game->objects[i] = obj;
+			return OK;
+		}
+	}
+	return ERROR;
 }

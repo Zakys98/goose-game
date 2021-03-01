@@ -20,7 +20,7 @@
 
 typedef struct _Game{
   Player* player;
-  Object* obj;
+  Object* objects[MAX_OBJECTS];
   Space* spaces[MAX_SPACES + 1];
   T_Command last_cmd;
 } Game;
@@ -107,7 +107,7 @@ Id     game_get_player_location(Game* game);
  * @param game pointer to game
  * @return Id of the space object is placed at
  */
-Id     game_get_object_location(Game* game);
+//Id     game_get_object_location(Game* game);
 
 
 /**
@@ -126,6 +126,6 @@ T_Command game_get_last_command(Game* game);
  * @param filename file to load the spaces from
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS game_load_spaces(Game* game, char* filename);
+STATUS game_load_game(Game* game, char* filename);
 
 #endif

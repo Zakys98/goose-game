@@ -133,7 +133,7 @@ STATUS game_set_player_location(Game* game, Id id);
  * @param id id of object
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS game_set_object_location(Game* game, Id id);
+//STATUS game_set_object_location(Game* game, Id id);
 
 /**
    Game interface implementation
@@ -143,10 +143,11 @@ STATUS game_create(Game* game) {
     for (int i = 0; i < MAX_SPACES; i++) {
         game->spaces[i] = NULL;
     }
+	for (int i = 0; i < MAX_OBJECTS; i++) {
+        game->objects[i] = NULL;
+    }
     game->player = player_create(NO_ID);
     player_set_location(game->player, NO_ID);
-    game->obj = object_create(NO_ID);
-    object_set_location(game->obj, NO_ID);
     game->last_cmd = NO_CMD;
 
     return OK;
@@ -156,11 +157,11 @@ STATUS game_create_from_file(Game* game, char* filename) {
     if (game_create(game) == ERROR)
         return ERROR;
 
-    if (game_load_spaces(game, filename) == ERROR)
+    if (game_load_game(game, filename) == ERROR)
         return ERROR;
 
     game_set_player_location(game, game_get_space_id_at(game, 0));
-    game_set_object_location(game, game_get_space_id_at(game, 0));
+    //game_set_object_location(game, game_get_space_id_at(game, 0));
 
     return OK;
 }
@@ -203,17 +204,17 @@ STATUS game_set_player_location(Game* game, Id s) {
     return player_set_location(game->player, s);
 }
 
-STATUS game_set_object_location(Game* game, Id s) {
-    return object_set_location(game->obj, s);
-}
+// STATUS game_set_object_location(Game* game, Id s) {
+//     return object_set_location(game->obj, s);
+// }
 
 Id game_get_player_location(Game* game) {
     return player_get_location(game->player);
 }
 
-Id game_get_object_location(Game* game) {
-    return object_get_location(game->obj);
-}
+// Id game_get_object_location(Game* game) {
+//     return object_get_location(game->obj);
+// }
 
 STATUS game_update(Game* game, T_Command cmd) {
     game->last_cmd = cmd;
@@ -235,7 +236,7 @@ void game_print_data(Game* game) {
         space_print(game->spaces[i]);
     }
 
-    printf("=> Object location: %ld\n", game_get_object_location(game));
+    //printf("=> Object location: %ld\n", game_get_object_location(game));
     printf("=> Player location: %ld\n", game_get_player_location(game));
     printf("prompt:> ");
 }
@@ -254,7 +255,18 @@ void game_callback_unknown(Game* game) {
 }
 
 void game_callback_exit(Game* game) {
-    free(game->obj);
+    for (int i = FIRST_SPACE; i < MAX_SPACES; i++) {
+		if(game->spaces[i] == NULL)
+			break;
+        
+		free(game->spaces[i]);
+    }
+	for (int i = 0; i < MAX_OBJECTS; i++) {
+        if(game->objects[i] == NULL)
+			break;
+        
+		free(game->objects[i]);
+    }
     free(game->player);
 }
 

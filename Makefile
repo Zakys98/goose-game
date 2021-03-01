@@ -1,5 +1,5 @@
 cc=gcc
-CFLAGS=-std=c11 -Werror -pedantic -Wextra -g -Wall
+CFLAGS=-std=c11 -pedantic -Wextra -g -Wall
 TARGET=goose
 OBJS := command.o die.o game_loop.o game_reader.o game.o graphic_engine.o object.o player.o screen.o set.o space.o
 
