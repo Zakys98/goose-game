@@ -29,7 +29,7 @@ BOOL dice_not_exist(Dice *d) {
 
 Dice *dice_create(int minimum, int maximum) {
     Dice *d = malloc(sizeof(struct dice));
-    if (d == NULL)
+    if (dice_not_exist(d))
         return NULL;
 
     d->minimum = minimum;
