@@ -22,7 +22,7 @@ typedef struct _Set Set;
  * @date 01-03-2021 
  * 
  * @param s pointer to set
- * @return integer size of set
+ * @return integer size of set, -1 in case of error
  */
 int set_get_size(Set* s);
 

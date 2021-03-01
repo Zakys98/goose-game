@@ -11,6 +11,7 @@
 #include "set.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct _Vector {
 	Id id;
@@ -90,8 +91,8 @@ Vector* set_get_element_by_id(Set* s, Id id) {
 
 
 /** Interface implementation */
-Set* set_get_size(Set* s) {
-	return s->size;
+int set_get_size(Set* s) {
+	return (s == NULL) ? -1 : s->size;
 }
 
 Set* set_create() {
