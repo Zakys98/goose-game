@@ -111,6 +111,18 @@ STATUS space_add_object(Space* space, Id id) {
   return OK;
 }
 
+STATUS space_set_gdesc(Space* space, int line, char* name){
+  if (!space || !name || line > 2) {
+    return ERROR;
+  }
+
+  if (!strcpy(space->gdesc[line], name)) {
+    return ERROR;
+  }
+
+  return OK;
+}
+
 const char * space_get_name(Space* space) {
   if (!space) {
     return NULL;

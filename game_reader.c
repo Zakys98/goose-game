@@ -65,6 +65,7 @@ STATUS game_load_game(Game* game, char* filename) {
 STATUS game_load_spaces(Game* game, char* line) {
 	char name[WORD_SIZE] = "";
     char* toks = NULL;
+	char first[7], second[7], third[7];
     Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
     Space* space = NULL;
 
@@ -80,6 +81,14 @@ STATUS game_load_spaces(Game* game, char* line) {
 	south = atol(toks);
 	toks = strtok(NULL, "|");
 	west = atol(toks);
+	toks = strtok(NULL, "|");
+	if(toks != NULL){
+		strncpy(first, toks, 7);
+		toks = strtok(NULL, "|");
+		strncpy(second, toks, 7);
+		toks = strtok(NULL, "|");
+		strncpy(third, toks, 7);
+	}
 	
 	space = space_create(id);
 	if (space != NULL) {
@@ -89,6 +98,11 @@ STATUS game_load_spaces(Game* game, char* line) {
 		space_set_south(space, south);
 		space_set_west(space, west);
 		game_add_space(game, space);
+	}
+	if(toks != NULL){
+		space_set_gdesc(space, 0, first);
+		space_set_gdesc(space, 1, second);
+		space_set_gdesc(space, 2, third);
 	}
 	return OK;
 }

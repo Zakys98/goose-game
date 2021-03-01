@@ -29,6 +29,7 @@ Id space_get_north(Space* space);
 STATUS space_set_south(Space* space, Id id);
 Id space_get_south(Space* space);
 STATUS space_set_east(Space* space, Id id);
+STATUS space_set_gdesc(Space* space, int line, char* name);
 Id space_get_east(Space* space);
 STATUS space_set_west(Space* space, Id id);
 Id space_get_west(Space* space);
