@@ -26,14 +26,11 @@
  * @return STATUS ERROR = 0, OK = 1
  */
 STATUS game_add_space(Game* game, Space* space);
+STATUS game_add_object(Game* game, Object* obj);
 
-STATUS game_load_spaces(Game* game, char* filename) {
+STATUS game_load_game(Game* game, char* filename) {
     FILE* file = NULL;
     char line[WORD_SIZE] = "";
-    char name[WORD_SIZE] = "";
-    char* toks = NULL;
-    Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
-    Space* space = NULL;
     STATUS status = OK;
 
     if (!filename) {
@@ -47,31 +44,10 @@ STATUS game_load_spaces(Game* game, char* filename) {
 
     while (fgets(line, WORD_SIZE, file)) {
         if (strncmp("#s:", line, 3) == 0) {
-            toks = strtok(line + 3, "|");
-            id = atol(toks);
-            toks = strtok(NULL, "|");
-            strcpy(name, toks);
-            toks = strtok(NULL, "|");
-            north = atol(toks);
-            toks = strtok(NULL, "|");
-            east = atol(toks);
-            toks = strtok(NULL, "|");
-            south = atol(toks);
-            toks = strtok(NULL, "|");
-            west = atol(toks);
-#ifdef DEBUG
-            printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
-#endif
-            space = space_create(id);
-            if (space != NULL) {
-                space_set_name(space, name);
-                space_set_north(space, north);
-                space_set_east(space, east);
-                space_set_south(space, south);
-                space_set_west(space, west);
-                game_add_space(game, space);
-            }
-        }
+			game_load_spaces(game, line);
+        } else if (strncmp("#o:", line, 3) == 0) {
+			game_load_objects(game, line);
+		}
     }
 
     if (ferror(file)) {
@@ -81,6 +57,56 @@ STATUS game_load_spaces(Game* game, char* filename) {
     fclose(file);
 
     return status;
+}
+
+STATUS game_load_spaces(Game* game, char* line) {
+	char name[WORD_SIZE] = "";
+    char* toks = NULL;
+    Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
+    Space* space = NULL;
+
+	toks = strtok(line + 3, "|");
+	id = atol(toks);
+	toks = strtok(NULL, "|");
+	strcpy(name, toks);
+	toks = strtok(NULL, "|");
+	north = atol(toks);
+	toks = strtok(NULL, "|");
+	east = atol(toks);
+	toks = strtok(NULL, "|");
+	south = atol(toks);
+	toks = strtok(NULL, "|");
+	west = atol(toks);
+	
+	space = space_create(id);
+	if (space != NULL) {
+		space_set_name(space, name);
+		space_set_north(space, north);
+		space_set_east(space, east);
+		space_set_south(space, south);
+		space_set_west(space, west);
+		game_add_space(game, space);
+	}
+	return OK;
+}
+
+STATUS game_load_objects(Game* game, char* line) {
+	char* toks = NULL;
+	char name[WORD_SIZE] = "";
+    Id id = NO_ID;
+	Id space = NO_ID;
+
+	toks = strtok(line + 3, "|");
+	id = atol(toks);
+	toks = strtok(NULL, "|");
+	strcpy(name, toks);
+	toks = strtok(NULL, "|");
+	space = atol(toks);
+
+	Object* o = object_create(id);
+	object_set_location(o, space);
+	
+	return game_add_object(game, o);
 }
 
 STATUS game_add_space(Game* game, Space* space) {
@@ -101,4 +127,10 @@ STATUS game_add_space(Game* game, Space* space) {
     game->spaces[i] = space;
 
     return OK;
+}
+
+STATUS game_add_object(Game* game, Object* obj) {
+	(void*)game;
+	(void*)obj;
+	return OK;
 }
