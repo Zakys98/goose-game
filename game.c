@@ -255,12 +255,6 @@ void game_callback_unknown(Game* game) {
 }
 
 void game_callback_exit(Game* game) {
-    for (int i = FIRST_SPACE; i < MAX_SPACES; i++) {
-		if(game->spaces[i] == NULL)
-			break;
-        
-		free(game->spaces[i]);
-    }
 	for (int i = 0; i < MAX_OBJECTS; i++) {
         if(game->objects[i] == NULL)
 			break;
