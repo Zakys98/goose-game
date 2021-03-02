@@ -241,6 +241,16 @@ void game_print_data(Game* game) {
     printf("prompt:> ");
 }
 
+int game_get_number_object(Game *game){
+    if(game == NULL)
+        return -1;
+    int counter = 0;
+    while((counter < MAX_OBJECTS) && (game->objects[counter] != NULL)){
+        counter++;
+    }
+    return counter;
+}
+
 BOOL game_is_over(Game* game) {
     (void)game;
     return FALSE;

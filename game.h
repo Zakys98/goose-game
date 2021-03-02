@@ -128,4 +128,12 @@ T_Command game_get_last_command(Game* game);
  */
 STATUS game_load_game(Game* game, char* filename);
 
+/**
+ * @brief get number of objects
+ * 
+ * @param game pointer to game
+ * @return number or if ERROR -1
+ */
+int game_get_number_object(Game *game);
+
 #endif
