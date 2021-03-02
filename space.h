@@ -35,6 +35,7 @@ STATUS space_set_west(Space* space, Id id);
 Id space_get_west(Space* space);
 STATUS space_add_object(Space* space, Id id);
 STATUS space_remove_object(Space* space, Id id);
+char* space_get_gdesc(Space* space, int line);
 STATUS space_print(Space* space);
 
 #endif

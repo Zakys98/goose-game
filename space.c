@@ -172,6 +172,13 @@ STATUS space_remove_object(Space* space, Id id) {
   return set_delete(space->objects, id);
 }
 
+char* space_get_gdesc(Space* space, int line){
+  if (!space) {
+    return NULL;
+  }
+  return space->gdesc[line];
+}
+
 STATUS space_print(Space* space) {
   Id idaux = NO_ID;
 
