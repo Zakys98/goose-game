@@ -144,22 +144,24 @@ STATUS 	set_delete(Set* s, Id id) {
 
 	Vector* v1 = s->head;
 	Vector* v2 = v1->next;
-	if (v1->id != id) {
+	if (v1->id == id) {
 		free(v1);
 		s->head = v2;
+		s->size -= 1;
 		return OK;
 	}
 	for(int i=0; i < (set_get_size(s) - 1); i++) {
-		if (v2->id == id)
-			break;
-		else {
+		if (v2->id == id) {
+			v1->next = v2->next;
+			free(v2);
+			s->size -= 1;
+			return OK; 
+		} else {
 			v1 = v2;
-			v2 = v1->next;
+			v2 = v2->next;
 		}
 	}
-	v1->next = v2->next;
-	free(v2);
-	return OK;
+	return ERROR;
 }
 
 void set_print(Set* s, FILE* fp) {

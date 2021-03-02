@@ -218,7 +218,7 @@ Object* game_get_object_by_name(Game* game, char* name) {
     }
 
     for (int i = 0; i < MAX_OBJECTS && game->objects[i] != NULL; i++) {
-        if (name == object_get_name(game->objects[i])) {
+        if (strcmp(name, object_get_name(game->objects[i])) == 0) {
             return game->objects[i];
         }
     }
@@ -352,16 +352,17 @@ void game_callback_take(Game* game) {
 	if (space_objects_count(location) == 0)
 		return;
     
-    Object* player_obj = player_get_object(game->player);
 	if (scanf("%s", input) > 0) {
-		if (player_obj != NULL) {
+		if (player_get_object(game->player) != NULL) {
 			game_callback_drop(game);
 		}
 		Object* obj = game_get_object_by_name(game, input);
 		if (obj == NULL)
 			return;
 
-		space_remove_object(location, object_get_id(obj));
+		if (space_remove_object(location, object_get_id(obj)) == ERROR)
+			return;
+
 		player_set_object(game->player, obj);
 	}
 }
