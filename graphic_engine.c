@@ -97,7 +97,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
     /* Paint in the description area */
     screen_area_clear(ge->descript);
-    sprintf(str, "Objects location:");
+    sprintf(str, " Objects location:");
     screen_area_puts(ge->descript, str);
     memset(str, '\0', 255);
     for (int i = 0; i < game_get_number_object(game); i++) {
@@ -107,6 +107,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
             strcat(pom, ",");
         strcat(str, pom);
     }
+    screen_area_puts(ge->descript, str);
+
+    sprintf(str, " ");
+    screen_area_puts(ge->descript, str);
+    sprintf(str, " Player object: %s:%ld", object_get_name(game->player->obj), object_get_location(game->player->obj));
     screen_area_puts(ge->descript, str);
 
     // if ((obj_loc = game_get_object_location(game)) != NO_ID) {
