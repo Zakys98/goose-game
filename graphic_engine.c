@@ -11,6 +11,17 @@ struct _Graphic_engine {
     Area *map, *descript, *banner, *help, *feedback;
 };
 
+/**
+ * @brief Paint important things to description area
+ *
+ * @author Jiri Zak
+ * @date 2-03-2021
+ * 
+ * @param ge pointer to graphic_engine
+ * @param game pointer to game
+ */
+void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game);
+
 Graphic_engine *graphic_engine_create() {
     static Graphic_engine *ge = NULL;
 
@@ -45,22 +56,22 @@ void graphic_engine_destroy(Graphic_engine *ge) {
     free(ge);
 }
 
-char* graphic_engine_get_space_objects(Game* g, Space* s) {
-	if (space_objects_count(s) == 0)
-		return NULL;
+char *graphic_engine_get_space_objects(Game *g, Space *s) {
+    if (space_objects_count(s) == 0)
+        return NULL;
 
-	Id* obj_ids = space_get_objects(s);
-	char* res = (char*)malloc(20);
-	char* object_names = res;
-	Object* obj = game_get_object(g, obj_ids[0]);
-	
-	object_names += sprintf(object_names, "%s", object_get_name(obj));	
+    Id *obj_ids = space_get_objects(s);
+    char *res = (char *)malloc(20);
+    char *object_names = res;
+    Object *obj = game_get_object(g, obj_ids[0]);
 
-	for (int i = 1; i < space_objects_count(s); i++) {
-		obj = game_get_object(g, obj_ids[i]);
-		object_names += sprintf(object_names, ", %s", object_get_name(obj));	
-	}
-	return res;
+    object_names += sprintf(object_names, "%s", object_get_name(obj));
+
+    for (int i = 1; i < space_objects_count(s); i++) {
+        obj = game_get_object(g, obj_ids[i]);
+        object_names += sprintf(object_names, ", %s", object_get_name(obj));
+    }
+    return res;
 }
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
@@ -69,7 +80,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     char str[255];
     T_Command last_cmd = UNKNOWN;
     extern char *cmd_to_str[N_CMD][N_CMDT];
-	char* objects = NULL;
+    char *objects = NULL;
 
     /* Paint the in the map area */
     screen_area_clear(ge->map);
@@ -77,7 +88,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         space_act = game_get_space(game, id_act);
         id_back = space_get_north(space_act);
         id_next = space_get_south(space_act);
-		objects = graphic_engine_get_space_objects(game, space_act);
+        objects = graphic_engine_get_space_objects(game, space_act);
 
         if (id_back != NO_ID) {
             sprintf(str, "  |         %2d|", (int)id_back);
@@ -101,11 +112,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
             sprintf(str, "  | %s   |", space_get_gdesc(space_act, 2));
             screen_area_puts(ge->map, str);
             if (objects != NULL) {
-				int n = 10 - strlen(objects);
-				printf("%*c", n, ' ');
-				sprintf(str, "  | %s%*c|", objects, n, ' ');
-				screen_area_puts(ge->map, str);
-			}
+                int n = 10 - strlen(objects);
+                printf("%*c", n, ' ');
+                sprintf(str, "  | %s%*c|", objects, n, ' ');
+                screen_area_puts(ge->map, str);
+            }
             sprintf(str, "  +-----------+");
             screen_area_puts(ge->map, str);
         }
@@ -121,28 +132,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     }
 
     /* Paint in the description area */
-    screen_area_clear(ge->descript);
-    sprintf(str, " Objects location:");
-    screen_area_puts(ge->descript, str);
-    memset(str, '\0', 255);
-    for (int i = 0; i < game_get_number_object(game); i++) {
-        char pom[30] = "";
-        sprintf(pom, " %s:%ld", object_get_name(game->objects[i]), object_get_location(game->objects[i]));
-        if(i+1 != game_get_number_object(game))
-            strcat(pom, ",");
-        strcat(str, pom);
-    }
-    screen_area_puts(ge->descript, str);
-
-    sprintf(str, " ");
-    screen_area_puts(ge->descript, str);
-    sprintf(str, " Player object: %s:%ld", object_get_name(game->player->obj), object_get_location(game->player->obj));
-    screen_area_puts(ge->descript, str);
-
-    sprintf(str, " ");
-    screen_area_puts(ge->descript, str);
-    sprintf(str, " Last die value: %d", dice_get_last_roll(game->dice));
-    screen_area_puts(ge->descript, str);
+    graphic_engine_paint_description_area(ge, game);
 
     /* Paint in the banner area */
     screen_area_puts(ge->banner, " The game of the Goose ");
@@ -162,4 +152,35 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     /* Dump to the terminal */
     screen_paint();
     printf("prompt:> ");
+}
+
+void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
+    screen_area_clear(ge->descript);
+    char str[255] = "";
+    if (game_get_number_object(game) != 0) {
+        screen_area_clear(ge->descript);
+        sprintf(str, " Objects location:");
+        screen_area_puts(ge->descript, str);
+        memset(str, '\0', 255);
+        for (int i = 0; i < game_get_number_object(game); i++) {
+            char pom[30] = "";
+            sprintf(pom, " %s:%ld", object_get_name(game->objects[i]), object_get_location(game->objects[i]));
+            if (i + 1 != game_get_number_object(game))
+                strcat(pom, ",");
+            strcat(str, pom);
+        }
+        screen_area_puts(ge->descript, str);
+    }
+
+    if (object_get_name(game->player->obj) != NULL) {
+        sprintf(str, " ");
+        screen_area_puts(ge->descript, str);
+        sprintf(str, " Player object: %s:%ld", object_get_name(game->player->obj), object_get_location(game->player->obj));
+        screen_area_puts(ge->descript, str);
+    }
+
+    sprintf(str, " ");
+    screen_area_puts(ge->descript, str);
+    sprintf(str, " Last die value: %d", dice_get_last_roll(game->dice));
+    screen_area_puts(ge->descript, str);
 }
