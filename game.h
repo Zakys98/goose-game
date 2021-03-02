@@ -96,7 +96,7 @@ Space* game_get_space(Game* game, Id id);
  * @param game pointer to game
  * @return Id of the space player is currently at
  */
-Id     game_get_player_location(Game* game);
+Id    game_get_player_location(Game* game);
 
 /**
  * @brief object location getter
@@ -108,6 +108,8 @@ Id     game_get_player_location(Game* game);
  * @return Id of the space object is placed at
  */
 //Id     game_get_object_location(Game* game);
+
+Object* game_get_object(Game* game, Id id);
 
 
 /**

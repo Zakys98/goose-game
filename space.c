@@ -182,6 +182,14 @@ char* space_get_gdesc(Space* space, int line){
   return space->gdesc[line];
 }
 
+Id* space_get_objects(Space* s) {
+	return set_get_elements(s->objects);
+}
+
+int space_objects_count(Space* s) {
+	return set_get_size(s->objects);
+}
+
 STATUS space_print(Space* space) {
   Id idaux = NO_ID;
 

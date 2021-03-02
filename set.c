@@ -180,6 +180,20 @@ void set_print(Set* s, FILE* fp) {
 	}
 }
 
+Id* set_get_elements(Set* s) {
+	Id* elems = (Id*)malloc(sizeof(Id)*set_get_size(s));
+	if(elems == NULL || set_is_empty(s))
+		return NULL;
+
+	Vector* v = s->head;
+	for (int i = 0; (i < set_get_size(s) && v != NULL); i++) {
+		elems[i] = v->id;
+		v = v->next;
+	}
+	return elems;
+}
+
+
 
 
 

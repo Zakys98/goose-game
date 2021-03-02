@@ -86,4 +86,6 @@ STATUS 	set_delete(Set* s, Id id);
  */
 void set_print(Set* s, FILE* fp);
 
+Id* set_get_elements(Set* s);
+
 #endif
