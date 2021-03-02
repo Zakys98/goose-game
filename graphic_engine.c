@@ -11,6 +11,17 @@ struct _Graphic_engine {
     Area *map, *descript, *banner, *help, *feedback;
 };
 
+/**
+ * @brief Paint important things to description area
+ *
+ * @author Jiri Zak
+ * @date 2-03-2021
+ * 
+ * @param ge pointer to graphic_engine
+ * @param game pointer to game
+ */
+void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game);
+
 Graphic_engine *graphic_engine_create() {
     static Graphic_engine *ge = NULL;
 
@@ -96,28 +107,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     }
 
     /* Paint in the description area */
-    screen_area_clear(ge->descript);
-    sprintf(str, " Objects location:");
-    screen_area_puts(ge->descript, str);
-    memset(str, '\0', 255);
-    for (int i = 0; i < game_get_number_object(game); i++) {
-        char pom[30] = "";
-        sprintf(pom, " %s:%ld", object_get_name(game->objects[i]), object_get_location(game->objects[i]));
-        if(i+1 != game_get_number_object(game))
-            strcat(pom, ",");
-        strcat(str, pom);
-    }
-    screen_area_puts(ge->descript, str);
-
-    sprintf(str, " ");
-    screen_area_puts(ge->descript, str);
-    sprintf(str, " Player object: %s:%ld", object_get_name(game->player->obj), object_get_location(game->player->obj));
-    screen_area_puts(ge->descript, str);
-
-    sprintf(str, " ");
-    screen_area_puts(ge->descript, str);
-    sprintf(str, " Last die value: %d", dice_get_last_roll(game->dice));
-    screen_area_puts(ge->descript, str);
+    graphic_engine_paint_description_area(ge, game);
 
     /* Paint in the banner area */
     screen_area_puts(ge->banner, " The game of the Goose ");
@@ -137,4 +127,32 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     /* Dump to the terminal */
     screen_paint();
     printf("prompt:> ");
+}
+
+void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
+    char str[255];
+    screen_area_clear(ge->descript);
+    sprintf(str, " Objects location:");
+    screen_area_puts(ge->descript, str);
+    memset(str, '\0', 255);
+    for (int i = 0; i < game_get_number_object(game); i++) {
+        char pom[30] = "";
+        sprintf(pom, " %s:%ld", object_get_name(game->objects[i]), object_get_location(game->objects[i]));
+        if (i + 1 != game_get_number_object(game))
+            strcat(pom, ",");
+        strcat(str, pom);
+    }
+    screen_area_puts(ge->descript, str);
+
+    if (object_get_name(game->player->obj) != NULL) {
+        sprintf(str, " ");
+        screen_area_puts(ge->descript, str);
+        sprintf(str, " Player object: %s:%ld", object_get_name(game->player->obj), object_get_location(game->player->obj));
+        screen_area_puts(ge->descript, str);
+    }
+
+    sprintf(str, " ");
+    screen_area_puts(ge->descript, str);
+    sprintf(str, " Last die value: %d", dice_get_last_roll(game->dice));
+    screen_area_puts(ge->descript, str);
 }
