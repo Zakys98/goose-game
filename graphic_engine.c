@@ -46,9 +46,8 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 }
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
-    Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID;
+    Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID;
     Space *space_act = NULL;
-    char obj = '\0';
     char str[255];
     T_Command last_cmd = UNKNOWN;
     extern char *cmd_to_str[N_CMD][N_CMDT];
@@ -60,33 +59,20 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         id_back = space_get_north(space_act);
         id_next = space_get_south(space_act);
 
-        // if (game_get_object_location(game) == id_back)
-        //     obj = '*';
-        // else
-        //     obj = ' ';
-
         if (id_back != NO_ID) {
             sprintf(str, "  |         %2d|", (int)id_back);
             screen_area_puts(ge->map, str);
-            sprintf(str, "  |     %c     |", obj);
-            screen_area_puts(ge->map, str);
+            //gen obj
             sprintf(str, "  +-----------+");
             screen_area_puts(ge->map, str);
             sprintf(str, "        ^");
             screen_area_puts(ge->map, str);
         }
 
-        // if (game_get_object_location(game) == id_act)
-        //     obj = '*';
-        // else
-        //     obj = ' ';
-
         if (id_act != NO_ID) {
             sprintf(str, "  +-----------+");
             screen_area_puts(ge->map, str);
             sprintf(str, "  | 8D      %2d|", (int)id_act);
-            screen_area_puts(ge->map, str);
-            sprintf(str, "  |     %c     |", obj);
             screen_area_puts(ge->map, str);
             sprintf(str, "  | %s   |", space_get_gdesc(space_act, 0));
             screen_area_puts(ge->map, str);
@@ -99,19 +85,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
             screen_area_puts(ge->map, str);
         }
 
-        // if (game_get_object_location(game) == id_next)
-        //     obj = '*';
-        // else
-        //     obj = ' ';
-
         if (id_next != NO_ID) {
             sprintf(str, "        v");
             screen_area_puts(ge->map, str);
             sprintf(str, "  +-----------+");
             screen_area_puts(ge->map, str);
             sprintf(str, "  |         %2d|", (int)id_next);
-            screen_area_puts(ge->map, str);
-            sprintf(str, "  |     %c     |", obj);
             screen_area_puts(ge->map, str);
         }
     }
