@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "command.h"
 #include "screen.h"
@@ -87,6 +88,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
             screen_area_puts(ge->map, str);
             sprintf(str, "  |     %c     |", obj);
             screen_area_puts(ge->map, str);
+            sprintf(str, "  | %s   |", space_get_gdesc(space_act, 0));
+            screen_area_puts(ge->map, str);
+            sprintf(str, "  | %s   |", space_get_gdesc(space_act, 1));
+            screen_area_puts(ge->map, str);
+            sprintf(str, "  | %s   |", space_get_gdesc(space_act, 2));
+            screen_area_puts(ge->map, str);
+            //gen objects
             sprintf(str, "  +-----------+");
             screen_area_puts(ge->map, str);
         }
