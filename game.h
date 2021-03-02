@@ -17,12 +17,14 @@
 #include "game_reader.h"
 #include "player.h"
 #include "object.h"
+#include "die.h"
 
 typedef struct _Game{
   Player* player;
   Object* objects[MAX_OBJECTS];
   Space* spaces[MAX_SPACES + 1];
   T_Command last_cmd;
+  Dice *dice;
 } Game;
 
 /**
@@ -129,5 +131,13 @@ T_Command game_get_last_command(Game* game);
  * @return STATUS ERROR = 0, OK = 1
  */
 STATUS game_load_game(Game* game, char* filename);
+
+/**
+ * @brief get number of objects
+ * 
+ * @param game pointer to game
+ * @return number or if ERROR -1
+ */
+int game_get_number_object(Game *game);
 
 #endif
