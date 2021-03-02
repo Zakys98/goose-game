@@ -35,7 +35,7 @@ Dice *dice_create(int minimum, int maximum) {
 
     d->minimum = minimum;
     d->maximum = maximum;
-    d->last_roll = 0;
+    d->last_roll = -1;
     srand(time(NULL));
     return d;
 }
