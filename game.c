@@ -212,6 +212,19 @@ Object* game_get_object(Game* game, Id id) {
     return NULL;
 }
 
+Object* game_get_object_by_name(Game* game, char* name) {
+    if (name == NULL) {
+        return NULL;
+    }
+
+    for (int i = 0; i < MAX_OBJECTS && game->objects[i] != NULL; i++) {
+        if (name == object_get_name(game->objects[i])) {
+            return game->objects[i];
+        }
+    }
+    return NULL;
+}
+
 STATUS game_set_player_location(Game* game, Id s) {
     return player_set_location(game->player, s);
 }
@@ -333,20 +346,24 @@ void game_callback_back(Game* game) {
 }
 
 void game_callback_take(Game* game) {
-    (void)game;
-    /*Space* location = game_get_space(game, game_get_player_location(game));
+	char input[20];
+    Space* location = game_get_space(game, game_get_player_location(game));
 
-    Object* space_obj = space_get_object(location);
-    if (space_obj == NULL)
-        return;
-
+	if (space_objects_count(location) == 0)
+		return;
+    
     Object* player_obj = player_get_object(game->player);
-    space_set_object(location, NULL);
-    if (player_obj != NULL) {
-        game_callback_drop(game);
-    }
-    player_set_object(game->player, space_obj);
-    object_set_location(space_obj, NO_ID);*/
+	if (scanf("%s", input) > 0) {
+		if (player_obj != NULL) {
+			game_callback_drop(game);
+		}
+		Object* obj = game_get_object_by_name(game, input);
+		if (obj == NULL)
+			return;
+
+		space_remove_object(location, object_get_id(obj));
+		player_set_object(game->player, obj);
+	}
 }
 
 void game_callback_drop(Game* game) {
