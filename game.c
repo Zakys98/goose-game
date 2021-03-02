@@ -149,6 +149,7 @@ STATUS game_create(Game* game) {
     game->player = player_create(NO_ID);
     player_set_location(game->player, NO_ID);
     game->last_cmd = NO_CMD;
+    game->dice = dice_create(1, 6);
 
     return OK;
 }
@@ -271,7 +272,8 @@ void game_callback_exit(Game* game) {
         
 		free(game->objects[i]);
     }
-    free(game->player);
+    player_destroy(&game->player);
+    dice_destroy(&game->dice);
 }
 
 void game_callback_next(Game* game) {
@@ -348,7 +350,7 @@ void game_callback_drop(Game* game) {
 }
 
 void game_callback_roll(Game* game) {
-    (void)game;
+    dice_roll(game->dice);
 }
 
 void game_callback_left(Game* game) {

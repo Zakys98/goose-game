@@ -17,12 +17,14 @@
 #include "game_reader.h"
 #include "player.h"
 #include "object.h"
+#include "die.h"
 
 typedef struct _Game{
   Player* player;
   Object* objects[MAX_OBJECTS];
   Space* spaces[MAX_SPACES + 1];
   T_Command last_cmd;
+  Dice *dice;
 } Game;
 
 /**

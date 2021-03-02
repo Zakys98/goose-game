@@ -114,10 +114,10 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     sprintf(str, " Player object: %s:%ld", object_get_name(game->player->obj), object_get_location(game->player->obj));
     screen_area_puts(ge->descript, str);
 
-    // if ((obj_loc = game_get_object_location(game)) != NO_ID) {
-    //     sprintf(str, "  Object location:%d", (int)obj_loc);
-    //     screen_area_puts(ge->descript, str);
-    // }
+    sprintf(str, " ");
+    screen_area_puts(ge->descript, str);
+    sprintf(str, " Last die value: %d", dice_get_last_roll(game->dice));
+    screen_area_puts(ge->descript, str);
 
     /* Paint in the banner area */
     screen_area_puts(ge->banner, " The game of the Goose ");
