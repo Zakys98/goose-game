@@ -186,18 +186,29 @@ Id game_get_space_id_at(Game* game, int position) {
 }
 
 Space* game_get_space(Game* game, Id id) {
-    int i = 0;
-
     if (id == NO_ID) {
         return NULL;
     }
 
-    for (i = 0; i < MAX_SPACES && game->spaces[i] != NULL; i++) {
+    for (int i = 0; i < MAX_SPACES && game->spaces[i] != NULL; i++) {
         if (id == space_get_id(game->spaces[i])) {
             return game->spaces[i];
         }
     }
 
+    return NULL;
+}
+
+Object* game_get_object(Game* game, Id id) {
+    if (id == NO_ID) {
+        return NULL;
+    }
+
+    for (int i = 0; i < MAX_OBJECTS && game->objects[i] != NULL; i++) {
+        if (id == object_get_id(game->objects[i])) {
+            return game->objects[i];
+        }
+    }
     return NULL;
 }
 

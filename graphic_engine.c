@@ -56,12 +56,31 @@ void graphic_engine_destroy(Graphic_engine *ge) {
     free(ge);
 }
 
+char* graphic_engine_get_space_objects(Game* g, Space* s) {
+	if (space_objects_count(s) == 0)
+		return NULL;
+
+	Id* obj_ids = space_get_objects(s);
+	char* res = (char*)malloc(20);
+	char* object_names = res;
+	Object* obj = game_get_object(g, obj_ids[0]);
+	
+	object_names += sprintf(object_names, "%s", object_get_name(obj));	
+
+	for (int i = 1; i < space_objects_count(s); i++) {
+		obj = game_get_object(g, obj_ids[i]);
+		object_names += sprintf(object_names, ", %s", object_get_name(obj));	
+	}
+	return res;
+}
+
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID;
     Space *space_act = NULL;
     char str[255];
     T_Command last_cmd = UNKNOWN;
     extern char *cmd_to_str[N_CMD][N_CMDT];
+	char* objects = NULL;
 
     /* Paint the in the map area */
     screen_area_clear(ge->map);
@@ -69,6 +88,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         space_act = game_get_space(game, id_act);
         id_back = space_get_north(space_act);
         id_next = space_get_south(space_act);
+		objects = graphic_engine_get_space_objects(game, space_act);
 
         if (id_back != NO_ID) {
             sprintf(str, "  |         %2d|", (int)id_back);
@@ -91,7 +111,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
             screen_area_puts(ge->map, str);
             sprintf(str, "  | %s   |", space_get_gdesc(space_act, 2));
             screen_area_puts(ge->map, str);
-            //gen objects
+            if (objects != NULL) {
+				int n = 10 - strlen(objects);
+				printf("%*c", n, ' ');
+				sprintf(str, "  | %s%*c|", objects, n, ' ');
+				screen_area_puts(ge->map, str);
+			}
             sprintf(str, "  +-----------+");
             screen_area_puts(ge->map, str);
         }

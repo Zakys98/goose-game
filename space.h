@@ -36,6 +36,10 @@ Id space_get_west(Space* space);
 STATUS space_add_object(Space* space, Id id);
 STATUS space_remove_object(Space* space, Id id);
 char* space_get_gdesc(Space* space, int line);
+Id* space_get_objects(Space* s);
+int space_objects_count(Space* s);
 STATUS space_print(Space* space);
+
+
 
 #endif
