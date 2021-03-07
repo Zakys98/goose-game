@@ -12,6 +12,7 @@
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <string.h> 
+#include <stdbool.h>
 #include "space.h"
 #include "space_test.h"
 #include "test.h"
@@ -30,13 +31,13 @@
 int main(int argc, char** argv) {
 
   int test = 0;
-  int all = 1;
+  bool all = true;
 
   if (argc < 2) {
     printf("Running all test for module Space:\n");
   } else {
     test = atoi(argv[1]);
-    all = 0;
+    all = false;
     printf("Running test %d:\t", test);
     if (test < 1 && test > MAX_TESTS) {
       printf("Error: unknown test %d\t", test);
@@ -76,7 +77,7 @@ int main(int argc, char** argv) {
 
   PRINT_PASSED_PERCENTAGE;
 
-  return 1;
+  return 0;
 }
 
 void test1_space_create() {
@@ -154,12 +155,12 @@ void test2_space_set_west() {
 void test1_space_set_object() {
   Space *s;
   s = space_create(1);
-  PRINT_TEST_RESULT(space_set_object(s,TRUE) == OK);
+  PRINT_TEST_RESULT(space_add_object(s,1) == OK);
 }
 
 void test2_space_set_object() {
   Space *s = NULL;
-  PRINT_TEST_RESULT(space_set_object(s,TRUE) == ERROR);
+  PRINT_TEST_RESULT(space_add_object(s, 1) == ERROR);
 }
 
 void test1_space_get_name() {
@@ -179,21 +180,21 @@ void test2_space_get_name() {
 void test1_space_get_object() {
   Space *s;
   s = space_create(1);
-  PRINT_TEST_RESULT(space_get_object(s) == FALSE);
+  PRINT_TEST_RESULT(space_get_objects(s) == FALSE);
      
 }
 
 void test2_space_get_object() {
   Space *s;
   s = space_create(1);
-  space_set_object(s,TRUE);
-  PRINT_TEST_RESULT(space_get_object(s) == TRUE);
+  space_add_object(s,1);
+  PRINT_TEST_RESULT(space_get_objects(s) != NULL);
      
 }
 
 void test3_space_get_object() {
   Space *s = NULL;
-  PRINT_TEST_RESULT(space_get_object(s) == FALSE);
+  PRINT_TEST_RESULT(space_get_objects(s) == NULL);
 }
 
 void test1_space_get_north() {

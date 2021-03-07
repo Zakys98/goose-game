@@ -183,7 +183,7 @@ char* space_get_gdesc(Space* space, int line){
 }
 
 Id* space_get_objects(Space* s) {
-	return set_get_elements(s->objects);
+	return s != NULL ? set_get_elements(s->objects) : NULL;
 }
 
 int space_objects_count(Space* s) {
