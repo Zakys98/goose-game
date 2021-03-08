@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "graphic_engine.h"
 
@@ -49,6 +50,8 @@ void game_loop_run(Game game, Graphic_engine *gengine);
  */
 void game_loop_cleanup(Game game, Graphic_engine *gengine);
 
+void game_init_from_arguments(Game *game, int argc, char **argv);
+
 int main(int argc, char *argv[]) {
     Game game;
     Graphic_engine *gengine;
@@ -59,6 +62,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (!game_loop_init(&game, &gengine, argv[1])) {
+        game_init_from_arguments(&game, argc, argv);
         game_loop_run(game, gengine);
         game_loop_cleanup(game, gengine);
     }
@@ -85,15 +89,24 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
 
 void game_loop_run(Game game, Graphic_engine *gengine) {
     T_Command command = NO_CMD;
+    STATUS s = ERROR;
 
     while ((command != EXIT) && !game_is_over(&game)) {
-        graphic_engine_paint_game(gengine, &game);
+        graphic_engine_paint_game(gengine, &game, s);
         command = get_user_input();
-        game_update(&game, command);
+        s = game_update(&game, command);
     }
 }
 
 void game_loop_cleanup(Game game, Graphic_engine *gengine) {
     game_destroy(&game);
     graphic_engine_destroy(gengine);
+}
+
+void game_init_from_arguments(Game *game, int argc, char **argv) {
+    for (int i = 2; i < argc; i += 2) {
+        if (strcmp(argv[i], "-l") == 0 && argc >= i) {
+            game->log = fopen(argv[i + 1], "w");
+        }
+    }
 }

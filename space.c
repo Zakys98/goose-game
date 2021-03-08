@@ -55,7 +55,7 @@ STATUS space_destroy(Space** space) {
     return ERROR;
   }
 
-  set_destroy((*space)->objects);
+  set_destroy(&(*space)->objects);
   free(*space);
   *space = NULL;
 

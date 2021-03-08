@@ -12,19 +12,22 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "command.h"
-#include "space.h"
-#include "game_reader.h"
-#include "player.h"
-#include "object.h"
-#include "die.h"
+#include <stdio.h>
 
-typedef struct _Game{
-  Player* player;
-  Object* objects[MAX_OBJECTS];
-  Space* spaces[MAX_SPACES + 1];
-  T_Command last_cmd;
-  Dice *dice;
+#include "command.h"
+#include "die.h"
+#include "game_reader.h"
+#include "object.h"
+#include "player.h"
+#include "space.h"
+
+typedef struct _Game {
+    Player* player;
+    Object* objects[MAX_OBJECTS];
+    Space* spaces[MAX_SPACES + 1];
+    T_Command last_cmd;
+    Dice* dice;
+    FILE* log;
 } Game;
 
 /**
@@ -68,14 +71,14 @@ STATUS game_destroy(Game* game);
  * @param game pointer to game
  * @return always returns false
  */
-BOOL   game_is_over(Game* game);
+BOOL game_is_over(Game* game);
 
 /**
  * @brief prints the current state of game
  * 
  * @param game pointer to game
  */
-void   game_print_data(Game* game);
+void game_print_data(Game* game);
 
 /**
  * @brief space getter by id
@@ -98,7 +101,7 @@ Space* game_get_space(Game* game, Id id);
  * @param game pointer to game
  * @return Id of the space player is currently at
  */
-Id    game_get_player_location(Game* game);
+Id game_get_player_location(Game* game);
 
 /**
  * @brief object location getter
@@ -113,7 +116,6 @@ Id    game_get_player_location(Game* game);
 
 Object* game_get_object(Game* game, Id id);
 
-
 /**
  * @brief last command getter
  * 
@@ -121,7 +123,6 @@ Object* game_get_object(Game* game, Id id);
  * @return last command
  */
 T_Command game_get_last_command(Game* game);
-
 
 /**
  * @brief loads spaces from a file, implemented in game_reader.c
@@ -138,6 +139,14 @@ STATUS game_load_game(Game* game, char* filename);
  * @param game pointer to game
  * @return number or if ERROR -1
  */
-int game_get_number_object(Game *game);
+int game_get_number_object(Game* game);
+
+/**
+ * @brief indicates if log file is set
+ * 
+ * @param game pointer to game
+ * @return returns true if log file is created returns false otherwise
+ */
+BOOL game_logfile_exist(Game* game);
 
 #endif

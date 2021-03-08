@@ -37,7 +37,7 @@ Graphic_engine *graphic_engine_create() {
     ge->descript = screen_area_init(50, 1, 29, 13);
     ge->banner = screen_area_init(28, 15, 23, 1);
     ge->help = screen_area_init(1, 16, 78, 2);
-    ge->feedback = screen_area_init(1, 19, 78, 3);
+    ge->feedback = screen_area_init(1, 20, 78, 2);
 
     return ge;
 }
@@ -71,10 +71,11 @@ char *graphic_engine_get_space_objects(Game *g, Space *s) {
         obj = game_get_object(g, obj_ids[i]);
         object_names += sprintf(object_names, ", %s", object_get_name(obj));
     }
+    free(obj_ids);
     return res;
 }
 
-void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
+void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
     Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID;
     Space *space_act = NULL;
     char str[255];
@@ -116,6 +117,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
                 printf("%*c", n, ' ');
                 sprintf(str, "  | %s%*c|", objects, n, ' ');
                 screen_area_puts(ge->map, str);
+                free(objects);
             }
             sprintf(str, "  +-----------+");
             screen_area_puts(ge->map, str);
@@ -146,7 +148,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
     /* Paint in the feedback area */
     last_cmd = game_get_last_command(game);
-    sprintf(str, " %s (%s)", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
+    sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
     screen_area_puts(ge->feedback, str);
 
     /* Dump to the terminal */
