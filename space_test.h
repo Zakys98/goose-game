@@ -1,10 +1,10 @@
 /** 
  * @brief It declares the tests for the space module
  * 
- * @file space_test_en.h
- * @author Profesores Pprog
- * @version 2.0 
- * @date 19-01-2016
+ * @file space_test.h
+ * @author Jiri Zak
+ * @version 1.0
+ * @date 07-03-2021
  * @copyright GNU Public License
  */
 

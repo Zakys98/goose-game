@@ -44,10 +44,10 @@ Set* set_create();
  * @author Eva Moresova
  * @date 01-03-2021 
  * 
- * @param s pointer to set
+ * @param s double pointer to set
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS 	set_destroy(Set* s);
+STATUS 	set_destroy(Set** s);
 
 /**
  * @brief adds new element with specified id to the set. If the element

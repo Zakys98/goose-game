@@ -104,18 +104,19 @@ Set* set_create() {
 	return s;
 }
 
-STATUS set_destroy(Set* s) {
-	if (s == NULL) 
+STATUS set_destroy(Set** s) {
+	if (*s == NULL) 
 		return OK;
 
-	if (!set_is_empty(s)) {
-		for(int i = 0; i < set_get_size(s); i++) {
-			Vector* tmp = s->head;
-			s->head = s->head->next;
+	if (!set_is_empty(*s)) {
+		for(int i = 0; i < set_get_size(*s); i++) {
+			Vector* tmp = (*s)->head;
+			(*s)->head = (*s)->head->next;
 			free(tmp);
 		}
 	}
-	free(s);
+	free(*s);
+	*s = NULL;
 	return OK;
 }
 
