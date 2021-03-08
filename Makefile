@@ -22,4 +22,4 @@ space_test: space_test.o space.o set.o
 	$(cc) $(CFLAGS) -o space_test space_test.o space.o set.o
 
 clean:
-	rm *.o $(TARGET) set_test
+	rm *.o $(TARGET) set_test space_test
