@@ -150,6 +150,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
     last_cmd = game_get_last_command(game);
     sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
     screen_area_puts(ge->feedback, str);
+    if(game_logfile_exist(game))
+        fprintf(game->log, " %s (%s): %s\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
 
     /* Dump to the terminal */
     screen_paint();
