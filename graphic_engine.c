@@ -179,7 +179,7 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
     if (object_get_name(game->player->obj) != NULL) {
         sprintf(str, " ");
         screen_area_puts(ge->descript, str);
-        sprintf(str, " Player object: %s:%ld", object_get_name(game->player->obj), object_get_location(game->player->obj));
+        sprintf(str, " Player object: %s", object_get_name(game->player->obj));
         screen_area_puts(ge->descript, str);
     }
 
