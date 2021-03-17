@@ -83,6 +83,15 @@ void test_all() {
     PRINT_PASSED_PERCENTAGE;
 }
 
+/** 
+ * @brief Main function for SET unit tests. 
+ * 
+ * You may execute ALL or a SINGLE test
+ *   1.- No parameter -> ALL test are executed 
+ *   2.- A number means a particular test (the one identified by that number) 
+ *       is executed
+ *  
+ */
 int main(int argc, char **argv) {
     printf("Set test\n");
     printf("=========================\n");
