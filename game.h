@@ -16,7 +16,6 @@
 
 #include "command.h"
 #include "die.h"
-#include "game_reader.h"
 #include "object.h"
 #include "player.h"
 #include "space.h"

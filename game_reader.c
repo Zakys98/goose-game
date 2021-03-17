@@ -8,7 +8,7 @@
  * @copyright GNU Public License
  */
 
-#include "game_reader.h"
+#include "game.h"
 
 #include <string.h>
 #include <stdio.h>
