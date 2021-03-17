@@ -29,6 +29,8 @@ BOOL dice_not_exist(Dice *d) {
 }
 
 Dice *dice_create(int minimum, int maximum) {
+	if (maximum < minimum) return NULL;
+	
     Dice *d = malloc(sizeof(struct dice));
     if (dice_not_exist(d))
         return NULL;

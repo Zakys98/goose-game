@@ -11,12 +11,16 @@ $(TARGET) : $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test: set_test space_test
+test: set_test space_test die_test
 	./set_test
 	./space_test
+	./die_test
 
 set_test: set_test.o set.o
 	$(cc) $(CFLAGS) -o set_test set_test.o set.o
+
+die_test: die_test.o die.o
+	$(cc) $(CFLAGS) -o die_test die_test.o die.o
 	
 space_test: space_test.o space.o set.o
 	$(cc) $(CFLAGS) -o space_test space_test.o space.o set.o
