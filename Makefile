@@ -2,6 +2,7 @@ cc=gcc
 CFLAGS=-std=c11 -pedantic -Wextra -g -Wall
 TARGET=goose
 OBJS := command.o die.o game_loop.o game_reader.o game.o graphic_engine.o object.o player.o screen.o set.o space.o
+TESTS=set_test space_test die_test
 
 all: $(TARGET)
 
@@ -11,7 +12,7 @@ $(TARGET) : $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test: set_test space_test die_test
+test: $(TESTS)
 	./set_test
 	./space_test
 	./die_test
@@ -26,4 +27,4 @@ space_test: space_test.o space.o set.o
 	$(cc) $(CFLAGS) -o space_test space_test.o space.o set.o
 
 clean:
-	rm *.o $(TARGET) set_test space_test
+	rm *.o $(TARGET) $(TESTS)
