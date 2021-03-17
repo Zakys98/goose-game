@@ -3,8 +3,8 @@
  * 
  * @file game_reader.c
  * @author Eva Moresova
- * @version 1.0 
- * @date 10-02-2021 
+ * @version 2.0 
+ * @date 08-03-2021 
  * @copyright GNU Public License
  */
 
@@ -21,16 +21,50 @@
  * @author Eva Moresova
  * @date 10-02-2021
  * 
- * @param game pointer to game, where we add space
+ * @param game pointer to game
  * @param space pointer to space, which is added to game
  * @return STATUS ERROR = 0, OK = 1
  */
 STATUS game_add_space(Game* game, Space* space);
+
+/**
+ * @brief add object to game
+ *
+ * @author Eva Moresova
+ * @date 08-03-2021
+ * 
+ * @param game pointer to game
+ * @param obj pointer to object, which is added to game
+ * @return STATUS ERROR = 0, OK = 1
+ */
 STATUS game_add_object(Game* game, Object* obj);
 
-STATUS game_load_spaces (Game* game, char* line);
-STATUS game_load_objects (Game* game, char* line);
+/**
+ * @brief load space string description, add it to game
+ *
+ * @author Eva Moresova
+ * @date 08-03-2021
+ * 
+ * @param game pointer to game
+ * @param line string with space description
+ * @return STATUS ERROR = 0, OK = 1
+ */
+STATUS game_load_space(Game* game, char* line);
 
+/**
+ * @brief load object string description, add it to game
+ *
+ * @author Eva Moresova
+ * @date 08-03-2021
+ * 
+ * @param game pointer to game
+ * @param line string with object description
+ * @return STATUS ERROR = 0, OK = 1
+ */
+STATUS game_load_object(Game* game, char* line);
+
+
+// Implementation
 STATUS game_load_game(Game* game, char* filename) {
     FILE* file = NULL;
     char line[WORD_SIZE] = "";
@@ -47,9 +81,9 @@ STATUS game_load_game(Game* game, char* filename) {
 
     while (fgets(line, WORD_SIZE, file)) {
         if (strncmp("#s:", line, 3) == 0) {
-			game_load_spaces(game, line);
+			game_load_space(game, line);
         } else if (strncmp("#o:", line, 3) == 0) {
-			game_load_objects(game, line);
+			game_load_object(game, line);
 		}
     }
 
@@ -62,7 +96,7 @@ STATUS game_load_game(Game* game, char* filename) {
     return status;
 }
 
-STATUS game_load_spaces(Game* game, char* line) {
+STATUS game_load_space(Game* game, char* line) {
 	char name[WORD_SIZE] = "";
     char* toks = NULL;
 	char first[8], second[8], third[8];
@@ -110,7 +144,7 @@ STATUS game_load_spaces(Game* game, char* line) {
 	return OK;
 }
 
-STATUS game_load_objects(Game* game, char* line) {
+STATUS game_load_object(Game* game, char* line) {
 	char* toks = NULL;
 	char name[WORD_SIZE] = "";
     Id id = NO_ID;

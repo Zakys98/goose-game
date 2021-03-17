@@ -4,8 +4,8 @@
  * 
  * @file game.c
  * @author Eva Moresova
- * @version 1.0 
- * @date 17-02-2021 
+ * @version 2.0 
+ * @date 01-03-2021 
  * @copyright GNU Public License
  */
 
@@ -58,7 +58,7 @@ STATUS game_callback_drop(Game* game);
  * @brief callback for roll command, player is able to move to left if possible.
  *
  * @author Jiri Zak
- * @date 1-03-2021
+ * @date 01-03-2021
  * 
  * @param game pointer to game
  */
@@ -68,7 +68,7 @@ STATUS game_callback_roll(Game* game);
  * @brief callback for left command, player is able to move to left if possible.
  *
  * @author Jiri Zak
- * @date 1-03-2021
+ * @date 01-03-2021
  * 
  * @param game pointer to game
  */
@@ -78,7 +78,7 @@ STATUS game_callback_left(Game* game);
  * @brief callback for left command, player is able to move to left if possible.
  *
  * @author Jiri Zak
- * @date 1-03-2021
+ * @date 01-03-2021
  * 
  * @param game pointer to game
  */
@@ -124,18 +124,6 @@ Id game_get_space_id_at(Game* game, int position);
 STATUS game_set_player_location(Game* game, Id id);
 
 /**
- * @brief object location setter 
- *
- * @author Eva Moresova
- * @date 12-02-2021
- * 
- * @param game pointer to game
- * @param id id of object
- * @return STATUS ERROR = 0, OK = 1
- */
-//STATUS game_set_object_location(Game* game, Id id);
-
-/**
    Game interface implementation
 */
 
@@ -163,8 +151,6 @@ STATUS game_create_from_file(Game* game, char* filename) {
         return ERROR;
 
     game_set_player_location(game, game_get_space_id_at(game, 0));
-    //game_set_object_location(game, game_get_space_id_at(game, 0));
-
     return OK;
 }
 
@@ -255,7 +241,6 @@ void game_print_data(Game* game) {
         space_print(game->spaces[i]);
     }
 
-    //printf("=> Object location: %ld\n", game_get_object_location(game));
     printf("=> Player location: %ld\n", game_get_player_location(game));
     printf("prompt:> ");
 }

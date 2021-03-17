@@ -86,6 +86,16 @@ STATUS 	set_delete(Set* s, Id id);
  */
 void set_print(Set* s, FILE* fp);
 
+
+/**
+ * @brief returns array of Ids of elements inside the set
+ *
+ * @author Eva Moresova
+ * @date 08-03-2021 
+ * 
+ * @param s pointer to set
+ * @return array of Id
+ */
 Id* set_get_elements(Set* s);
 
 #endif

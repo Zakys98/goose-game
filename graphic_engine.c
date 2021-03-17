@@ -11,16 +11,33 @@ struct _Graphic_engine {
     Area *map, *descript, *banner, *help, *feedback;
 };
 
+//Private functions
+
 /**
  * @brief Paint important things to description area
  *
  * @author Jiri Zak
- * @date 2-03-2021
+ * @date 02-03-2021
  * 
  * @param ge pointer to graphic_engine
  * @param game pointer to game
  */
 void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game);
+
+/**
+ * @brief Get string of all object names in a space
+ *
+ * @author Eva Moresova
+ * @date 14-03-2021
+ * 
+ * @param g pointer to game
+ * @param s pointer to space
+ * @return string with names of all objects in the specified space
+ */
+char *graphic_engine_get_space_objects(Game *g, Space *s);
+
+
+//Implementation
 
 Graphic_engine *graphic_engine_create() {
     static Graphic_engine *ge = NULL;
