@@ -35,7 +35,7 @@ Link* link_create(Id);
  * @param l double pointer to Link
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS link_destroy(Link **);
+STATUS link_destroy(Link**);
 
 /**
  * @brief Link name setter 
@@ -128,5 +128,15 @@ STATUS link_set_opened(Link* l, BOOL opened);
  * @return TRUE or FALSE if ERROR 
  */
 BOOL link_get_opened(Link* l);
+
+/**
+ * @brief Link print
+ *
+ * @author Jiri Zak
+ * @date 22-03-2021
+ * 
+ * @param l pointer to Link
+ */
+void link_print(Link* l);
 
 #endif
