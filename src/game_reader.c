@@ -16,30 +16,6 @@
 
 // Private functions
 /**
- * @brief add space to game
- *
- * @author Eva Moresova
- * @date 10-02-2021
- * 
- * @param game pointer to game
- * @param space pointer to space, which is added to game
- * @return STATUS ERROR = 0, OK = 1
- */
-STATUS game_add_space(Game* game, Space* space);
-
-/**
- * @brief add object to game
- *
- * @author Eva Moresova
- * @date 08-03-2021
- * 
- * @param game pointer to game
- * @param obj pointer to object, which is added to game
- * @return STATUS ERROR = 0, OK = 1
- */
-STATUS game_add_object(Game* game, Object* obj);
-
-/**
  * @brief load space string description, add it to game
  *
  * @author Eva Moresova
@@ -162,38 +138,4 @@ STATUS game_load_object(Game* game, char* line) {
 	object_set_location(obj, space);
 	
 	return game_add_object(game, obj);
-}
-
-STATUS game_add_space(Game* game, Space* space) {
-    int i = 0;
-
-    if (space == NULL) {
-        return ERROR;
-    }
-
-    while ((i < MAX_SPACES) && (game->spaces[i] != NULL)) {
-        i++;
-    }
-
-    if (i >= MAX_SPACES) {
-        return ERROR;
-    }
-
-    game->spaces[i] = space;
-
-    return OK;
-}
-
-STATUS game_add_object(Game* game, Object* obj) {
-
-	Space* space = game_get_space(game, object_get_location(obj));
-	space_add_object(space, object_get_id(obj));
-    
-    for (int i=0; i < MAX_OBJECTS; i++) {
-		if (game->objects[i] == NULL) {
-			game->objects[i] = obj;
-			return OK;
-		}
-	}
-	return ERROR;
 }

@@ -15,6 +15,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct _Game {
+    Player* player;
+    Object* objects[MAX_OBJECTS];
+    Space* spaces[MAX_SPACES + 1];
+    T_Command last_cmd;
+    Dice* dice;
+    FILE* log;
+};
+
 #define N_CALLBACK 9
 
 /**
@@ -127,6 +136,13 @@ STATUS game_set_player_location(Game* game, Id id);
    Game interface implementation
 */
 
+Game* game_init(){
+    Game *g = malloc(sizeof(Game));
+    if(g == NULL)
+        return NULL;
+    return g;
+}
+
 STATUS game_create(Game* game) {
     for (int i = 0; i < MAX_SPACES; i++) {
         game->spaces[i] = NULL;
@@ -201,6 +217,21 @@ Object* game_get_object(Game* game, Id id) {
     return NULL;
 }
 
+Object* game_get_object_at_position(Game* game, int id){
+    if(game == NULL || id < 0 || id >= MAX_OBJECTS)
+        return NULL;
+
+    return game->objects[id];
+}
+
+Player* game_get_player(Game* game){
+    return game != NULL ? game->player : NULL;
+}
+
+Dice* game_get_dice(Game* game){
+    return game != NULL ? game->dice : NULL;
+}
+
 Object* game_get_object_by_name(Game* game, char* name) {
     if (name == NULL) {
         return NULL;
@@ -231,6 +262,40 @@ T_Command game_get_last_command(Game* game) {
     return game->last_cmd;
 }
 
+STATUS game_add_space(Game* game, Space* space) {
+    int i = 0;
+
+    if (space == NULL) {
+        return ERROR;
+    }
+
+    while ((i < MAX_SPACES) && (game->spaces[i] != NULL)) {
+        i++;
+    }
+
+    if (i >= MAX_SPACES) {
+        return ERROR;
+    }
+
+    game->spaces[i] = space;
+
+    return OK;
+}
+
+STATUS game_add_object(Game* game, Object* obj) {
+
+	Space* space = game_get_space(game, object_get_location(obj));
+	space_add_object(space, object_get_id(obj));
+    
+    for (int i=0; i < MAX_OBJECTS; i++) {
+		if (game->objects[i] == NULL) {
+			game->objects[i] = obj;
+			return OK;
+		}
+	}
+	return ERROR;
+}
+
 void game_print_data(Game* game) {
     int i = 0;
 
@@ -253,6 +318,16 @@ int game_get_number_object(Game *game){
         counter++;
     }
     return counter;
+}
+
+void game_open_log_file(Game *game, char *filename){
+    if(game == NULL || filename == NULL)
+        return;
+    game->log = fopen(filename, "w");
+}
+
+FILE* game_get_log_file(Game* game){
+    return game != NULL ? game->log : NULL;
 }
 
 BOOL game_logfile_exist(Game* game){

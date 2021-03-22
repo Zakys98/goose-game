@@ -37,7 +37,7 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name);
  * @param game inittialized game
  * @param gengine pointer to initialized game engine
  */
-void game_loop_run(Game game, Graphic_engine *gengine);
+void game_loop_run(Game *game, Graphic_engine *gengine);
 
 /**
  * @brief clean(free) game and game engine
@@ -48,12 +48,14 @@ void game_loop_run(Game game, Graphic_engine *gengine);
  * @param game inittialized game
  * @param gengine pointer to initialized game engine
  */
-void game_loop_cleanup(Game game, Graphic_engine *gengine);
+void game_loop_cleanup(Game *game, Graphic_engine *gengine);
 
 void game_init_from_arguments(Game *game, int argc, char **argv);
 
 int main(int argc, char *argv[]) {
-    Game game;
+    Game *game = game_init();
+    if(game == NULL)
+        return 1;
     Graphic_engine *gengine;
 
     if (argc < 2) {
@@ -61,8 +63,8 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    if (!game_loop_init(&game, &gengine, argv[1])) {
-        game_init_from_arguments(&game, argc, argv);
+    if (!game_loop_init(game, &gengine, argv[1])) {
+        game_init_from_arguments(game, argc, argv);
         game_loop_run(game, gengine);
         game_loop_cleanup(game, gengine);
     }
@@ -73,8 +75,10 @@ int main(int argc, char *argv[]) {
 int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
     if (game_create_from_file(game, file_name) == ERROR) {
         fprintf(stderr, "Error while initializing game.\n");
-        player_destroy(&game->player);
-        dice_destroy(&game->dice);
+        Player *pl = game_get_player(game);
+        player_destroy(&pl);
+        Dice *d = game_get_dice(game);
+        dice_destroy(&d);
         return 1;
     }
 
@@ -87,26 +91,26 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
     return 0;
 }
 
-void game_loop_run(Game game, Graphic_engine *gengine) {
+void game_loop_run(Game *game, Graphic_engine *gengine) {
     T_Command command = NO_CMD;
     STATUS s = ERROR;
 
-    while ((command != EXIT) && !game_is_over(&game)) {
-        graphic_engine_paint_game(gengine, &game, s);
+    while ((command != EXIT) && !game_is_over(game)) {
+        graphic_engine_paint_game(gengine, game, s);
         command = get_user_input();
-        s = game_update(&game, command);
+        s = game_update(game, command);
     }
 }
 
-void game_loop_cleanup(Game game, Graphic_engine *gengine) {
-    game_destroy(&game);
+void game_loop_cleanup(Game *game, Graphic_engine *gengine) {
+    game_destroy(game);
     graphic_engine_destroy(gengine);
 }
 
 void game_init_from_arguments(Game *game, int argc, char **argv) {
     for (int i = 2; i < argc; i += 2) {
         if (strcmp(argv[i], "-l") == 0 && argc >= i) {
-            game->log = fopen(argv[i + 1], "w");
+            game_open_log_file(game, argv[i + 1]);
         }
     }
 }
