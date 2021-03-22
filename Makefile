@@ -32,4 +32,4 @@ space_test: $(OBJ_DIR)/space_test.o $(OBJ_DIR)/space.o $(OBJ_DIR)/set.o
 	$(cc) $(CFLAGS) -o space_test $(OBJ_DIR)/space_test.o $(OBJ_DIR)/space.o $(OBJ_DIR)/set.o
 
 clean:
-	rm $(OBJ_DIR)/*.o $(TARGET) $(TESTS)
+	rm -f $(OBJ_DIR)/*.o $(TARGET) $(TESTS)
