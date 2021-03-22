@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "graphic_engine.h"
+#include "../include/graphic_engine.h"
 
 // Prototypes
 /**

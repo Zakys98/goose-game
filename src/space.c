@@ -1,6 +1,6 @@
 
-#include "space.h"
-#include "set.h"
+#include "../include/space.h"
+#include "../include/set.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -8,12 +8,12 @@
  * @copyright GNU Public License
  */
 
-#include "set.h"
+#include "../include/set.h"
 
 #include <stdlib.h>
 
-#include "test.h"
-#include "types.h"
+#include "../include/test.h"
+#include "../include/types.h"
 
 void test_set_init() {
     Set *s = set_create();

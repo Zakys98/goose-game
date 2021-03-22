@@ -8,7 +8,7 @@
  * @copyright GNU Public License
  */
 
-#include "object.h"
+#include "../include/object.h"
 
 #include <stdio.h>
 #include <stdlib.h>

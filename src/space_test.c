@@ -8,15 +8,15 @@
  * @copyright GNU Public License
  */
 
-#include "space_test.h"
+#include "../include/space_test.h"
 
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "space.h"
-#include "test.h"
+#include "../include/space.h"
+#include "../include/test.h"
 
 #define MAX_TESTS 28
 

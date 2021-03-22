@@ -8,7 +8,7 @@
  * @copyright GNU Public License
  */
 
-#include "command.h"
+#include "../include/command.h"
 
 #include <stdio.h>
 #include <strings.h>

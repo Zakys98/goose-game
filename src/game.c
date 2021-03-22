@@ -9,7 +9,7 @@
  * @copyright GNU Public License
  */
 
-#include "game.h"
+#include "../include/game.h"
 
 #include <stdio.h>
 #include <stdlib.h>

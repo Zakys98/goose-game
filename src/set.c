@@ -8,7 +8,7 @@
  * @copyright GNU Public License
  */
 
-#include "set.h"
+#include "../include/set.h"
 
 #include <stdio.h>
 #include <stdlib.h>

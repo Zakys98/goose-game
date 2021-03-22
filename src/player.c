@@ -8,7 +8,7 @@
  * @copyright GNU Public License
  */
 
-#include "player.h"
+#include "../include/player.h"
 
 #include <stdio.h>
 #include <stdlib.h>

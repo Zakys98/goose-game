@@ -1,11 +1,11 @@
-#include "graphic_engine.h"
+#include "../include/graphic_engine.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "command.h"
-#include "screen.h"
+#include "../include/command.h"
+#include "../include/screen.h"
 
 struct _Graphic_engine {
     Area *map, *descript, *banner, *help, *feedback;

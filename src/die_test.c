@@ -11,9 +11,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "die.h"
-#include "test.h"
-#include "types.h"
+#include "../include/die.h"
+#include "../include/test.h"
+#include "../include/types.h"
 
 void test_die_create() {
     Dice* d = dice_create(1, 6);

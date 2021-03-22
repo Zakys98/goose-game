@@ -1,15 +1,20 @@
 cc=gcc
 CFLAGS=-std=c11 -pedantic -Wextra -g -Wall
 TARGET=goose
-OBJS := command.o die.o game_loop.o game_reader.o game.o graphic_engine.o object.o player.o screen.o set.o space.o
+SRC_DIR := src
+OBJ_DIR := obj
+DOC_DIR := doc
+OBJS := $(OBJ_DIR)/command.o $(OBJ_DIR)/die.o $(OBJ_DIR)/game_loop.o $(OBJ_DIR)/game_reader.o $(OBJ_DIR)/game.o $(OBJ_DIR)/graphic_engine.o $(OBJ_DIR)/object.o $(OBJ_DIR)/player.o $(OBJ_DIR)/screen.o $(OBJ_DIR)/set.o $(OBJ_DIR)/space.o
 TESTS=set_test space_test die_test
+
+.PHONY: all clean
 
 all: $(TARGET)
 
 $(TARGET) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 
-%.o: %.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 test: $(TESTS)
@@ -17,14 +22,14 @@ test: $(TESTS)
 	./space_test
 	./die_test
 
-set_test: set_test.o set.o
-	$(cc) $(CFLAGS) -o set_test set_test.o set.o
+set_test: $(OBJ_DIR)/set_test.o $(OBJ_DIR)/set.o
+	$(cc) $(CFLAGS) -o set_test $(OBJ_DIR)/set_test.o $(OBJ_DIR)/set.o
 
-die_test: die_test.o die.o
-	$(cc) $(CFLAGS) -o die_test die_test.o die.o
+die_test: $(OBJ_DIR)/die_test.o $(OBJ_DIR)/die.o
+	$(cc) $(CFLAGS) -o die_test $(OBJ_DIR)/die_test.o $(OBJ_DIR)/die.o
 	
-space_test: space_test.o space.o set.o
-	$(cc) $(CFLAGS) -o space_test space_test.o space.o set.o
+space_test: $(OBJ_DIR)/space_test.o $(OBJ_DIR)/space.o $(OBJ_DIR)/set.o
+	$(cc) $(CFLAGS) -o space_test $(OBJ_DIR)/space_test.o $(OBJ_DIR)/space.o $(OBJ_DIR)/set.o
 
 clean:
-	rm *.o $(TARGET) $(TESTS)
+	rm $(OBJ_DIR)/*.o $(TARGET) $(TESTS)
