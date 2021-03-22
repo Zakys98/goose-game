@@ -20,14 +20,17 @@
 #include "player.h"
 #include "space.h"
 
-typedef struct _Game {
-    Player* player;
-    Object* objects[MAX_OBJECTS];
-    Space* spaces[MAX_SPACES + 1];
-    T_Command last_cmd;
-    Dice* dice;
-    FILE* log;
-} Game;
+typedef struct _Game Game;
+
+/**
+ * @brief Game create
+ *
+ * @author Jiri Zak
+ * @date 22-03-2021
+ * 
+ * @return pointer to Game
+ */
+Game* game_init();
 
 /**
  * @brief inicializes the game, spaces, player and object position 
@@ -103,17 +106,96 @@ Space* game_get_space(Game* game, Id id);
 Id game_get_player_location(Game* game);
 
 /**
- * @brief object location getter
+ * @brief object getter with id
  *
  * @author Eva Moresova
  * @date 12-02-2021
  * 
  * @param game pointer to game
- * @return Id of the space object is placed at
+ * @param id id of object
+ * @return object with id or NULL
  */
-//Id     game_get_object_location(Game* game);
-
 Object* game_get_object(Game* game, Id id);
+
+/**
+ * @brief object getter at position
+ *
+ * @author Eva Moresova
+ * @date 12-02-2021
+ * 
+ * @param game pointer to game
+ * @param id position in game
+ * @return object with id or NULL
+ */
+Object* game_get_object_at_position(Game* game, int id);
+
+/**
+ * @brief player getter
+ *
+ * @author Eva Moresova
+ * @date 12-02-2021
+ * 
+ * @param game pointer to game
+ * @return player or NULL
+ */
+Player* game_get_player(Game* game);
+
+/**
+ * @brief dice getter
+ *
+ * @author Jiri Zak
+ * @date 22-03-2021
+ * 
+ * @param game pointer to game
+ * @return dice or NULL
+ */
+Dice* game_get_dice(Game* game);
+
+/**
+ * @brief open log file for output
+ *
+ * @author Jiri Zak
+ * @date 22-03-2021
+ * 
+ * @param game pointer to game
+ * @param filename name of the file
+ */
+void game_open_log_file(Game *game, char *filename);
+
+/**
+ * @brief log getter
+ *
+ * @author Jiri Zak
+ * @date 22-03-2021
+ * 
+ * @param game pointer to game
+ * @return FILE or NULL
+ */
+FILE* game_get_log_file(Game* game);
+
+/**
+ * @brief add space to game
+ *
+ * @author Eva Moresova
+ * @date 10-02-2021
+ * 
+ * @param game pointer to game
+ * @param space pointer to space, which is added to game
+ * @return STATUS ERROR = 0, OK = 1
+ */
+STATUS game_add_space(Game* game, Space* space);
+
+/**
+ * @brief add object to game
+ *
+ * @author Eva Moresova
+ * @date 08-03-2021
+ * 
+ * @param game pointer to game
+ * @param obj pointer to object, which is added to game
+ * @return STATUS ERROR = 0, OK = 1
+ */
+STATUS game_add_object(Game* game, Object* obj);
 
 /**
  * @brief last command getter

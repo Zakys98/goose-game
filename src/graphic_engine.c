@@ -168,7 +168,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
     sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
     screen_area_puts(ge->feedback, str);
     if(game_logfile_exist(game))
-        fprintf(game->log, " %s (%s): %s\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
+        fprintf(game_get_log_file(game), " %s (%s): %s\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
 
     /* Dump to the terminal */
     screen_paint();
@@ -185,7 +185,7 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
         memset(str, '\0', 255);
         for (int i = 0; i < game_get_number_object(game); i++) {
             char pom[30] = "";
-            sprintf(pom, " %s:%ld", object_get_name(game->objects[i]), object_get_location(game->objects[i]));
+            sprintf(pom, " %s:%ld", object_get_name(game_get_object_at_position(game, i)), object_get_location(game_get_object_at_position(game, i)));
             if (i + 1 != game_get_number_object(game))
                 strcat(pom, ",");
             strcat(str, pom);
@@ -193,15 +193,15 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->descript, str);
     }
 
-    if (object_get_name(game->player->obj) != NULL) {
+    if (object_get_name(game_get_player(game)->obj) != NULL) {
         sprintf(str, " ");
         screen_area_puts(ge->descript, str);
-        sprintf(str, " Player object: %s", object_get_name(game->player->obj));
+        sprintf(str, " Player object: %s", object_get_name(game_get_player(game)->obj));
         screen_area_puts(ge->descript, str);
     }
 
     sprintf(str, " ");
     screen_area_puts(ge->descript, str);
-    sprintf(str, " Last die value: %d", dice_get_last_roll(game->dice));
+    sprintf(str, " Last die value: %d", dice_get_last_roll(game_get_dice(game)));
     screen_area_puts(ge->descript, str);
 }
