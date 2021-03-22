@@ -193,12 +193,12 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->descript, str);
     }
 
-    if (object_get_name(game_get_player(game)->obj) != NULL) {
-        sprintf(str, " ");
-        screen_area_puts(ge->descript, str);
-        sprintf(str, " Player object: %s", object_get_name(game_get_player(game)->obj));
-        screen_area_puts(ge->descript, str);
-    }
+    // if (object_get_name(game_get_player(game)->obj) != NULL) {
+    //     sprintf(str, " ");
+    //     screen_area_puts(ge->descript, str);
+    //     sprintf(str, " Player object: %s", object_get_name(game_get_player(game)->obj));
+    //     screen_area_puts(ge->descript, str);
+    // }
 
     sprintf(str, " ");
     screen_area_puts(ge->descript, str);

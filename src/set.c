@@ -26,17 +26,6 @@ struct _Set {
 /** Private functions definitions */
 
 /**
- * @brief for testing if set is empty
- *
- * @author Eva Moresova
- * @date 01-03-2021 
- * 
- * @param s pointer to set
- * @return TRUE if empty, FALSE otherwise
- */
-BOOL set_is_empty(Set* s);
-
-/**
  * @brief for testing if element with specified id is in the set
  *
  * @author Eva Moresova
@@ -63,17 +52,6 @@ Vector* set_get_element_by_id(Set* s, Id id);
 
 
 /** Private functions implementation */
-
-BOOL set_is_empty(Set* s) {
-	if (s != NULL && set_get_size(s) == 0) {
-		return TRUE;
-	}
-	return FALSE;
-}
-
-BOOL set_element_exists(Set* s, Id id) {
-	return (set_get_element_by_id(s, id) != NULL);
-}
 
 Vector* set_get_element_by_id(Set* s, Id id) {
 	if (s == NULL)
@@ -118,6 +96,17 @@ STATUS set_destroy(Set** s) {
 	free(*s);
 	*s = NULL;
 	return OK;
+}
+
+BOOL set_is_empty(Set* s) {
+	if (s != NULL && set_get_size(s) == 0) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL set_element_exists(Set* s, Id id) {
+	return (set_get_element_by_id(s, id) != NULL);
 }
 
 STATUS set_add(Set* s, Id id) {
@@ -165,22 +154,24 @@ STATUS 	set_delete(Set* s, Id id) {
 	return ERROR;
 }
 
-void set_print(Set* s, FILE* fp) {
+int set_print(Set* s, FILE* fp) {
 	if (s == NULL || fp == NULL) 
-		return;
+		return -1;
 
+	int c = 0;
 	if (set_is_empty(s)) {
-		fprintf(fp, "Size 0: {}\n");
+		c += fprintf(fp, "Size 0: {}\n");
 	} else {
 		Vector* v = s->head;
-		fprintf(fp, "Size %d: {%ld", set_get_size(s), v->id);
+		c += fprintf(fp, "Size %d: {%ld", set_get_size(s), v->id);
 		v = v->next;
 		while (v != NULL) {
-			fprintf(fp, ", %ld", v->id);
+			c += fprintf(fp, ", %ld", v->id);
 			v = v->next;
 		}
-		fprintf(fp, "}\n");
+		c += fprintf(fp, "}\n");
 	}
+	return c;
 }
 
 Id* set_get_elements(Set* s) {

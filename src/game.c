@@ -151,7 +151,7 @@ STATUS game_create(Game* game) {
         game->objects[i] = NULL;
     }
     game->log = NULL;
-    game->player = player_create(NO_ID);
+    game->player = player_create(NO_ID, 1);
     player_set_location(game->player, NO_ID);
     game->last_cmd = NO_CMD;
     game->dice = dice_create(1, 6);
@@ -296,6 +296,13 @@ STATUS game_add_object(Game* game, Object* obj) {
 	return ERROR;
 }
 
+STATUS game_set_player(Game* game, Player* p) {
+	if (game == NULL || p == NULL) return ERROR;
+
+	game->player = p;
+	return OK;
+}
+
 void game_print_data(Game* game) {
     int i = 0;
 
@@ -414,8 +421,8 @@ STATUS game_callback_take(Game* game) {
 		return ERROR;
     
 	if (scanf("%s", input) > 0) {
-		if (player_get_object(game->player) != NULL) {
-			game_callback_drop(game);
+		if (player_inventory_full(game->player)) {
+			return ERROR;
 		}
 		Object* obj = game_get_object_by_name(game, input);
 		if (obj == NULL)
@@ -424,19 +431,25 @@ STATUS game_callback_take(Game* game) {
 		if (space_remove_object(location, object_get_id(obj)) == ERROR)
 			return ERROR;
 
-		player_set_object(game->player, obj);
+		player_add_object(game->player, obj);
 	}
     return OK;
 }
 
 STATUS game_callback_drop(Game* game) {
-    Space* s = game_get_space(game, game_get_player_location(game));
-    if (!object_exist(player_get_object(game->player)))
-        return ERROR;
+	char input[20];
+	if (scanf("%s", input) > 0) {
+		Object* obj = game_get_object_by_name(game, input);
+		if (obj == NULL)
+			return ERROR;
 
-    space_add_object(s, object_get_id(game->player->obj));
-    object_set_location(player_get_object(game->player), space_get_id(s));
-    game->player->obj = NULL;
+		Space* s = game_get_space(game, game_get_player_location(game));
+		if (!player_get_object(game->player, object_get_id(obj)))
+			return ERROR;
+
+		space_add_object(s, object_get_id(obj));
+		object_set_location(obj, space_get_id(s));
+	}
     return OK;
 }
 

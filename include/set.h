@@ -50,6 +50,17 @@ Set* set_create();
 STATUS 	set_destroy(Set** s);
 
 /**
+ * @brief for testing if set is empty
+ *
+ * @author Eva Moresova
+ * @date 01-03-2021 
+ * 
+ * @param s pointer to set
+ * @return TRUE if empty, FALSE otherwise
+ */
+BOOL set_is_empty(Set* s);
+
+/**
  * @brief adds new element with specified id to the set. If the element
  * is in the set already no changes are made.
  *
@@ -83,8 +94,9 @@ STATUS 	set_delete(Set* s, Id id);
  * 
  * @param s pointer to set
  * @param fp file pointer, set is printed to this file
+ * @return the number of printed characters or -1 in case of error
  */
-void set_print(Set* s, FILE* fp);
+int set_print(Set* s, FILE* fp);
 
 
 /**
