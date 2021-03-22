@@ -8,8 +8,8 @@
  * @copyright GNU Public License
  */
 
-#ifndef DIE_H
-#define DIE_H
+#ifndef LINK_H
+#define LINK_H
 
 #include "types.h"
 
