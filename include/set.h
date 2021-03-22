@@ -83,8 +83,9 @@ STATUS 	set_delete(Set* s, Id id);
  * 
  * @param s pointer to set
  * @param fp file pointer, set is printed to this file
+ * @return the number of printed characters or -1 in case of error
  */
-void set_print(Set* s, FILE* fp);
+int set_print(Set* s, FILE* fp);
 
 
 /**

@@ -14,6 +14,7 @@
 #include "object.h"
 #include "space.h"
 #include "types.h"
+#include "inventory.h"
 
 /**
  * Structure for Player
