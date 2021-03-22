@@ -44,22 +44,37 @@ void inventory_destroy(Inventory** i) {
 	*i = NULL;
 }
 
+BOOL inventory_isFull(Inventory* i) {
+	if (set_get_size(i->objects) == i->capacity) 
+		return TRUE;
+
+	return FALSE;
+}
+
+BOOL inventory_isEmpty(Inventory* i) {
+	
+	if (set_get_size(i->objects) == i->capacity) 
+		return TRUE;
+
+	return FALSE;
+}
+
 // STATUS inventory_set(Inventory* i, Object* o) {
 // 	if (i == NULL || o == NULL) return ERROR;
 
 // 	return OK;
 // }
 
-Object* inventory_get(Game* g, Inventory* i, Id id) {
+Object* inventory_get(Inventory* i, Id id) {
 	if(i == NULL) return NULL;
 
 	if (set_delete(i->objects, id) == ERROR) return NULL;
-	return game_get_object(g, id);
+	//return game_get_object(g, id);
+	return NULL;
 }
 
 STATUS inventory_add(Inventory* i, Object* o) {
-	if (i == NULL || o == NULL ||
-		set_get_size(i->objects) == i->capacity) 
+	if (i == NULL || o == NULL || inventory_isFull(i)) 
 		return ERROR;
 
 	return set_add(i->objects, object_get_id(o));

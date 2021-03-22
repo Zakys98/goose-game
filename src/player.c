@@ -14,19 +14,23 @@
 #include <stdlib.h>
 #include <string.h>
 
-Player *player_create(Id id) {
+Player *player_create(Id id, int cap) {
     Player *p = (Player *)malloc(sizeof(struct player));
-    if (p == NULL)
+    if (p == NULL) {
         return NULL;
+	}
+	p->inventory = inventory_create(cap);
+	if (p->inventory == NULL) return NULL;
     p->id = id;
 	p->location = NO_ID;
-	p->obj = NULL;
     return p;
 }
 
 STATUS player_destroy(Player **p) {
-    if (!player_exist(*p))
+    if (!player_exist(*p)) {
         return FALSE;
+	}
+	inventory_destroy(&(*p)->inventory);
     free(*p);
     *p = NULL;
     return OK;
@@ -69,17 +73,23 @@ Id player_get_location(Player *p){
     return p->location;
 }
 
-STATUS player_set_object(Player *p, Object *o) {
+STATUS player_add_object(Player *p, Object *o) {
     if (!player_exist(p) || !object_exist(o))
         return ERROR;
-    p->obj = o;
+    inventory_add(p->inventory, o);
     return OK;
 }
 
-Object* player_get_object(Player *p) {
+Object* player_get_object(Player *p, Id id) {
     if (!player_exist(p))
         return NULL;
-    return p->obj;
+    return inventory_get(p->inventory, id);
+}
+
+BOOL player_inventory_full(Player* p) {
+	if (p == NULL) return TRUE;
+
+	return inventory_isFull(p->inventory);
 }
 
 void player_print(Player *p) {

@@ -198,6 +198,19 @@ STATUS game_add_space(Game* game, Space* space);
 STATUS game_add_object(Game* game, Object* obj);
 
 /**
+ * @brief set player
+ *
+ * @author Eva Moresova
+ * @date 22-03-2021
+ * 
+ * @param game pointer to game
+ * @param p pointer to player
+ * @return STATUS ERROR = 0, OK = 1
+ */
+STATUS game_set_player(Game* game, Player* p);
+
+
+/**
  * @brief last command getter
  * 
  * @param game pointer to game

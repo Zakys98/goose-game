@@ -13,7 +13,6 @@
 
 #include "object.h"
 #include "set.h"
-#include "game.h"
 
 typedef struct _Inventory Inventory;
 
@@ -39,9 +38,9 @@ Inventory* inventory_create(int);
  */
 void inventory_destroy(Inventory**);
 
-
+BOOL inventory_isFull(Inventory*);
 STATUS inventory_set(Inventory*, Object*);
-Object* inventory_get(Game*, Inventory*, Id);
+Object* inventory_get(Inventory*, Id);
 STATUS inventory_add(Inventory*, Object*);
 
 /**

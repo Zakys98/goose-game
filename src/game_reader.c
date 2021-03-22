@@ -39,6 +39,18 @@ STATUS game_load_space(Game* game, char* line);
  */
 STATUS game_load_object(Game* game, char* line);
 
+/**
+ * @brief load player string description, add it to game
+ *
+ * @author Eva Moresova
+ * @date 22-03-2021
+ * 
+ * @param game pointer to game
+ * @param line string with player description
+ * @return STATUS ERROR = 0, OK = 1
+ */
+STATUS game_load_player(Game* game, char* line);
+
 
 // Implementation
 STATUS game_load_game(Game* game, char* filename) {
@@ -60,6 +72,8 @@ STATUS game_load_game(Game* game, char* filename) {
 			game_load_space(game, line);
         } else if (strncmp("#o:", line, 3) == 0) {
 			game_load_object(game, line);
+		} else if (strncmp("#p:", line, 3) == 0) {
+			game_load_player(game, line);
 		}
     }
 
@@ -138,4 +152,27 @@ STATUS game_load_object(Game* game, char* line) {
 	object_set_location(obj, space);
 	
 	return game_add_object(game, obj);
+}
+
+STATUS game_load_player(Game* game, char* line) {
+	char* toks = NULL;
+	char name[WORD_SIZE] = "";
+    Id id = NO_ID;
+	Id space = NO_ID;
+	int cap = 0;
+
+	toks = strtok(line + 3, "|");
+	id = atol(toks);
+	toks = strtok(NULL, "|");
+	strcpy(name, toks);
+	toks = strtok(NULL, "|");
+	space = atol(toks);
+	toks = strtok(NULL, "|");
+	cap = atoi(toks);
+
+	Player* p = player_create(id, cap);
+	player_set_name(p, name);
+	player_set_location(p, space);
+
+	return game_set_player(game, p);
 }

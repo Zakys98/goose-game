@@ -27,19 +27,20 @@ typedef struct player {
     Id id;
     char name[WORD_SIZE + 1];
     Id location;
-    Object *obj;
+    Inventory* inventory;
 } Player;
 
 /**
  * @brief Player create
  *
  * @author Jiri Zak
- * @date 12-02-2021
+ * @date 22-03-2021
  * 
  * @param id id of player
+ * @param cap capacity of players backpack (inventory)
  * @return pointer to Player
  */
-Player*     player_create(Id);
+Player*     player_create(Id, int);
 
 /**
  * @brief Player destroy
@@ -121,7 +122,7 @@ STATUS      player_set_location(Player *, Id);
 Id      	player_get_location(Player *);
 
 /**
- * @brief Player object setter 
+ * @brief Add object to players inventory
  *
  * @author Jiri Zak
  * @date 12-02-2021
@@ -130,7 +131,7 @@ Id      	player_get_location(Player *);
  * @param o pointer to Object
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS      player_set_object(Player *, Object *);
+STATUS      player_add_object(Player *, Object *);
 
 /**
  * @brief Player object getter 
@@ -141,7 +142,18 @@ STATUS      player_set_object(Player *, Object *);
  * @param p pointer to Player
  * @return pointer to object or NULL if ERROR 
  */
-Object*     player_get_object(Player *);
+Object*     player_get_object(Player *, Id);
+
+/**
+ * @brief Check if players inventory is full 
+ *
+ * @author Eva Moresova
+ * @date 22-03-2021
+ * 
+ * @param p pointer to Player
+ * @return TRUE if the inventory is full, FALSE otherwise
+ */
+BOOL player_inventory_full(Player*);
 
 /**
  * @brief Player print
