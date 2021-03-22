@@ -12,7 +12,6 @@
 #define PLAYER_H
 
 #include "object.h"
-#include "space.h"
 #include "types.h"
 #include "inventory.h"
 
