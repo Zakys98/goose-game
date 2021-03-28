@@ -51,6 +51,18 @@ STATUS game_load_object(Game* game, char* line);
  */
 STATUS game_load_player(Game* game, char* line);
 
+/**
+ * @brief load link string description, add it to game
+ *
+ * @author Jiri Zak
+ * @date 22-03-2021
+ * 
+ * @param game pointer to game
+ * @param line string with link description
+ * @return STATUS ERROR = 0, OK = 1
+ */
+STATUS game_load_links(Game* game, char* line);
+
 
 // Implementation
 STATUS game_load_game(Game* game, char* filename) {
@@ -74,6 +86,8 @@ STATUS game_load_game(Game* game, char* filename) {
 			game_load_object(game, line);
 		} else if (strncmp("#p:", line, 3) == 0) {
 			game_load_player(game, line);
+		} else if (strncmp("#l:", line, 3) == 0) {
+			game_load_links(game, line);
 		}
     }
 
@@ -175,4 +189,9 @@ STATUS game_load_player(Game* game, char* line) {
 	player_set_location(p, space);
 
 	return game_set_player(game, p);
+}
+
+STATUS game_load_links(Game* game, char* line){
+
+	return OK;
 }
