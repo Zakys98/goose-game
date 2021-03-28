@@ -151,8 +151,6 @@ STATUS game_create(Game* game) {
         game->objects[i] = NULL;
     }
     game->log = NULL;
-    game->player = player_create(NO_ID, 1);
-    player_set_location(game->player, NO_ID);
     game->last_cmd = NO_CMD;
     game->dice = dice_create(1, 6);
 

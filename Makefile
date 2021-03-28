@@ -4,7 +4,7 @@ TARGET=goose
 SRC_DIR := src
 OBJ_DIR := obj
 DOC_DIR := doc
-OBJS := $(OBJ_DIR)/command.o $(OBJ_DIR)/die.o $(OBJ_DIR)/game_loop.o $(OBJ_DIR)/game_reader.o $(OBJ_DIR)/game.o $(OBJ_DIR)/graphic_engine.o $(OBJ_DIR)/object.o $(OBJ_DIR)/player.o $(OBJ_DIR)/screen.o $(OBJ_DIR)/set.o $(OBJ_DIR)/space.o $(OBJ_DIR)/inventory.o
+OBJS := $(OBJ_DIR)/command.o $(OBJ_DIR)/die.o $(OBJ_DIR)/game_loop.o $(OBJ_DIR)/game_reader.o $(OBJ_DIR)/game.o $(OBJ_DIR)/graphic_engine.o $(OBJ_DIR)/object.o $(OBJ_DIR)/player.o $(OBJ_DIR)/screen.o $(OBJ_DIR)/set.o $(OBJ_DIR)/space.o $(OBJ_DIR)/inventory.o $(OBJ_DIR)/link.o
 TESTS=set_test space_test die_test
 
 .PHONY: all clean
@@ -14,7 +14,7 @@ all: $(TARGET)
 $(TARGET) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 test: $(TESTS)
@@ -32,4 +32,4 @@ space_test: $(OBJ_DIR)/space_test.o $(OBJ_DIR)/space.o $(OBJ_DIR)/set.o
 	$(cc) $(CFLAGS) -o space_test $(OBJ_DIR)/space_test.o $(OBJ_DIR)/space.o $(OBJ_DIR)/set.o
 
 clean:
-	rm $(OBJ_DIR)/*.o $(TARGET) $(TESTS)
+	rm -f $(OBJ_DIR)/*.o $(TARGET) $(TESTS)
