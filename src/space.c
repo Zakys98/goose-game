@@ -81,7 +81,7 @@ STATUS space_set_name(Space* space, char* name) {
     return OK;
 }
 
-STATUS space_set_north(Space* space, Link *l) {
+STATUS space_set_north(Space* space, Link* l) {
     if (!space || l == NULL) {
         return ERROR;
     }
@@ -89,7 +89,7 @@ STATUS space_set_north(Space* space, Link *l) {
     return OK;
 }
 
-STATUS space_set_south(Space* space, Link *l) {
+STATUS space_set_south(Space* space, Link* l) {
     if (!space || l == NULL) {
         return ERROR;
     }
@@ -97,7 +97,7 @@ STATUS space_set_south(Space* space, Link *l) {
     return OK;
 }
 
-STATUS space_set_east(Space* space, Link *l) {
+STATUS space_set_east(Space* space, Link* l) {
     if (!space || l == NULL) {
         return ERROR;
     }
@@ -105,7 +105,7 @@ STATUS space_set_east(Space* space, Link *l) {
     return OK;
 }
 
-STATUS space_set_west(Space* space, Link *l) {
+STATUS space_set_west(Space* space, Link* l) {
     if (!space || l == NULL) {
         return ERROR;
     }

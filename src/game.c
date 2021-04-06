@@ -136,9 +136,9 @@ STATUS game_set_player_location(Game* game, Id id);
    Game interface implementation
 */
 
-Game* game_init(){
-    Game *g = malloc(sizeof(Game));
-    if(g == NULL)
+Game* game_init() {
+    Game* g = malloc(sizeof(Game));
+    if (g == NULL)
         return NULL;
     return g;
 }
@@ -147,7 +147,7 @@ STATUS game_create(Game* game) {
     for (int i = 0; i < MAX_SPACES; i++) {
         game->spaces[i] = NULL;
     }
-	for (int i = 0; i < MAX_OBJECTS; i++) {
+    for (int i = 0; i < MAX_OBJECTS; i++) {
         game->objects[i] = NULL;
     }
     game->log = NULL;
@@ -168,12 +168,11 @@ STATUS game_create_from_file(Game* game, char* filename) {
 }
 
 STATUS game_destroy(Game* game) {
-
     for (int i = 0; (i < MAX_SPACES) && (game->spaces[i] != NULL); i++) {
         space_destroy(game->spaces + i);
     }
 
-    if(game_logfile_exist(game))
+    if (game_logfile_exist(game))
         fclose(game->log);
 
     free(game);
@@ -216,18 +215,18 @@ Object* game_get_object(Game* game, Id id) {
     return NULL;
 }
 
-Object* game_get_object_at_position(Game* game, int id){
-    if(game == NULL || id < 0 || id >= MAX_OBJECTS)
+Object* game_get_object_at_position(Game* game, int id) {
+    if (game == NULL || id < 0 || id >= MAX_OBJECTS)
         return NULL;
 
     return game->objects[id];
 }
 
-Player* game_get_player(Game* game){
+Player* game_get_player(Game* game) {
     return game != NULL ? game->player : NULL;
 }
 
-Dice* game_get_dice(Game* game){
+Dice* game_get_dice(Game* game) {
     return game != NULL ? game->dice : NULL;
 }
 
@@ -282,24 +281,23 @@ STATUS game_add_space(Game* game, Space* space) {
 }
 
 STATUS game_add_object(Game* game, Object* obj) {
+    Space* space = game_get_space(game, object_get_location(obj));
+    space_add_object(space, object_get_id(obj));
 
-	Space* space = game_get_space(game, object_get_location(obj));
-	space_add_object(space, object_get_id(obj));
-    
-    for (int i=0; i < MAX_OBJECTS; i++) {
-		if (game->objects[i] == NULL) {
-			game->objects[i] = obj;
-			return OK;
-		}
-	}
-	return ERROR;
+    for (int i = 0; i < MAX_OBJECTS; i++) {
+        if (game->objects[i] == NULL) {
+            game->objects[i] = obj;
+            return OK;
+        }
+    }
+    return ERROR;
 }
 
 STATUS game_set_player(Game* game, Player* p) {
-	if (game == NULL || p == NULL) return ERROR;
+    if (game == NULL || p == NULL) return ERROR;
 
-	game->player = p;
-	return OK;
+    game->player = p;
+    return OK;
 }
 
 void game_print_data(Game* game) {
@@ -316,27 +314,27 @@ void game_print_data(Game* game) {
     printf("prompt:> ");
 }
 
-int game_get_number_object(Game *game){
-    if(game == NULL)
+int game_get_number_object(Game* game) {
+    if (game == NULL)
         return -1;
     int counter = 0;
-    while((counter < MAX_OBJECTS) && (game->objects[counter] != NULL)){
+    while ((counter < MAX_OBJECTS) && (game->objects[counter] != NULL)) {
         counter++;
     }
     return counter;
 }
 
-void game_open_log_file(Game *game, char *filename){
-    if(game == NULL || filename == NULL)
+void game_open_log_file(Game* game, char* filename) {
+    if (game == NULL || filename == NULL)
         return;
     game->log = fopen(filename, "w");
 }
 
-FILE* game_get_log_file(Game* game){
+FILE* game_get_log_file(Game* game) {
     return game != NULL ? game->log : NULL;
 }
 
-BOOL game_logfile_exist(Game* game){
+BOOL game_logfile_exist(Game* game) {
     return game->log != NULL ? TRUE : FALSE;
 }
 
@@ -355,8 +353,8 @@ STATUS game_callback_unknown(Game* game) {
 }
 
 STATUS game_callback_exit(Game* game) {
-	for (int i = 0; i < MAX_OBJECTS && game->objects[i] != NULL; i++) {
-		object_destroy(&game->objects[i]);
+    for (int i = 0; i < MAX_OBJECTS && game->objects[i] != NULL; i++) {
+        object_destroy(&game->objects[i]);
     }
     player_destroy(&game->player);
     dice_destroy(&game->dice);
@@ -364,91 +362,60 @@ STATUS game_callback_exit(Game* game) {
 }
 
 STATUS game_callback_next(Game* game) {
-    int i = 0;
-    Id current_id = NO_ID;
-    Id space_id = NO_ID;
-
-    space_id = game_get_player_location(game);
-    if (space_id == NO_ID) {
+    Space* location = game_get_space(game, game_get_player_location(game));
+    Id next_location = link_get_second_space(space_get_south(location));
+    if (next_location == NO_ID)
         return ERROR;
-    }
-
-    for (i = 0; i < MAX_SPACES && game->spaces[i] != NULL; i++) {
-        current_id = space_get_id(game->spaces[i]);
-        if (current_id == space_id) {
-            current_id = link_get_second_space(space_get_south(game->spaces[i]));
-            if (current_id != NO_ID) {
-                game_set_player_location(game, current_id);
-                return OK;
-            }
-            return ERROR;
-        }
-    }
-    return ERROR;
+    game_set_player_location(game, next_location);
+    return OK;
 }
 
 STATUS game_callback_back(Game* game) {
-    int i = 0;
-    Id current_id = NO_ID;
-    Id space_id = NO_ID;
-
-    space_id = game_get_player_location(game);
-
-    if (NO_ID == space_id) {
+    Space* location = game_get_space(game, game_get_player_location(game));
+    Id next_location = link_get_second_space(space_get_north(location));
+    if (next_location == NO_ID)
         return ERROR;
-    }
-
-    for (i = 0; i < MAX_SPACES && game->spaces[i] != NULL; i++) {
-        current_id = space_get_id(game->spaces[i]);
-        if (current_id == space_id) {
-            current_id = link_get_second_space(space_get_north(game->spaces[i]));
-            if (current_id != NO_ID) {
-                game_set_player_location(game, current_id);
-                return OK;
-            }
-            return ERROR;
-        }
-    }
-    return ERROR;
+    game_set_player_location(game, next_location);
+    return OK;
 }
 
 STATUS game_callback_take(Game* game) {
-	char input[20];
+    char input[20];
     Space* location = game_get_space(game, game_get_player_location(game));
 
-	if (space_objects_count(location) == 0)
-		return ERROR;
-    
-	if (scanf("%s", input) > 0) {
-		if (player_inventory_full(game->player)) {
-			return ERROR;
-		}
-		Object* obj = game_get_object_by_name(game, input);
-		if (obj == NULL)
-			return ERROR;
+    if (space_objects_count(location) == 0)
+        return ERROR;
 
-		if (space_remove_object(location, object_get_id(obj)) == ERROR)
-			return ERROR;
+    if (scanf("%s", input) > 0) {
+        if (player_inventory_full(game->player)) {
+            return ERROR;
+        }
+        Object* obj = game_get_object_by_name(game, input);
+        if (obj == NULL)
+            return ERROR;
 
-		player_add_object(game->player, obj);
-	}
+        if (space_remove_object(location, object_get_id(obj)) == ERROR)
+            return ERROR;
+
+        player_add_object(game->player, obj);
+    }
     return OK;
 }
 
 STATUS game_callback_drop(Game* game) {
-	char input[20];
-	if (scanf("%s", input) > 0) {
-		Object* obj = game_get_object_by_name(game, input);
-		if (obj == NULL)
-			return ERROR;
+    char input[20];
+    if (scanf("%s", input) > 0) {
+        Object* obj = game_get_object_by_name(game, input);
+        if (obj == NULL)
+            return ERROR;
 
-		Space* s = game_get_space(game, game_get_player_location(game));
-		if (!player_get_object(game->player, object_get_id(obj)))
-			return ERROR;
+        Space* s = game_get_space(game, game_get_player_location(game));
+        if (!player_get_object(game->player, object_get_id(obj)))
+            return ERROR;
 
-		space_add_object(s, object_get_id(obj));
-		object_set_location(obj, space_get_id(s));
-	}
+        space_add_object(s, object_get_id(obj));
+        object_set_location(obj, space_get_id(s));
+    }
     return OK;
 }
 
