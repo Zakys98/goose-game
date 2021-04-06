@@ -104,8 +104,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
     screen_area_clear(ge->map);
     if ((id_act = game_get_player_location(game)) != NO_ID) {
         space_act = game_get_space(game, id_act);
-        id_back = space_get_north(space_act);
-        id_next = space_get_south(space_act);
+        id_back = link_get_second_space(space_get_north(space_act));
+        id_next = link_get_second_space(space_get_south(space_act));
         objects = graphic_engine_get_space_objects(game, space_act);
 
         if (id_back != NO_ID) {

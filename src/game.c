@@ -164,7 +164,6 @@ STATUS game_create_from_file(Game* game, char* filename) {
     if (game_load_game(game, filename) == ERROR)
         return ERROR;
 
-    game_set_player_location(game, game_get_space_id_at(game, 0));
     return OK;
 }
 
@@ -176,6 +175,8 @@ STATUS game_destroy(Game* game) {
 
     if(game_logfile_exist(game))
         fclose(game->log);
+
+    free(game);
 
     return OK;
 }
@@ -375,7 +376,7 @@ STATUS game_callback_next(Game* game) {
     for (i = 0; i < MAX_SPACES && game->spaces[i] != NULL; i++) {
         current_id = space_get_id(game->spaces[i]);
         if (current_id == space_id) {
-            current_id = space_get_south(game->spaces[i]);
+            current_id = link_get_second_space(space_get_south(game->spaces[i]));
             if (current_id != NO_ID) {
                 game_set_player_location(game, current_id);
                 return OK;
@@ -400,7 +401,7 @@ STATUS game_callback_back(Game* game) {
     for (i = 0; i < MAX_SPACES && game->spaces[i] != NULL; i++) {
         current_id = space_get_id(game->spaces[i]);
         if (current_id == space_id) {
-            current_id = space_get_north(game->spaces[i]);
+            current_id = link_get_second_space(space_get_north(game->spaces[i]));
             if (current_id != NO_ID) {
                 game_set_player_location(game, current_id);
                 return OK;
@@ -458,7 +459,7 @@ STATUS game_callback_roll(Game* game) {
 
 STATUS game_callback_left(Game* game) {
     Space* location = game_get_space(game, game_get_player_location(game));
-    Id next_location = space_get_west(location);
+    Id next_location = link_get_second_space(space_get_west(location));
     if (next_location == NO_ID)
         return ERROR;
     game_set_player_location(game, next_location);
@@ -467,7 +468,7 @@ STATUS game_callback_left(Game* game) {
 
 STATUS game_callback_right(Game* game) {
     Space* location = game_get_space(game, game_get_player_location(game));
-    Id next_location = space_get_east(location);
+    Id next_location = link_get_second_space(space_get_east(location));
     if (next_location == NO_ID)
         return ERROR;
     game_set_player_location(game, next_location);
