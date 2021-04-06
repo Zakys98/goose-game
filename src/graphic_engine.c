@@ -109,43 +109,49 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
         objects = graphic_engine_get_space_objects(game, space_act);
 
         if (id_back != NO_ID) {
-            sprintf(str, "  |         %2d|", (int)id_back);
+            sprintf(str, "      |            %2d|", (int)id_back);
             screen_area_puts(ge->map, str);
-            //gen obj
-            sprintf(str, "  +-----------+");
+            sprintf(str, "      +--------------+");
             screen_area_puts(ge->map, str);
-            sprintf(str, "        ^");
+            sprintf(str, "            ^ %ld", id_back);
             screen_area_puts(ge->map, str);
         }
 
         if (id_act != NO_ID) {
-            sprintf(str, "  +-----------+");
+            sprintf(str, "      +--------------+");
             screen_area_puts(ge->map, str);
-            sprintf(str, "  | 8D      %2d|", (int)id_act);
+            if(space_get_east(space_act) == NULL && space_get_west(space_act) == NULL)
+                sprintf(str, "      | >8D        %2d|", (int)id_act);
+            else if(space_get_west(space_act) == NULL && space_get_east(space_act) != NULL)
+                sprintf(str, "      | >8D        %2d| -->", (int)id_act);
+            else if(space_get_west(space_act) != NULL && space_get_east(space_act) == NULL)
+                sprintf(str, "  <-- | >8D        %2d|", (int)id_act);
+            else
+                sprintf(str, "  <-- | >8D        %2d| -->", (int)id_act);
             screen_area_puts(ge->map, str);
-            sprintf(str, "  | %s   |", space_get_gdesc(space_act, 0));
+            sprintf(str, "      |    %s   |", space_get_gdesc(space_act, 0));
             screen_area_puts(ge->map, str);
-            sprintf(str, "  | %s   |", space_get_gdesc(space_act, 1));
+            sprintf(str, "      |    %s   |", space_get_gdesc(space_act, 1));
             screen_area_puts(ge->map, str);
-            sprintf(str, "  | %s   |", space_get_gdesc(space_act, 2));
+            sprintf(str, "      |    %s   |", space_get_gdesc(space_act, 2));
             screen_area_puts(ge->map, str);
             if (objects != NULL) {
                 int n = 10 - strlen(objects);
                 printf("%*c", n, ' ');
-                sprintf(str, "  | %s%*c|", objects, n, ' ');
+                sprintf(str, "      | %s%*c   |", objects, n, ' ');
                 screen_area_puts(ge->map, str);
                 free(objects);
             }
-            sprintf(str, "  +-----------+");
+            sprintf(str, "      +--------------+");
             screen_area_puts(ge->map, str);
         }
 
         if (id_next != NO_ID) {
-            sprintf(str, "        v");
+            sprintf(str, "            v %ld", id_next);
             screen_area_puts(ge->map, str);
-            sprintf(str, "  +-----------+");
+            sprintf(str, "      +--------------+");
             screen_area_puts(ge->map, str);
-            sprintf(str, "  |         %2d|", (int)id_next);
+            sprintf(str, "      |            %2d|", (int)id_next);
             screen_area_puts(ge->map, str);
         }
     }
