@@ -2,7 +2,7 @@
  * @brief Represents an inventory
  *
  * @file inventory.h
- * @author Eva Moresova
+ * @author Eva Moresova and Ivan del Horno
  * @version 1.0
  * @date 22-03-2021
  * @copyright GNU Public License
