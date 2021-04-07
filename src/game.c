@@ -24,7 +24,7 @@ struct _Game {
     FILE* log;
 };
 
-#define N_CALLBACK 9
+#define N_CALLBACK 10
 
 /**
    Define the function type for the callbacks
@@ -93,6 +93,8 @@ STATUS game_callback_left(Game* game);
  */
 STATUS game_callback_right(Game* game);
 
+STATUS game_callback_move(Game* game);
+
 static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_unknown,
     game_callback_exit,
@@ -102,7 +104,8 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_drop,
     game_callback_roll,
     game_callback_left,
-    game_callback_right};
+    game_callback_right,
+	game_callback_move};
 
 /**
    Private functions prototypes
@@ -440,4 +443,22 @@ STATUS game_callback_right(Game* game) {
         return ERROR;
     game_set_player_location(game, next_location);
     return OK;
+}
+
+STATUS game_callback_move(Game* game) {
+	char input[20];
+
+    if (scanf("%s", input) <= 0) return ERROR;
+
+	if (strcmp(input, "north") == 0 || strcmp(input, "n")) {
+		return game_callback_back(game);
+	} else if (strcmp(input, "south") == 0 || strcmp(input, "s")) {
+		return game_callback_next(game);
+	} else if (strcmp(input, "west") == 0 || strcmp(input, "w")) {
+		return game_callback_left(game);
+	} else if (strcmp(input, "east") == 0 || strcmp(input, "e")) {
+		return game_callback_right(game);
+	}
+	
+	return ERROR;
 }
