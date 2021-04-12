@@ -24,7 +24,7 @@ char *cmd_to_str[N_CMD][N_CMDT] =
      {"b", "Back"},
      {"t", "Take"},
      {"d", "Drop"},
-     {"r1", "Roll"},
+     {"rl", "Roll"},
      {"l", "Left"},
      {"r", "Right"},
 	 {"m", "Move"}};
