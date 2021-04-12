@@ -268,6 +268,8 @@ void test_all()
     test_inventory_has_id_no();
     test_inventory_has_id_noid();
     test_inventory_has_id_null();
+
+    PRINT_PASSED_PERCENTAGE;
 }
 
 /** 

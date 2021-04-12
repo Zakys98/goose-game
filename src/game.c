@@ -413,7 +413,7 @@ STATUS game_callback_drop(Game* game) {
             return ERROR;
 
         Space* s = game_get_space(game, game_get_player_location(game));
-        if (!player_get_object(game->player, object_get_id(obj)))
+        if (player_delete_object(game->player, obj) == ERROR)
             return ERROR;
 
         space_add_object(s, object_get_id(obj));

@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MIN_CAP_INV 1
+
 
 struct _Inventory
 {
@@ -21,49 +21,7 @@ struct _Inventory
 	int capacity; //Capacity of the inventory
 };
 
-// Private functions
 
-//Should this be private or public?
-
-/**
- * @brief Checks if the inventory contains a given ID
- * @author Ivan del Horno
- * @param i Pointer to the inventory to be checked
- * @param id ID of the object to search
- * @return TRUE if it is conatained, FALSE if it is not
- */
-BOOL _inventory_contains_id(Inventory *i, Id id);
-
-BOOL _inventory_contains_id(Inventory *i, Id id)
-{
-	int a, n;
-	Id *ids = NULL;
-
-	if (i == NULL || id == NO_ID)
-	{
-		return FALSE;
-	}
-
-	n = set_get_size(i->objects);
-	ids = set_get_elements(i->objects);
-
-	if (ids == NULL)
-	{
-		return FALSE;
-	}
-
-	for (a = 0; a < n; a++)
-	{
-		if (ids[a] == id)
-		{
-			return TRUE;
-		}
-	}
-
-	return FALSE;
-}
-
-// Implementation
 
 Inventory *inventory_create(int cap)
 {

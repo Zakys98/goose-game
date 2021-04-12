@@ -22,11 +22,12 @@
  * id location 
  * Object *obj
  */
-typedef struct player {
-    Id id;
-    char name[WORD_SIZE + 1];
-    Id location;
-    Inventory* inventory;
+typedef struct player
+{
+    Id id; //Id of the player
+    char name[WORD_SIZE + 1]; //Name of the player
+    Id location; //Id of the location of the player
+    Inventory *inventory; //Inventory of the player
 } Player;
 
 /**
@@ -39,7 +40,7 @@ typedef struct player {
  * @param cap capacity of players backpack (inventory)
  * @return pointer to Player
  */
-Player*     player_create(Id, int);
+Player *player_create(Id, int);
 
 /**
  * @brief Player destroy
@@ -50,7 +51,7 @@ Player*     player_create(Id, int);
  * @param p double pointer to player
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS      player_destroy(Player **);
+STATUS player_destroy(Player **);
 
 /**
  * @brief Check if player is not NULL
@@ -61,7 +62,7 @@ STATUS      player_destroy(Player **);
  * @param p pointer to Player
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS      player_exist(Player *);
+STATUS player_exist(Player *);
 
 /**
  * @brief Player id getter 
@@ -72,7 +73,7 @@ STATUS      player_exist(Player *);
  * @param p pointer to Player
  * @return Id or -1 if ERROR
  */
-Id          player_get_id(Player *);
+Id player_get_id(Player *);
 
 /**
  * @brief Player name getter 
@@ -83,7 +84,7 @@ Id          player_get_id(Player *);
  * @param p pointer to Player
  * @return pointer to const char or NULL if ERROR 
  */
-const char* player_get_name(Player *);
+const char *player_get_name(Player *);
 
 /**
  * @brief Player name setter 
@@ -95,7 +96,7 @@ const char* player_get_name(Player *);
  * @param str pointer to const char
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS      player_set_name(Player *, const char *);
+STATUS player_set_name(Player *, const char *);
 
 /**
  * @brief Player location setter 
@@ -107,7 +108,7 @@ STATUS      player_set_name(Player *, const char *);
  * @param id id of location
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS      player_set_location(Player *, Id);
+STATUS player_set_location(Player *, Id);
 
 /**
  * @brief PLayer location getter 
@@ -118,7 +119,7 @@ STATUS      player_set_location(Player *, Id);
  * @param p pointer to Player
  * @return Id or NO_ID if ERROR 
  */
-Id      	player_get_location(Player *);
+Id player_get_location(Player *);
 
 /**
  * @brief Add object to players inventory
@@ -130,7 +131,7 @@ Id      	player_get_location(Player *);
  * @param o pointer to Object
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS      player_add_object(Player *, Object *);
+STATUS player_add_object(Player *p, Object *o);
 
 /**
  * @brief Player object getter 
@@ -141,8 +142,7 @@ STATUS      player_add_object(Player *, Object *);
  * @param p pointer to Player
  * @return pointer to object or NULL if ERROR 
  */
-Object*     player_get_object(Player *, Id);
-
+STATUS player_delete_object(Player *p, Object *o);
 /**
  * @brief Check if players inventory is full 
  *
@@ -152,7 +152,7 @@ Object*     player_get_object(Player *, Id);
  * @param p pointer to Player
  * @return TRUE if the inventory is full, FALSE otherwise
  */
-BOOL player_inventory_full(Player*);
+BOOL player_inventory_full(Player *);
 
 /**
  * @brief Player print
@@ -162,6 +162,6 @@ BOOL player_inventory_full(Player*);
  * 
  * @param p pointer to Player
  */
-void        player_print(Player *);
+void player_print(Player *);
 
 #endif

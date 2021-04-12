@@ -14,6 +14,8 @@
 #include "object.h"
 #include "set.h"
 
+#define MIN_CAP_INV 1
+
 typedef struct _Inventory Inventory;
 
 /**
