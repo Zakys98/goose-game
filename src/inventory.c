@@ -98,6 +98,7 @@ void inventory_destroy(Inventory **i)
 	}
 	set_destroy(&(*i)->objects);
 	free(*i);
+	*i = NULL;
 	return;
 }
 
@@ -125,7 +126,7 @@ BOOL inventory_isEmpty(Inventory *i)
 	return (set_is_empty(i->objects) == TRUE);
 }
 
-STATUS inventory_set_id(Inventory *i, Id id)
+STATUS inventory_add_id(Inventory *i, Id id)
 {
 	if (i == NULL || id == NO_ID || inventory_isFull(i) == TRUE)
 	{

@@ -61,7 +61,7 @@ BOOL inventory_isEmpty(Inventory *i);
  * @param id Id of object to add
  * @return OK or ERROR
  */
-STATUS inventory_set_id(Inventory *i, Id id);
+STATUS inventory_add_id(Inventory *i, Id id);
 
 /**
  * @brief Deletes an object from the inventory given its Id

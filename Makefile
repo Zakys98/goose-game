@@ -21,6 +21,7 @@ test: $(TESTS)
 	./set_test
 	./space_test
 	./die_test
+	./inventory_test
 
 set_test: $(OBJ_DIR)/set_test.o $(OBJ_DIR)/set.o
 	$(cc) $(CFLAGS) -o set_test $(OBJ_DIR)/set_test.o $(OBJ_DIR)/set.o
@@ -30,6 +31,9 @@ die_test: $(OBJ_DIR)/die_test.o $(OBJ_DIR)/die.o
 	
 space_test: $(OBJ_DIR)/space_test.o $(OBJ_DIR)/space.o $(OBJ_DIR)/set.o
 	$(cc) $(CFLAGS) -o space_test $(OBJ_DIR)/space_test.o $(OBJ_DIR)/space.o $(OBJ_DIR)/set.o
+
+inventory_test: $(OBJ_DIR)/inventory_test.o $(OBJ_DIR)/inventory.o $(OBJ_DIR)/set.o $(OBJ_DIR)/object.o
+	$(cc) $(CFLAGS) -o inventory_test $(OBJ_DIR)/inventory_test.o $(OBJ_DIR)/inventory.o $(OBJ_DIR)/set.o $(OBJ_DIR)/object.o
 
 clean:
 	rm -f $(OBJ_DIR)/*.o $(TARGET) $(TESTS)
