@@ -90,14 +90,14 @@ Inventory *inventory_create(int cap)
 	return i;
 }
 
-void inventory_destroy(Inventory *i)
+void inventory_destroy(Inventory **i)
 {
-	if (i == NULL)
+	if (i == NULL || *i == NULL)
 	{
 		return;
 	}
-	set_destroy(i->objects);
-	free(i);
+	set_destroy(&(*i)->objects);
+	free(*i);
 	return;
 }
 
@@ -143,6 +143,25 @@ STATUS inventory_del_id(Inventory *i, Id id)
 	}
 
 	return (set_delete(i->objects, id));
+}
+
+STATUS inventory_add(Inventory *i, Object *o)
+{
+	if (i == NULL || o == NULL || inventory_isFull(i))
+		return ERROR;
+
+	return set_add(i->objects, object_get_id(o));
+}
+
+Object *inventory_get(Inventory *i, Id id)
+{
+	if (i == NULL)
+		return NULL;
+
+	if (set_delete(i->objects, id) == ERROR)
+		return NULL;
+	//return game_get_object(g, id);
+	return NULL;
 }
 
 int inventory_get_nObjects(Inventory *i)

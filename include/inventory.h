@@ -36,7 +36,7 @@ Inventory *inventory_create(int cap);
  * @param i double pointer to inventory
  * @return STATUS ERROR = 0, OK = 1
  */
-void inventory_destroy(Inventory *i);
+void inventory_destroy(Inventory **i);
 
 /**
  * @brief Checks if the given inventory is full
@@ -73,6 +73,24 @@ STATUS inventory_set_id(Inventory *i, Id id);
 STATUS inventory_del_id(Inventory *i, Id id);
 
 /**
+ * @brief Adds an object to an inventory
+ * @author Ivan del Horno and Eva Moresova
+ * @param i Pointer to the inventory
+ * @param o Pointer to the object
+ * @return ERROR or OK
+ */
+STATUS inventory_add(Inventory *i, Object *o);
+
+/**
+ * @brief Gets an object from an inventory
+ * @author Ivan del Horno and Eva Moresova
+ * @param i Pointer to the inventory
+ * @param id Id of the object
+ * @return Pointer to the object or NULL in case of error
+ */
+Object *inventory_get(Inventory *i, Id id);
+
+    /**
  * @brief Get the number of objects inside an inventory
  * @author Ivan del Horno
  * @param i Pointer to the inventory
@@ -91,7 +109,7 @@ int inventory_get_capacity(Inventory *i);
 /**
  * @brief prints the contents of a specified inventory
  *
- * @author Eva Moresova
+ * @author Ivan del Horno and Eva Moresova
  * @date 22-03-2021 
  * 
  * @param i pointer to inventory
