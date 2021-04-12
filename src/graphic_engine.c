@@ -36,7 +36,6 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game);
  */
 char *graphic_engine_get_space_objects(Game *g, Space *s);
 
-
 //Implementation
 
 Graphic_engine *graphic_engine_create() {
@@ -120,11 +119,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
         if (id_act != NO_ID) {
             sprintf(str, "      +--------------+");
             screen_area_puts(ge->map, str);
-            if(space_get_east(space_act) == NULL && space_get_west(space_act) == NULL)
+            if (space_get_east(space_act) == NULL && space_get_west(space_act) == NULL)
                 sprintf(str, "      | >8D        %2d|", (int)id_act);
-            else if(space_get_west(space_act) == NULL && space_get_east(space_act) != NULL)
+            else if (space_get_west(space_act) == NULL && space_get_east(space_act) != NULL)
                 sprintf(str, "      | >8D        %2d| -->", (int)id_act);
-            else if(space_get_west(space_act) != NULL && space_get_east(space_act) == NULL)
+            else if (space_get_west(space_act) != NULL && space_get_east(space_act) == NULL)
                 sprintf(str, "  <-- | >8D        %2d|", (int)id_act);
             else
                 sprintf(str, "  <-- | >8D        %2d| -->", (int)id_act);
@@ -173,7 +172,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
     last_cmd = game_get_last_command(game);
     sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
     screen_area_puts(ge->feedback, str);
-    if(game_logfile_exist(game))
+    if (game_logfile_exist(game))
         fprintf(game_get_log_file(game), " %s (%s): %s\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
 
     /* Dump to the terminal */
@@ -199,12 +198,15 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->descript, str);
     }
 
-    // if (object_get_name(game_get_player(game)->obj) != NULL) {
-    //     sprintf(str, " ");
-    //     screen_area_puts(ge->descript, str);
-    //     sprintf(str, " Player object: %s", object_get_name(game_get_player(game)->obj));
-    //     screen_area_puts(ge->descript, str);
-    // }
+    Id *objectsOfPlayer = inventory_get_elements(game_get_player(game)->inventory);
+    for (int i = 0; i < inventory_get_nObjects(game_get_player(game)->inventory); i++) {
+        sprintf(str, " ");
+        screen_area_puts(ge->descript, str);
+        sprintf(str, " Player object: %s", object_get_name(game_get_object(game, objectsOfPlayer[i])));
+        screen_area_puts(ge->descript, str);
+    }
+    if(objectsOfPlayer != NULL)
+        free(objectsOfPlayer);
 
     sprintf(str, " ");
     screen_area_puts(ge->descript, str);

@@ -175,10 +175,10 @@ int set_print(Set* s, FILE* fp) {
 }
 
 Id* set_get_elements(Set* s) {
-	if(s == NULL)
+	if(s == NULL || set_is_empty(s))
 		return NULL;
 	Id* elems = (Id*)malloc(sizeof(Id)*set_get_size(s));
-	if(elems == NULL || set_is_empty(s))
+	if(elems == NULL)
 		return NULL;
 
 	Vector* v = s->head;
