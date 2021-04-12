@@ -148,67 +148,28 @@ void test_inventory_isEmpty_from_null()
     PRINT_TEST_RESULT(inventory_isEmpty(i) == TRUE);
 }
 
-void test_inventory_add()
+void test_inventory_add_object()
 {
     Inventory *i = inventory_create(4);
     Object *o = object_create(12);
-    PRINT_TEST_RESULT(inventory_add(i, o) == OK);
+    PRINT_TEST_RESULT(inventory_add_object(i, o) == OK);
     object_destroy(&o);
     inventory_destroy(&i);
 }
 
-void test_inventory_add_null_obj()
+void test_inventory_add_object_null_obj()
 {
     Inventory *i = inventory_create(4);
     Object *o = NULL;
-    PRINT_TEST_RESULT(inventory_add(i, o) == ERROR);
+    PRINT_TEST_RESULT(inventory_add_object(i, o) == ERROR);
     inventory_destroy(&i);
 }
 
-void test_inventory_add_to_null()
+void test_inventory_add_object_to_null()
 {
     Inventory *i = NULL;
     Object *o = object_create(12);
-    PRINT_TEST_RESULT(inventory_add(i, o) == ERROR);
-    object_destroy(&o);
-}
-
-void test_inventory_get()
-{
-    Inventory *i = inventory_create(4);
-    Object *o = object_create(12);
-    inventory_add(i, o);
-    PRINT_TEST_RESULT(inventory_get(i, 12) != NULL);
-    object_destroy(&o);
-    inventory_destroy(&i);
-}
-
-void test_inventory_get_noid()
-{
-    Inventory *i = inventory_create(4);
-    Object *o = object_create(12);
-    inventory_add(i, o);
-    PRINT_TEST_RESULT(inventory_get(i, NO_ID) == NULL);
-    object_destroy(&o);
-    inventory_destroy(&i);
-}
-
-void test_inventory_get_inexistent()
-{
-    Inventory *i = inventory_create(4);
-    Object *o = object_create(12);
-    inventory_add(i, o);
-    PRINT_TEST_RESULT(inventory_get(i, 16) == NULL);
-    object_destroy(&o);
-    inventory_destroy(&i);
-}
-
-void test_inventory_get_from_null()
-{
-    Inventory *i = NULL;
-    Object *o = object_create(12);
-    inventory_add(i, o);
-    PRINT_TEST_RESULT(inventory_get(i, 12) == NULL);
+    PRINT_TEST_RESULT(inventory_add_object(i, o) == ERROR);
     object_destroy(&o);
 }
 
@@ -216,7 +177,7 @@ void test_inventory_get_nobjects()
 {
     Inventory *i = inventory_create(4);
     Object *o = object_create(12);
-    inventory_add(i, o);
+    inventory_add_object(i, o);
     inventory_add_id(i, 13);
     PRINT_TEST_RESULT(inventory_get_nObjects(i) == 2);
     object_destroy(&o);
@@ -228,6 +189,52 @@ void test_inventory_get_nobjects_from_null()
     Inventory *i = NULL;
     PRINT_TEST_RESULT(inventory_get_nObjects(i) == -1);
 }
+
+void test_inventory_get_elements()
+{
+    Inventory *i = inventory_create(4);
+    inventory_add_id(i, 13);
+    PRINT_TEST_RESULT(inventory_get_elements(i) != NULL);
+    inventory_destroy(&i);
+}
+
+void test_inventory_get_elements_null()
+{
+    Inventory *i = NULL;
+    PRINT_TEST_RESULT(inventory_get_elements(i) == NULL);
+}
+
+void test_inventory_has_id()
+{
+    Inventory *i = inventory_create(4);
+    inventory_add_id(i, 14);
+    PRINT_TEST_RESULT(inventory_has_id(i, 14) == TRUE);
+    inventory_destroy(&i);
+}
+
+void test_inventory_has_id_no()
+{
+    Inventory *i = inventory_create(4);
+    inventory_add_id(i, 14);
+    PRINT_TEST_RESULT(inventory_has_id(i, 13) == FALSE);
+    inventory_destroy(&i);
+}
+
+void test_inventory_has_id_noid()
+{
+    Inventory *i = inventory_create(4);
+    inventory_add_id(i, 14);
+    PRINT_TEST_RESULT(inventory_has_id(i, NO_ID) == FALSE);
+    inventory_destroy(&i);
+}
+
+void test_inventory_has_id_null()
+{
+    Inventory *i = NULL;
+    PRINT_TEST_RESULT(inventory_has_id(i, 14) == FALSE);
+}
+
+
 
 void test_all()
 {
@@ -250,15 +257,17 @@ void test_all()
     test_inventory_isEmpty_it_is();
     test_inventory_isEmpty_it_is_not();
     test_inventory_isEmpty_from_null();
-    test_inventory_add();
-    test_inventory_add_null_obj();
-    test_inventory_add_to_null();
-    test_inventory_get();
-    test_inventory_get_noid();
-    test_inventory_get_inexistent();
-    test_inventory_get_from_null();
+    test_inventory_add_object();
+    test_inventory_add_object_null_obj();
+    test_inventory_add_object_to_null();
     test_inventory_get_nobjects();
     test_inventory_get_nobjects_from_null();
+    test_inventory_get_elements();
+    test_inventory_get_elements_null();
+    test_inventory_has_id();
+    test_inventory_has_id_no();
+    test_inventory_has_id_noid();
+    test_inventory_has_id_null();
 }
 
 /** 

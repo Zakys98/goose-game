@@ -146,40 +146,12 @@ STATUS inventory_del_id(Inventory *i, Id id)
 	return (set_delete(i->objects, id));
 }
 
-STATUS inventory_add(Inventory *i, Object *o)
+STATUS inventory_add_object(Inventory *i, Object *o)
 {
 	if (i == NULL || o == NULL || inventory_isFull(i))
 		return ERROR;
 
 	return set_add(i->objects, object_get_id(o));
-}
-
-
-// IDK how to do it to get the object because
-// with the set module there is no function that
-// returns an object, so this looks impossible for me
-Object *inventory_get(Inventory *i, Id id)
-{
-	int j, pos = 0;
-	Id *ids = NULL;
-	Object *o = NULL;
-
-	if (i == NULL)
-		return NULL;
-
-	ids = set_get_elements(i->objects);
-	if (ids == NULL)
-	{
-		return NULL;
-	}
-
-	for (j = 0; j < i->capacity; j++)
-	{
-		if (ids[j] == id)
-		{
-			pos = j;
-		}
-	}
 }
 
 int inventory_get_nObjects(Inventory *i)
@@ -200,6 +172,43 @@ int inventory_get_capacity(Inventory *i)
 	}
 
 	return i->capacity;
+}
+
+Id *inventory_get_elements(Inventory *i)
+{
+	if (i == NULL)
+	{
+		return NULL;
+	}
+
+	return set_get_elements(i->objects);
+}
+
+BOOL inventory_has_id(Inventory *i, Id id)
+{
+	int j;
+	Id *ids = NULL;
+
+	if (i == NULL || id == NO_ID)
+	{
+		return FALSE;
+	}
+
+	ids = inventory_get_elements(i);
+	if (ids == NULL)
+	{
+		return FALSE;
+	}
+
+	for (j = 0; j < i->capacity; j++)
+	{
+		if (ids[j] == id)
+		{
+			return TRUE;
+		}
+	}
+
+	return FALSE;
 }
 
 int inventory_print(Inventory *inv, FILE *f)

@@ -79,16 +79,9 @@ STATUS inventory_del_id(Inventory *i, Id id);
  * @param o Pointer to the object
  * @return ERROR or OK
  */
-STATUS inventory_add(Inventory *i, Object *o);
+STATUS inventory_add_object(Inventory *i, Object *o);
 
-/**
- * @brief Gets an object from an inventory
- * @author Ivan del Horno and Eva Moresova
- * @param i Pointer to the inventory
- * @param id Id of the object
- * @return Pointer to the object or NULL in case of error
- */
-Object *inventory_get(Inventory *i, Id id);
+
 
     /**
  * @brief Get the number of objects inside an inventory
@@ -105,6 +98,23 @@ int inventory_get_nObjects(Inventory *i);
  * @return Int number of max objects or -1 in case of error
  */
 int inventory_get_capacity(Inventory *i);
+
+/**
+ * @brief Returns an array of the elements in the inventory
+ * @author Ivan del Horno
+ * @param i Pointer to the inventory
+ * @return Array of Ids or NULL if error
+ */
+Id* inventory_get_elements(Inventory *i);
+
+/**
+ * @brief Checks if a given ID is inside the inventory
+ * @author Ivan del Horno
+ * @param i Pointer to the inventory
+ * @param id Id to search
+ * @return TRUE if it is contained, or FALSE
+ */
+BOOL inventory_has_id(Inventory *i, Id id);
 
 /**
  * @brief prints the contents of a specified inventory
