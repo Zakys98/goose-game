@@ -2,7 +2,7 @@
  * @brief Represents an inventory
  *
  * @file inventory.h
- * @author Eva Moresova and Ivan del Horno
+ * @author Ivan del Horno and Eva Moresova
  * @version 1.0
  * @date 22-03-2021
  * @copyright GNU Public License
@@ -30,7 +30,7 @@ Inventory *inventory_create(int cap);
 /**
  * @brief destructor for inventory
  *
- * @author Eva Moresova
+ * @author Ivan del Horno
  * @date 22-03-2021 
  * 
  * @param i double pointer to inventory

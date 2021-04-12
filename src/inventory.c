@@ -2,7 +2,7 @@
  * @brief Implementation of inventory
  *
  * @file inventory.c
- * @author Eva Moresova and Ivan del Horno
+ * @author Ivan del Horno and Eva Moresova
  * @version 1.0
  * @date 22-03-2021
  * @copyright GNU Public License
@@ -24,6 +24,7 @@ struct _Inventory
 // Private functions
 
 //Should this be private or public?
+
 /**
  * @brief Checks if the inventory contains a given ID
  * @author Ivan del Horno
@@ -35,7 +36,7 @@ BOOL _inventory_contains_id(Inventory *i, Id id);
 
 BOOL _inventory_contains_id(Inventory *i, Id id)
 {
-	int i, n;
+	int a, n;
 	Id *ids = NULL;
 
 	if (i == NULL || id == NO_ID)
@@ -51,9 +52,9 @@ BOOL _inventory_contains_id(Inventory *i, Id id)
 		return FALSE;
 	}
 
-	for (i = 0; i < n; i++)
+	for (a = 0; a < n; a++)
 	{
-		if (ids[i] == id)
+		if (ids[a] == id)
 		{
 			return TRUE;
 		}
