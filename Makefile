@@ -7,7 +7,7 @@ DOC_DIR := doc
 OBJS := $(OBJ_DIR)/command.o $(OBJ_DIR)/die.o $(OBJ_DIR)/game_loop.o $(OBJ_DIR)/game_reader.o $(OBJ_DIR)/game.o $(OBJ_DIR)/graphic_engine.o $(OBJ_DIR)/object.o $(OBJ_DIR)/player.o $(OBJ_DIR)/screen.o $(OBJ_DIR)/set.o $(OBJ_DIR)/space.o $(OBJ_DIR)/inventory.o $(OBJ_DIR)/link.o
 TESTS=set_test space_test die_test
 
-.PHONY: all clean
+.PHONY: all clean docs
 
 all: $(TARGET)
 
@@ -34,6 +34,9 @@ space_test: $(OBJ_DIR)/space_test.o $(OBJ_DIR)/space.o $(OBJ_DIR)/set.o
 
 inventory_test: $(OBJ_DIR)/inventory_test.o $(OBJ_DIR)/inventory.o $(OBJ_DIR)/set.o $(OBJ_DIR)/object.o
 	$(cc) $(CFLAGS) -o inventory_test $(OBJ_DIR)/inventory_test.o $(OBJ_DIR)/inventory.o $(OBJ_DIR)/set.o $(OBJ_DIR)/object.o
+
+docs: Doxyfile
+	doxygen Doxyfile
 
 clean:
 	rm -f $(OBJ_DIR)/*.o $(TARGET) $(TESTS)
