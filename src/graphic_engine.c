@@ -112,7 +112,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
             screen_area_puts(ge->map, str);
             sprintf(str, "      +--------------+");
             screen_area_puts(ge->map, str);
-            sprintf(str, "            ^ %ld", id_back);
+            sprintf(str, "            ^ %ld", link_get_id(space_get_north(space_act)));
             screen_area_puts(ge->map, str);
         }
 
@@ -146,7 +146,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
         }
 
         if (id_next != NO_ID) {
-            sprintf(str, "            v %ld", id_next);
+            sprintf(str, "            v %ld", link_get_id(space_get_south(space_act)));
             screen_area_puts(ge->map, str);
             sprintf(str, "      +--------------+");
             screen_area_puts(ge->map, str);
@@ -199,14 +199,17 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
     }
 
     Id *objectsOfPlayer = inventory_get_elements(game_get_player(game)->inventory);
-    for (int i = 0; i < inventory_get_nObjects(game_get_player(game)->inventory); i++) {
+    if (objectsOfPlayer != NULL) {
         sprintf(str, " ");
         screen_area_puts(ge->descript, str);
-        sprintf(str, " Player object: %s", object_get_name(game_get_object(game, objectsOfPlayer[i])));
+        sprintf(str, " Player objects: %s", object_get_name(game_get_object(game, objectsOfPlayer[0])));
         screen_area_puts(ge->descript, str);
-    }
-    if(objectsOfPlayer != NULL)
+        for (int i = 1; i < inventory_get_nObjects(game_get_player(game)->inventory); i++) {
+            sprintf(str, "                 %s", object_get_name(game_get_object(game, objectsOfPlayer[i])));
+            screen_area_puts(ge->descript, str);
+        }
         free(objectsOfPlayer);
+    }
 
     sprintf(str, " ");
     screen_area_puts(ge->descript, str);

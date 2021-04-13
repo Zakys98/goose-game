@@ -27,6 +27,17 @@ typedef struct _Link Link;
 Link* link_create(Id);
 
 /**
+ * @brief Link id getter
+ *
+ * @author Jiri Zak
+ * @date 1-03-2021
+ * 
+ * @param l pointer to link
+ * @return id of the link or -1 if error
+ */
+Id link_get_id(Link *l);
+
+/**
  * @brief Link destroy and set it to NULL
  *
  * @author Jiri Zak

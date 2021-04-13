@@ -188,9 +188,3 @@ Id* set_get_elements(Set* s) {
 	}
 	return elems;
 }
-
-
-
-
-
-
