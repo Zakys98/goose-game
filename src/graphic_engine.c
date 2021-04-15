@@ -36,8 +36,6 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game);
  */
 char *graphic_engine_get_space_objects(Game *g, Space *s);
 
-char *numberOfSpaces(Id);
-
 //Implementation
 
 Graphic_engine *graphic_engine_create() {
@@ -51,11 +49,11 @@ Graphic_engine *graphic_engine_create() {
     if (ge == NULL)
         return NULL;
 
-    ge->map = screen_area_init(1, 1, 52, 13);
+    ge->map = screen_area_init(1, 1, 52, 17);
     ge->descript = screen_area_init(54, 1, 35, 13);
-    ge->banner = screen_area_init(28, 15, 23, 1);
-    ge->help = screen_area_init(1, 16, 88, 2);
-    ge->feedback = screen_area_init(1, 20, 88, 2);
+    ge->banner = screen_area_init(28, 19, 23, 1);
+    ge->help = screen_area_init(1, 20, 88, 2);
+    ge->feedback = screen_area_init(1, 24, 88, 2);
 
     return ge;
 }
@@ -109,62 +107,61 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
         id_next = link_get_second_space(space_get_south(space_act));
         objects = graphic_engine_get_space_objects(game, space_act);
 
-        char *spaces = NULL;
-        if (space_get_west(space_act) != NULL) {
-            spaces = numberOfSpaces(link_get_second_space(space_get_west(space_act)));
-        } else {
-            spaces = calloc(0, sizeof(char));
-        }
-        if (spaces == NULL)
-            return;
-
         if (id_back != NO_ID) {
-            sprintf(str, "   %s   |            %2d|", spaces, (int)id_back);
+            sprintf(str, "         |            %2d|", (int)id_back);
             screen_area_puts(ge->map, str);
-            sprintf(str, "   %s   +--------------+", spaces);
+            sprintf(str, "         +--------------+");
             screen_area_puts(ge->map, str);
-            sprintf(str, "   %s         ^ %ld", spaces, link_get_id(space_get_north(space_act)));
+            sprintf(str, "               ^ %ld", link_get_id(space_get_north(space_act)));
             screen_area_puts(ge->map, str);
         }
 
         if (id_act != NO_ID) {
-            sprintf(str, "  %s    +--------------+", spaces);
+            sprintf(str, "         +--------------+");
             screen_area_puts(ge->map, str);
             if (space_get_east(space_act) == NULL && space_get_west(space_act) == NULL)
-                sprintf(str, "      | >8D        %2d|", (int)id_act);
+                sprintf(str, "         | >8D        %2d|", (int)id_act);
             else if (space_get_west(space_act) == NULL && space_get_east(space_act) != NULL)
-                sprintf(str, "      | >8D        %2d| --> %ld", (int)id_act, link_get_second_space(space_get_east(space_act)));
+                sprintf(str, "         | >8D        %2d| --> %ld", (int)id_act, link_get_second_space(space_get_east(space_act)));
             else if (space_get_west(space_act) != NULL && space_get_east(space_act) == NULL)
-                sprintf(str, " %ld <-- | >8D        %2d|", link_get_second_space(space_get_west(space_act)), (int)id_act);
+                sprintf(str, " %3ld <-- | >8D        %2d|", link_get_second_space(space_get_west(space_act)), (int)id_act);
             else
-                sprintf(str, " %ld <-- | >8D        %2d| --> %ld", link_get_second_space(space_get_west(space_act)), (int)id_act, link_get_second_space(space_get_east(space_act)));
+                sprintf(str, " %3ld <-- | >8D        %2d| --> %ld", link_get_second_space(space_get_west(space_act)), (int)id_act, link_get_second_space(space_get_east(space_act)));
             screen_area_puts(ge->map, str);
-            sprintf(str, "   %s   |    %s   |", spaces, space_get_gdesc(space_act, 0));
+            sprintf(str, "         |    %s   |", space_get_gdesc(space_act, 0));
             screen_area_puts(ge->map, str);
-            sprintf(str, "   %s   |    %s   |", spaces, space_get_gdesc(space_act, 1));
+            sprintf(str, "         |    %s   |", space_get_gdesc(space_act, 1));
             screen_area_puts(ge->map, str);
-            sprintf(str, "   %s   |    %s   |", spaces, space_get_gdesc(space_act, 2));
+            sprintf(str, "         |    %s   |", space_get_gdesc(space_act, 2));
             screen_area_puts(ge->map, str);
             if (objects != NULL) {
                 int n = 10 - strlen(objects);
                 printf("%*c", n, ' ');
-                sprintf(str, "   %s   | %s%*c   |", spaces, objects, n, ' ');
+                sprintf(str, "         | %s%*c   |", objects, n, ' ');
                 screen_area_puts(ge->map, str);
                 free(objects);
+            } else {
+                sprintf(str, "         |              |");
+                screen_area_puts(ge->map, str);
             }
-            sprintf(str, "   %s   +--------------+", spaces);
+            sprintf(str, "         +--------------+");
             screen_area_puts(ge->map, str);
         }
 
         if (id_next != NO_ID) {
-            sprintf(str, "   %s         v %ld", spaces, link_get_id(space_get_south(space_act)));
+            sprintf(str, "               v %ld", link_get_id(space_get_south(space_act)));
             screen_area_puts(ge->map, str);
-            sprintf(str, "   %s   +--------------+", spaces);
+            sprintf(str, "         +--------------+");
             screen_area_puts(ge->map, str);
-            sprintf(str, "   %s   |            %2d|", spaces, (int)id_next);
+            sprintf(str, "         |            %2d|", (int)id_next);
+            screen_area_puts(ge->map, str);
+            sprintf(str, "         |    %s   |", space_get_gdesc(game_get_space(game, id_next), 0));
+            screen_area_puts(ge->map, str);
+            sprintf(str, "         |    %s   |", space_get_gdesc(game_get_space(game, id_next), 1));
+            screen_area_puts(ge->map, str);
+            sprintf(str, "         |    %s   |", space_get_gdesc(game_get_space(game, id_next), 2));
             screen_area_puts(ge->map, str);
         }
-        free(spaces);
     }
 
     /* Paint in the description area */
@@ -190,20 +187,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s) {
     /* Dump to the terminal */
     screen_paint();
     printf("prompt:> ");
-}
-
-char *numberOfSpaces(Id number) {
-    int j = 2;
-    while (number > 10) {
-        number /= 10;
-        j++;
-    }
-    char *spaces = calloc(j, sizeof(char));
-    for (int i = 0; i < j--; i++) {
-        spaces[i] = ' ';
-    }
-
-    return spaces;
 }
 
 void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
