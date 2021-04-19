@@ -43,6 +43,10 @@ Link* link_create(Id id) {
     return l;
 }
 
+Id link_get_id(Link *l){
+    return link_not_exist(l) ? -1 : l->id;
+}
+
 STATUS link_destroy(Link** l) {
     if (link_not_exist(*l)) {
         return ERROR;

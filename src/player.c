@@ -14,45 +14,62 @@
 #include <stdlib.h>
 #include <string.h>
 
-Player *player_create(Id id, int cap) {
-    Player *p = (Player *)malloc(sizeof(struct player));
-    if (p == NULL) {
+Player *player_create(Id id, int cap)
+{
+    Player *p = NULL;
+
+    if (id == NO_ID || cap < MIN_CAP_INV)
+    {
         return NULL;
-	}
-	p->inventory = inventory_create(cap);
-	if (p->inventory == NULL) return NULL;
+    }
+
+    p = (Player *)malloc(sizeof(Player));
+    if (p == NULL)
+    {
+        return NULL;
+    }
+
+    p->inventory = inventory_create(cap);
+    if (p->inventory == NULL)
+        return NULL;
     p->id = id;
-	p->location = NO_ID;
+    p->location = NO_ID;
     return p;
 }
 
-STATUS player_destroy(Player **p) {
-    if (!player_exist(*p)) {
+STATUS player_destroy(Player **p)
+{
+    if (!player_exist(*p))
+    {
         return FALSE;
-	}
-	inventory_destroy(&(*p)->inventory);
+    }
+    inventory_destroy(&(*p)->inventory);
     free(*p);
     *p = NULL;
     return OK;
 }
 
-STATUS player_exist(Player *p) {
+STATUS player_exist(Player *p)
+{
     return p == NULL ? FALSE : TRUE;
 }
 
-Id player_get_id(Player *p) {
+Id player_get_id(Player *p)
+{
     if (!player_exist(p))
         return -1;
     return p->id;
 }
 
-const char *player_get_name(Player *p) {
+const char *player_get_name(Player *p)
+{
     if (!player_exist(p))
         return NULL;
     return p->name;
 }
 
-STATUS player_set_name(Player *p, const char *str) {
+STATUS player_set_name(Player *p, const char *str)
+{
     if (!player_exist(p) || str == NULL)
         return ERROR;
     if (!strcpy(p->name, str))
@@ -60,38 +77,44 @@ STATUS player_set_name(Player *p, const char *str) {
     return OK;
 }
 
-STATUS player_set_location(Player *p, Id s){
+STATUS player_set_location(Player *p, Id s)
+{
     if (!player_exist(p) || s == NO_ID)
         return ERROR;
     p->location = s;
     return OK;
 }
 
-Id player_get_location(Player *p){
+Id player_get_location(Player *p)
+{
     if (!player_exist(p))
         return NO_ID;
     return p->location;
 }
 
-STATUS player_add_object(Player *p, Object *o) {
+STATUS player_add_object(Player *p, Object *o)
+{
     if (!player_exist(p) || !object_exist(o))
         return ERROR;
-    inventory_add(p->inventory, o);
-    return OK;
+    return inventory_add_id(p->inventory, object_get_id(o));
 }
 
-Object* player_get_object(Player *p, Id id) {
-    if (!player_exist(p))
-        return NULL;
-    return inventory_get(p->inventory, id);
+STATUS player_delete_object(Player *p, Object *o)
+{
+    if (!player_exist(p) || !object_exist(o))
+        return ERROR;
+    return inventory_del_id(p->inventory, object_get_id(o));
 }
 
-BOOL player_inventory_full(Player* p) {
-	if (p == NULL) return TRUE;
+BOOL player_inventory_full(Player *p)
+{
+    if (p == NULL)
+        return TRUE;
 
-	return inventory_isFull(p->inventory);
+    return inventory_isFull(p->inventory);
 }
 
-void player_print(Player *p) {
+void player_print(Player *p)
+{
     printf("id: %ld\n name: %s\n", p->id, p->name);
 }

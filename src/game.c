@@ -413,7 +413,7 @@ STATUS game_callback_drop(Game* game) {
             return ERROR;
 
         Space* s = game_get_space(game, game_get_player_location(game));
-        if (!player_get_object(game->player, object_get_id(obj)))
+        if (player_delete_object(game->player, obj) == ERROR)
             return ERROR;
 
         space_add_object(s, object_get_id(obj));
@@ -450,13 +450,13 @@ STATUS game_callback_move(Game* game) {
 
     if (scanf("%s", input) <= 0) return ERROR;
 
-	if (strcmp(input, "north") == 0 || strcmp(input, "n")) {
+	if (strcmp(input, "north") == 0 || strcmp(input, "n") == 0) {
 		return game_callback_back(game);
-	} else if (strcmp(input, "south") == 0 || strcmp(input, "s")) {
+	} else if (strcmp(input, "south") == 0 || strcmp(input, "s") == 0) {
 		return game_callback_next(game);
-	} else if (strcmp(input, "west") == 0 || strcmp(input, "w")) {
+	} else if (strcmp(input, "west") == 0 || strcmp(input, "w") == 0) {
 		return game_callback_left(game);
-	} else if (strcmp(input, "east") == 0 || strcmp(input, "e")) {
+	} else if (strcmp(input, "east") == 0 || strcmp(input, "e") == 0) {
 		return game_callback_right(game);
 	}
 	
