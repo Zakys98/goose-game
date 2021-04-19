@@ -14,8 +14,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * Structure for Object
+ * Id id
+ * char[] name
+ * id location 
+ */
+struct _Obj {
+    Id id;
+    char name[WORD_SIZE + 1];
+	Id location;
+};
+
 Object *object_create(Id id) {
-    Object *o = (Object *)malloc(sizeof(struct obj));
+    Object *o = (Object *)malloc(sizeof(struct _Obj));
     if (o == NULL)
         return NULL;
     o->id = id;

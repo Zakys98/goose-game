@@ -15,20 +15,7 @@
 #include "types.h"
 #include "inventory.h"
 
-/**
- * Structure for Player
- * Id id
- * char[] name
- * id location 
- * Object *obj
- */
-typedef struct player
-{
-    Id id; //Id of the player
-    char name[WORD_SIZE + 1]; //Name of the player
-    Id location; //Id of the location of the player
-    Inventory *inventory; //Inventory of the player
-} Player;
+typedef struct _Player Player;
 
 /**
  * @brief Player create
@@ -120,6 +107,17 @@ STATUS player_set_location(Player *, Id);
  * @return Id or NO_ID if ERROR 
  */
 Id player_get_location(Player *);
+
+/**
+ * @brief Player inventory getter 
+ *
+ * @author Eva Moresova
+ * @date 19-04-2021
+ * 
+ * @param p pointer to Player
+ * @return pointer to inventory or NULL if ERROR 
+ */
+Inventory *player_get_inventory(Player *);
 
 /**
  * @brief Add object to players inventory

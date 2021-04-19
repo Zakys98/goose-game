@@ -14,7 +14,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-Player *player_create(Id id, int cap)
+/**
+ * Structure for Player
+ * Id id
+ * char[] name
+ * id location 
+ * Object *obj
+ */
+struct _Player {
+    Id id; 		//Id of the player
+    char name[WORD_SIZE + 1]; 	//Name of the player
+    Id location;	 //Id of the location of the player
+    Inventory *inventory; 	//Inventory of the player
+};
+
+Player* player_create(Id id, int cap)
 {
     Player *p = NULL;
 
@@ -23,7 +37,7 @@ Player *player_create(Id id, int cap)
         return NULL;
     }
 
-    p = (Player *)malloc(sizeof(Player));
+    p = (Player *)malloc(sizeof(struct _Player));
     if (p == NULL)
     {
         return NULL;
@@ -90,6 +104,11 @@ Id player_get_location(Player *p)
     if (!player_exist(p))
         return NO_ID;
     return p->location;
+}
+
+Inventory *player_get_inventory(Player *p) {
+	if (p == NULL) return NULL;
+	return p->inventory;
 }
 
 STATUS player_add_object(Player *p, Object *o)

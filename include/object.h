@@ -15,17 +15,7 @@
 
 #define MAX_OBJECTS 50
 
-/**
- * Structure for Object
- * Id id
- * char[] name
- * id location 
- */
-typedef struct obj {
-    Id id;
-    char name[WORD_SIZE + 1];
-	Id location;
-} Object;
+typedef struct _Obj Object;
 
 /**
  * @brief Object create

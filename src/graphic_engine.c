@@ -207,13 +207,13 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->descript, str);
     }
 
-    Id *objectsOfPlayer = inventory_get_elements(game_get_player(game)->inventory);
+    Id *objectsOfPlayer = inventory_get_elements(player_get_inventory(game_get_player(game)));
     if (objectsOfPlayer != NULL) {
         sprintf(str, " ");
         screen_area_puts(ge->descript, str);
         sprintf(str, " Player objects: %s", object_get_name(game_get_object(game, objectsOfPlayer[0])));
         screen_area_puts(ge->descript, str);
-        for (int i = 1; i < inventory_get_nObjects(game_get_player(game)->inventory); i++) {
+        for (int i = 1; i < inventory_get_nObjects(player_get_inventory(game_get_player(game))); i++) {
             sprintf(str, "                 %s", object_get_name(game_get_object(game, objectsOfPlayer[i])));
             screen_area_puts(ge->descript, str);
         }
