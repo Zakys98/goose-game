@@ -5,7 +5,7 @@ SRC_DIR := src
 OBJ_DIR := obj
 DOC_DIR := doc
 OBJS := $(OBJ_DIR)/command.o $(OBJ_DIR)/die.o $(OBJ_DIR)/game_loop.o $(OBJ_DIR)/game_reader.o $(OBJ_DIR)/game.o $(OBJ_DIR)/graphic_engine.o $(OBJ_DIR)/object.o $(OBJ_DIR)/player.o $(OBJ_DIR)/screen.o $(OBJ_DIR)/set.o $(OBJ_DIR)/space.o $(OBJ_DIR)/inventory.o $(OBJ_DIR)/link.o
-TESTS=set_test space_test die_test
+TESTS=set_test space_test die_test link_test
 
 .PHONY: all clean docs
 
@@ -22,6 +22,7 @@ test: $(TESTS)
 	./space_test
 	./die_test
 	./inventory_test
+	./link_test
 
 set_test: $(OBJ_DIR)/set_test.o $(OBJ_DIR)/set.o
 	$(cc) $(CFLAGS) -o set_test $(OBJ_DIR)/set_test.o $(OBJ_DIR)/set.o
@@ -34,6 +35,9 @@ space_test: $(OBJ_DIR)/space_test.o $(OBJ_DIR)/space.o $(OBJ_DIR)/set.o
 
 inventory_test: $(OBJ_DIR)/inventory_test.o $(OBJ_DIR)/inventory.o $(OBJ_DIR)/set.o $(OBJ_DIR)/object.o
 	$(cc) $(CFLAGS) -o inventory_test $(OBJ_DIR)/inventory_test.o $(OBJ_DIR)/inventory.o $(OBJ_DIR)/set.o $(OBJ_DIR)/object.o
+
+link_test: $(OBJ_DIR)/link_test.o $(OBJ_DIR)/link.o
+	$(cc) $(CFLAGS) -o link_test $(OBJ_DIR)/link_test.o $(OBJ_DIR)/link.o
 
 docs: Doxyfile
 	doxygen Doxyfile
