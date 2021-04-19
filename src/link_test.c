@@ -18,12 +18,12 @@
 #include "../include/types.h"
 
 void test_link_init() {
-    Link *l = link_create(1);
+    Link *l = link_create();
     PRINT_TEST_RESULT(l != NULL);
 }
 
 void test_link_destroy() {
-    Link *l = link_create(1);
+    Link *l = link_create();
     link_destroy(&l);
     PRINT_TEST_RESULT(l == NULL);
 }
@@ -34,9 +34,15 @@ void test_link_destroy_null() {
     PRINT_TEST_RESULT(l == NULL);
 }
 
+void test_link_set_id() {
+	Link *l = link_create();
+	link_set_id(l, 1);
+	PRINT_TEST_RESULT(link_get_id(l) == 1);
+}
+
 void test_link_get_id() {
-    Link *l = link_create(1);
-    PRINT_TEST_RESULT(link_get_id(l) == 1);
+    Link *l = link_create();
+    PRINT_TEST_RESULT(link_get_id(l) == NO_ID);
 }
 
 void test_link_get_id_from_null() {
@@ -45,7 +51,7 @@ void test_link_get_id_from_null() {
 }
 
 void test_link_set_name() {
-    Link *l = link_create(1);
+    Link *l = link_create();
     PRINT_TEST_RESULT(link_set_name(l, "name") == 1);
 }
 
@@ -55,7 +61,7 @@ void test_link_set_name_to_null() {
 }
 
 void test_link_get_name() {
-    Link *l = link_create(1);
+    Link *l = link_create();
     link_set_name(l, "name");
     PRINT_TEST_RESULT(strcmp(link_get_name(l), "name") == 0);
 }
@@ -66,7 +72,7 @@ void test_link_get_name_from_null() {
 }
 
 void test_link_set_first_space_id() {
-    Link *l = link_create(1);
+    Link *l = link_create();
     PRINT_TEST_RESULT(link_set_first_space(l, 2) == 1);
 }
 
@@ -76,7 +82,7 @@ void test_link_set_first_space_id_to_null() {
 }
 
 void test_link_get_first_space_id() {
-    Link *l = link_create(1);
+    Link *l = link_create();
     link_set_first_space(l, 2);
     PRINT_TEST_RESULT(link_get_first_space(l) == 2);
 }
@@ -87,7 +93,7 @@ void test_link_get_first_space_id_from_null() {
 }
 
 void test_link_set_second_space_id() {
-    Link *l = link_create(1);
+    Link *l = link_create();
     PRINT_TEST_RESULT(link_set_second_space(l, 2) == 1);
 }
 
@@ -97,7 +103,7 @@ void test_link_set_second_space_id_to_null() {
 }
 
 void test_link_get_second_space_id() {
-    Link *l = link_create(1);
+    Link *l = link_create();
     link_set_second_space(l, 2);
     PRINT_TEST_RESULT(link_get_second_space(l) == 2);
 }
@@ -108,7 +114,7 @@ void test_link_get_second_space_id_from_null() {
 }
 
 void test_link_set_opened() {
-    Link *l = link_create(1);
+    Link *l = link_create();
     PRINT_TEST_RESULT(link_set_opened(l, FALSE) == 1);
 }
 
@@ -118,7 +124,7 @@ void test_link_set_opened_to_null() {
 }
 
 void test_link_get_opened() {
-    Link *l = link_create(1);
+    Link *l = link_create();
     link_set_opened(l, FALSE);
     PRINT_TEST_RESULT(link_get_opened(l) == FALSE);
 }

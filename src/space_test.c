@@ -109,46 +109,54 @@ void test3_space_set_name() {
 
 void test1_space_set_north() {
     Space *s;
+	Link* l = link_create();
     s = space_create(5);
-    PRINT_TEST_RESULT(space_set_north(s, 4) == OK);
+    PRINT_TEST_RESULT(space_set_north(s, l) == OK);
 }
 
 void test2_space_set_north() {
     Space *s = NULL;
-    PRINT_TEST_RESULT(space_set_north(s, 4) == ERROR);
+	Link* l = link_create();
+    PRINT_TEST_RESULT(space_set_north(s, l) == ERROR);
 }
 
 void test1_space_set_south() {
     Space *s;
+	Link* l = link_create();
     s = space_create(5);
-    PRINT_TEST_RESULT(space_set_south(s, 4) == OK);
+    PRINT_TEST_RESULT(space_set_south(s, l) == OK);
 }
 
 void test2_space_set_south() {
     Space *s = NULL;
-    PRINT_TEST_RESULT(space_set_south(s, 4) == ERROR);
+	Link* l = link_create();
+    PRINT_TEST_RESULT(space_set_south(s, l) == ERROR);
 }
 
 void test1_space_set_east() {
     Space *s;
+	Link* l = link_create();
     s = space_create(5);
-    PRINT_TEST_RESULT(space_set_east(s, 4) == OK);
+    PRINT_TEST_RESULT(space_set_east(s, l) == OK);
 }
 
 void test2_space_set_east() {
     Space *s = NULL;
-    PRINT_TEST_RESULT(space_set_east(s, 4) == ERROR);
+	Link* l = link_create();
+    PRINT_TEST_RESULT(space_set_east(s, l) == ERROR);
 }
 
 void test1_space_set_west() {
     Space *s;
+	Link* l = link_create();
     s = space_create(5);
-    PRINT_TEST_RESULT(space_set_west(s, 4) == OK);
+    PRINT_TEST_RESULT(space_set_west(s, l) == OK);
 }
 
 void test2_space_set_west() {
     Space *s = NULL;
-    PRINT_TEST_RESULT(space_set_west(s, 4) == ERROR);
+	Link* l = link_create();
+    PRINT_TEST_RESULT(space_set_west(s, l) == ERROR);
 }
 
 void test1_space_set_object() {
@@ -194,50 +202,58 @@ void test3_space_get_object() {
 
 void test1_space_get_north() {
     Space *s;
-    s = space_create(5);
-    space_set_north(s, 4);
-    PRINT_TEST_RESULT(space_get_north(s) == 4);
+	s = space_create(5);
+	Link* l = link_create();
+	link_set_id(l, 1);
+    space_set_north(s, l);
+    PRINT_TEST_RESULT(link_get_id(space_get_north(s)) == 1);
 }
 
 void test2_space_get_north() {
     Space *s = NULL;
-    PRINT_TEST_RESULT(space_get_north(s) == NO_ID);
+    PRINT_TEST_RESULT(space_get_north(s) == NULL);
 }
 
 void test1_space_get_south() {
     Space *s;
-    s = space_create(5);
-    space_set_south(s, 2);
-    PRINT_TEST_RESULT(space_get_south(s) == 2);
+	s = space_create(5);
+	Link* l = link_create();
+	link_set_id(l, 1);
+    space_set_south(s, l);
+    PRINT_TEST_RESULT(link_get_id(space_get_south(s)) == 1);
 }
 
 void test2_space_get_south() {
     Space *s = NULL;
-    PRINT_TEST_RESULT(space_get_south(s) == NO_ID);
+    PRINT_TEST_RESULT(space_get_south(s) == NULL);
 }
 
 void test1_space_get_east() {
     Space *s;
-    s = space_create(5);
-    space_set_east(s, 1);
-    PRINT_TEST_RESULT(space_get_east(s) == 1);
+	s = space_create(5);
+	Link* l = link_create();
+	link_set_id(l, 1);
+    space_set_east(s, l);
+    PRINT_TEST_RESULT(link_get_id(space_get_east(s)) == 1);
 }
 
 void test2_space_get_east() {
     Space *s = NULL;
-    PRINT_TEST_RESULT(space_get_east(s) == NO_ID);
+    PRINT_TEST_RESULT(space_get_east(s) == NULL);
 }
 
 void test1_space_get_west() {
     Space *s;
-    s = space_create(5);
-    space_set_west(s, 6);
-    PRINT_TEST_RESULT(space_get_west(s) == 6);
+	s = space_create(5);
+	Link* l = link_create();
+	link_set_id(l, 1);
+    space_set_west(s, l);
+    PRINT_TEST_RESULT(link_get_id(space_get_west(s)) == 1);
 }
 
 void test2_space_get_west() {
     Space *s = NULL;
-    PRINT_TEST_RESULT(space_get_west(s) == NO_ID);
+    PRINT_TEST_RESULT(space_get_west(s) == NULL);
 }
 
 void test1_space_get_id() {
