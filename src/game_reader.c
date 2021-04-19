@@ -3,8 +3,8 @@
  * 
  * @file game_reader.c
  * @author Eva Moresova
- * @version 2.0 
- * @date 08-03-2021 
+ * @version 3.0 
+ * @date 19-04-2021 
  * @copyright GNU Public License
  */
 
@@ -54,8 +54,8 @@ STATUS game_load_player(Game* game, char* line);
 /**
  * @brief load link string description, add it to game
  *
- * @author Jiri Zak
- * @date 22-03-2021
+ * @author Eva Moresova
+ * @date 19-04-2021
  * 
  * @param game pointer to game
  * @param line string with link description
@@ -135,7 +135,7 @@ STATUS game_load_space(Game* game, char* line) {
     if (space != NULL) {
         space_set_name(space, name);
         if (north != NO_ID) {
-            link = link_create(north);
+            link = link_create();
             if (link == NULL)
                 return ERROR;
             link_set_first_space(link, id);
@@ -143,7 +143,7 @@ STATUS game_load_space(Game* game, char* line) {
 			space_set_north(space, link);
         }
 		if (east != NO_ID) {
-            link = link_create(east);
+            link = link_create();
             if (link == NULL)
                 return ERROR;
             link_set_first_space(link, id);
@@ -151,7 +151,7 @@ STATUS game_load_space(Game* game, char* line) {
 			space_set_east(space, link);
         }
 		if (south != NO_ID) {
-            link = link_create(south);
+            link = link_create();
             if (link == NULL)
                 return ERROR;
             link_set_first_space(link, id);
@@ -159,7 +159,7 @@ STATUS game_load_space(Game* game, char* line) {
 			space_set_south(space, link);
 		}
 		if (west != NO_ID) {
-            link = link_create(west);
+            link = link_create();
             if (link == NULL)
                 return ERROR;
             link_set_first_space(link, id);
@@ -219,8 +219,64 @@ STATUS game_load_player(Game* game, char* line) {
     return game_set_player(game, p);
 }
 
+void modify_link(Link* link, Id id, char* name, int open) {
+	link_set_id(link, id);
+	link_set_name(link, name);
+	if (open == 0) 
+		link_set_opened(link, TRUE);
+	else 
+		link_set_opened(link, FALSE);
+}
+
+BOOL cmp_link(Id id1, Id id2, Link* link) {
+	if ((link_get_first_space(link) == id1 && link_get_second_space(link) == id2)
+		|| (link_get_first_space(link) == id2 && link_get_second_space(link) == id1)) {
+			return TRUE;
+	}
+	return FALSE;
+}
+
+Link* find_link(Space* space, Id id1, Id id2) {
+	if (cmp_link(id1, id2, space_get_north(space)) == TRUE) {
+		return space_get_north(space);
+	} else if (cmp_link(id1, id2, space_get_west(space)) == TRUE) {
+		return space_get_west(space);
+	} else if (cmp_link(id1, id2, space_get_south(space)) == TRUE) {
+		return space_get_south(space);
+	} else if (cmp_link(id1, id2, space_get_east(space)) == TRUE) {
+		return space_get_east(space);
+	}
+	return NULL;
+}
+
 STATUS game_load_links(Game* game, char* line) {
-	(void)game;
-	(void)line;
+	char* toks = NULL;
+    char name[WORD_SIZE] = "";
+    Id id = NO_ID, firstId = NO_ID, secondId = NO_ID;
+	int open = -1;
+
+	toks = strtok(line + 3, "|");
+	id = atol(toks);
+	toks = strtok(NULL, "|");
+	strcpy(name, toks);
+    toks = strtok(NULL, "|");
+	firstId = atol(toks);
+	toks = strtok(NULL, "|");
+	secondId = atol(toks);
+	toks = strtok(NULL, "|");
+	open = atoi(toks);
+
+	Space* firstSpace = game_get_space(game, firstId);
+	Space* secondSpace = game_get_space(game, secondId);
+	if (firstSpace == NULL || secondSpace == NULL) return ERROR;
+
+	//add link to first space
+	Link* link = find_link(firstSpace, firstId, secondId);
+	if (link != NULL) modify_link(link, id, name, open);
+	
+	//add link to second space
+	link = find_link(secondSpace, firstId, secondId);
+	if (link != NULL) modify_link(link, id, name, open);
+
     return OK;
 }

@@ -30,17 +30,22 @@ BOOL link_not_exist(Link* l) {
     return !link_exist(l);
 }
 
-Link* link_create(Id id) {
+Link* link_create() {
     Link* l = malloc(sizeof(Link));
     if (link_not_exist(l))
         return NULL;
 
-    l->id = id;
+    l->id = NO_ID;
     l->name[0] = '\0';
     l->first = -1;
     l->second = -1;
     l->opened = TRUE;
     return l;
+}
+
+void link_set_id(Link *l, Id id) {
+	if (l != NULL)
+		l->id = id;
 }
 
 Id link_get_id(Link *l){
