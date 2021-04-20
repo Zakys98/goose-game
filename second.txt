@@ -3,10 +3,13 @@ Move south
 Take hook
 Take key
 Move south
+Inspect space
 Move south
 Move east
 Move east
 Move east
+Move east
+Move south
 Move west
 Move south
 Move south

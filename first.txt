@@ -3,10 +3,13 @@ Next
 Take hook
 Take key
 Next
+Inspect space
 Next
 Right
 Right
 Right
+Right
+Next
 Left
 Next
 Next
