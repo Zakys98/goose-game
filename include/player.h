@@ -162,4 +162,25 @@ BOOL player_inventory_full(Player *);
  */
 void player_print(Player *);
 
+/**
+ * @brief Check if the object is in the inventory 
+ *
+ * @author Eva Moresova and Alba Delgado
+ * @date 20-04-2021
+ * 
+ * @param p pointer to Player and pointer to object
+ * @return TRUE if the inventory is full, FALSE otherwise
+ */
+BOOL player_search_inventory(Player *p, Object *object);
+
+/**
+ * @brief Number of objects the player has
+ *
+ * @author Alba Delgado
+ * @date 12-02-2021
+ * 
+ * @param p pointer to Player
+ */
+int player_getnObjects(Player *p);
+
 #endif

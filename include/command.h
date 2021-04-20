@@ -12,7 +12,7 @@
 #define COMMAND_H
 
 #define N_CMDT 2
-#define N_CMD 11
+#define N_CMD 12
 
 typedef enum enum_CmdType {
     CMDS,
@@ -30,7 +30,9 @@ typedef enum enum_Command {
     DROP,
     ROLL,
     LEFT,
-    RIGHT
+    RIGHT,
+    MOVE,
+    INSPECT
 } T_Command;
 
 /**
