@@ -117,4 +117,24 @@ Id object_get_location(Object*);
  */
 void object_print(Object *);
 
+/**
+ * @brief Object description setter
+ *
+ * @author Alba Delgado
+ * @date 12-04-2021
+ * 
+ * @param o pointer to Object
+ */
+STATUS object_set_description(Object *obj, char *description);
+
+/**
+ * @brief Object description getter
+ *
+ * @author Alba Delgado
+ * @date 12-04-2021
+ * 
+ * @param o pointer to Object
+ */
+const char * object_get_description(Object* object);
+
 #endif

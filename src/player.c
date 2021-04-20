@@ -137,3 +137,14 @@ void player_print(Player *p)
 {
     printf("id: %ld\n name: %s\n", p->id, p->name);
 }
+
+BOOL player_search_inventory(Player *p, Object *object){
+    return inventory_has_id(p->inventory,  object_get_id(object));
+}
+
+int player_getnObjects(Player *p){
+     if (!p) {
+    return ERROR;
+  }
+  return inventory_get_nObjects(p->inventory);
+}

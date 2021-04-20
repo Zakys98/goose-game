@@ -11,17 +11,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "player.h"
-#include "test.h"
-
-#define MAX_TESTS 31 /*!<NUMBER OF TEST */
+#include "../include/player.h"
+#include "../include/test.h"
 
 void test1_player_create()
 {
     Player *p;
     p = player_create(4,1);
     PRINT_TEST_RESULT(p != NULL);
-    player_destroy(p);
+    player_destroy(&p);
 }
 
 void test2_player_create()
@@ -29,7 +27,7 @@ void test2_player_create()
     Player *p;
     p = player_create(4,1);
     PRINT_TEST_RESULT(player_get_id(p) == 4);
-    player_destroy(p);
+    player_destroy(&p);
 }
 
 void test1_player_get_id()
@@ -37,7 +35,7 @@ void test1_player_get_id()
     Player *p;
     p = player_create(4,1);
     PRINT_TEST_RESULT(player_get_id(p) == 4);
-    player_destroy(p);
+    player_destroy(&p);
 }
 
 void test2_player_get_id()
@@ -51,7 +49,7 @@ void test1_player_set_name()
     Player *p;
     p = player_create(4,1);
     PRINT_TEST_RESULT(player_set_name(p, "hola") == OK);
-    player_destroy(p);
+    player_destroy(&p);
 }
 
 void test2_player_set_name()
@@ -59,7 +57,7 @@ void test2_player_set_name()
     Player *p;
     p = player_create(4,1);
     PRINT_TEST_RESULT(player_set_name(p, NULL) == ERROR);
-    player_destroy(p);
+    player_destroy(&p);
 }
 
 void test3_player_set_name()
@@ -74,7 +72,7 @@ void test1_player_get_name()
     p = player_create(4,1);
     player_set_name(p, "hola");
     PRINT_TEST_RESULT(strcmp(player_get_name(p), "hola") == 0);
-    player_destroy(p);
+    player_destroy(&p);
 }
 
 void test2_player_get_name()
@@ -87,22 +85,22 @@ void test1_player_set_player_location()
 {
     Player *p;
     p = player_create(4,1);
-    PRINT_TEST_RESULT(player_set_player_location(p, 5) == OK);
-    player_destroy(p);
+    PRINT_TEST_RESULT(player_set_location(p, 5) == OK);
+    player_destroy(&p);
 }
 
 void test2_player_set_player_location()
 {
     Player *p;
     p = player_create(4,1);
-    PRINT_TEST_RESULT(player_set_player_location(p, NO_ID) == ERROR);
-    player_destroy(p);
+    PRINT_TEST_RESULT(player_set_location(p, NO_ID) == ERROR);
+    player_destroy(&p);
 }
 
 void test3_player_set_player_location()
 {
     Player *p = NULL;
-    PRINT_TEST_RESULT(player_set_player_location(p, 5) == ERROR);
+    PRINT_TEST_RESULT(player_set_location(p, 5) == ERROR);
 }
 
 void test1_player_get_player_location()
@@ -110,104 +108,30 @@ void test1_player_get_player_location()
     Player *p;
 
     p = player_create(4,1);
-    player_set_player_location(p, 5);
-    PRINT_TEST_RESULT(player_get_player_location(p) == 5);
-    player_destroy(p);
+    player_set_location(p, 5);
+    PRINT_TEST_RESULT(player_get_location(p) == 5);
+    player_destroy(&p);
 }
 
 void test2_player_get_player_location()
 {
     Player *p = NULL;
 
-    PRINT_TEST_RESULT(player_get_player_location(p) == NO_ID);
-}
-
-void test1_player_set_object()
-{
-    Player *p;
-    p = player_create(4,1);
-    PRINT_TEST_RESULT(player_set_object(p, 4) == OK);
-    player_destroy(p);
-}
-
-void test2_player_set_object()
-{
-    Player *p;
-    p = player_create(4,1);
-    PRINT_TEST_RESULT(player_set_object(p, NO_ID) == ERROR);
-    player_destroy(p);
-}
-
-void test3_player_set_object()
-{
-    Player *p = NULL;
-    PRINT_TEST_RESULT(player_set_object(p, 4) == ERROR);
-}
-
-void test1_player_get_objects()
-{
-    Player *p;
-    p = player_create(4,1);
-    player_set_object(p, 4);
-    PRINT_TEST_RESULT(player_get_objects(p) != NULL);
-    player_destroy(p);
-}
-
-void test2_player_get_objects()
-{
-    Player *p = NULL;
-    PRINT_TEST_RESULT(player_get_objects(p) == NULL);
-}
-
-void test1_player_remove_object()
-{
-    Player *p;
-    p = player_create(4,1);
-    player_set_object(p, 4);
-    PRINT_TEST_RESULT(player_remove_object(p, 4) == OK);
-    player_destroy(p);
-}
-
-void test2_player_remove_object()
-{
-    Player *p;
-    p = player_create(4,1);
-    PRINT_TEST_RESULT(player_remove_object(p, NO_ID) == ERROR);
-    player_destroy(p);
-}
-
-void test3_player_remove_object()
-{
-    Player *p = NULL;
-    PRINT_TEST_RESULT(player_remove_object(p, 4) == ERROR);
-}
-
-void test1_player_set_max_objects()
-{
-    Player *p;
-    p = player_create(4,1);
-    PRINT_TEST_RESULT(player_set_max_objects(p, 5) == OK);
-    player_destroy(p);
-}
-
-void test2_player_set_max_objects()
-{
-    Player *p = NULL;
-    PRINT_TEST_RESULT(player_set_max_objects(p, 5) == ERROR);
+    PRINT_TEST_RESULT(player_get_location(p) == NO_ID);
 }
 
 void test1_player_get_numObj()
 {
     Player *p;
     p = player_create(4,1);
-    PRINT_TEST_RESULT(player_get_numObj(p) == 0);
-    player_destroy(p);
+    PRINT_TEST_RESULT(player_getnObjects(p) == 0);
+    player_destroy(&p);
 }
 
 void test2_player_get_numObj()
 {
     Player *p = NULL;
-    PRINT_TEST_RESULT(player_get_numObj(p) == ERROR);
+    PRINT_TEST_RESULT(player_getnObjects(p) == ERROR);
 }
 
 void test_all()
@@ -226,16 +150,6 @@ void test_all()
     test3_player_set_player_location();
     test1_player_get_player_location();
     test2_player_get_player_location();
-    test1_player_set_object();
-    test2_player_set_object();
-    test3_player_set_object();
-    test1_player_get_objects();
-    test2_player_get_objects();
-    test1_player_remove_object();
-    test2_player_remove_object();
-    test3_player_remove_object();
-    test1_player_set_max_objects();
-    test2_player_set_max_objects();
     test1_player_get_numObj();
     test2_player_get_numObj();
 
@@ -297,39 +211,9 @@ int main(int argc, char **argv)
             test2_player_get_player_location();
             break;
         case 15:
-            test1_player_set_object();
-            break;
-        case 16:
-            test2_player_set_object();
-            break;
-        case 17:
-            test3_player_set_object();
-            break;
-        case 18:
-            test1_player_get_objects();
-            break;
-        case 19:
-            test2_player_get_objects();
-            break;
-        case 20:
-            test1_player_remove_object();
-            break;
-        case 21:
-            test2_player_remove_object();
-            break;
-        case 22:
-            test3_player_remove_object();
-            break;
-        case 23:
-            test1_player_set_max_objects();
-            break;
-        case 24:
-            test2_player_set_max_objects();
-            break;
-        case 25:
             test1_player_get_numObj();
             break;
-        case 26:
+        case 16:
             test2_player_get_numObj();
             break;
         default:

@@ -24,6 +24,7 @@ struct _Obj {
     Id id;
     char name[WORD_SIZE + 1];
 	Id location;
+    char description[WORD_SIZE + 1];
 };
 
 Object *object_create(Id id) {
@@ -32,6 +33,8 @@ Object *object_create(Id id) {
         return NULL;
     o->id = id;
 	o->location = NO_ID;
+    memset(o->description, '\0', WORD_SIZE + 1);
+    
     return o;
 }
 
@@ -87,4 +90,19 @@ Id object_get_location(Object* o) {
 
 void object_print(Object *o) {
     printf("id: %ld\n name: %s\n", o->id, o->name);
+}
+
+STATUS object_set_description(Object *obj, char *description){
+    if(obj == NULL || description == NULL || strlen(description) > 49)
+        return ERROR;
+
+    strcpy(obj->description, description);
+    return OK;
+}
+
+const char * object_get_description(Object* object) {
+  if (!object) {
+    return NULL;
+  }
+  return object->description;
 }

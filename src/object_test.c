@@ -15,14 +15,12 @@
 #include "../include/test.h"
 #include "../include/types.h"
 
-#define MAX_TESTS 17 /*!<NUMBER OF TEST */
-
 void test1_object_create()
 {
   Object *o;
   o = object_create(5);
   PRINT_TEST_RESULT(o != NULL);
-  object_destroy(o);
+  object_destroy(&o);
 }
 
 void test2_object_create()
@@ -30,13 +28,7 @@ void test2_object_create()
   Object *o;
   o = object_create(4);
   PRINT_TEST_RESULT(object_get_id(o) == 4);
-  object_destroy(o);
-}
-
-void test3_object_set_id()
-{
-  Object *o = NULL;
-  PRINT_TEST_RESULT(object_set_id(o, 5) == ERROR);
+  object_destroy(&o);
 }
 
 void test1_object_get_id()
@@ -44,7 +36,7 @@ void test1_object_get_id()
   Object *o;
   o = object_create(5);
   PRINT_TEST_RESULT(object_get_id(o) == 5);
-  object_destroy(o);
+  object_destroy(&o);
 }
 
 void test2_object_get_id()
@@ -58,7 +50,7 @@ void test1_object_set_name()
   Object *o;
   o = object_create(5);
   PRINT_TEST_RESULT(object_set_name(o, "hola") == OK);
-  object_destroy(o);
+  object_destroy(&o);
 }
 
 void test2_object_set_name()
@@ -66,7 +58,7 @@ void test2_object_set_name()
   Object *o;
   o = object_create(5);
   PRINT_TEST_RESULT(object_set_name(o, NULL) == ERROR);
-  object_destroy(o);
+  object_destroy(&o);
 }
 
 void test3_object_set_name()
@@ -81,7 +73,7 @@ void test1_object_get_name()
   o = object_create(5);
   object_set_name(o, "hola");
   PRINT_TEST_RESULT(strcmp(object_get_name(o), "hola") == 0);
-  object_destroy(o);
+  object_destroy(&o);
 }
 
 void test2_object_get_name()
@@ -95,7 +87,7 @@ void test1_object_set_description()
   Object *o;
   o = object_create(5);
   PRINT_TEST_RESULT(object_set_description(o, "hola") == OK);
-  object_destroy(o);
+  object_destroy(&o);
 }
 
 void test2_object_set_description()
@@ -103,7 +95,7 @@ void test2_object_set_description()
   Object *o;
   o = object_create(5);
   PRINT_TEST_RESULT(object_set_description(o, NULL) == ERROR);
-  object_destroy(o);
+  object_destroy(&o);
 }
 
 void test3_object_set_description()
@@ -118,7 +110,7 @@ void test1_object_get_description()
   o = object_create(5);
   object_set_description(o, "hola");
   PRINT_TEST_RESULT(strcmp(object_get_description(o), "hola") == 0);
-  object_destroy(o);
+  object_destroy(&o);
 }
 
 void test2_object_get_description()

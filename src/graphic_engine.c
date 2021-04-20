@@ -223,9 +223,9 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game) {
 	if (description != NULL) {
 		sprintf(str, " ");
         screen_area_puts(ge->descript, str);
-        sprintf(str, " Descriptions:\n");
+        sprintf(str, " Descriptions:");
 		screen_area_puts(ge->descript, str);
-		sprintf(str, "%s\n", description);
+		sprintf(str, " %s", description);
 		screen_area_puts(ge->descript, str);
 	}
 

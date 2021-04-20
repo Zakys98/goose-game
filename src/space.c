@@ -46,6 +46,7 @@ Space* space_create(Id id) {
     newSpace->gdesc[0][7] = '\0';
     newSpace->gdesc[1][7] = '\0';
     newSpace->gdesc[2][7] = '\0';
+    memset(newSpace->description, '\0', WORD_SIZE + 1);
 
     return newSpace;
 }
@@ -246,9 +247,11 @@ BOOL space_hasObject(Space *space, Id id)
     {
         if(objects[i]== id)
         {
+            free(objects);
             return TRUE;
         }
     }
+    free(objects);
     return FALSE;
 }
 
