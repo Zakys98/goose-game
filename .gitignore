@@ -6,3 +6,5 @@ space_test
 die_test
 inventory_test
 link_test
+player_test
+object_test

@@ -234,8 +234,6 @@ void test_inventory_has_id_null()
     PRINT_TEST_RESULT(inventory_has_id(i, 14) == FALSE);
 }
 
-
-
 void test_all()
 {
     test_inventory_create();
@@ -281,7 +279,7 @@ void test_all()
  *       is executed
  *  
  */
-int main(int argc, char **argv)
+int main()
 {
     printf("Inventory test\n");
     printf("=========================\n");
