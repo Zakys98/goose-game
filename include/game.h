@@ -254,4 +254,6 @@ int game_get_number_object(Game* game);
  */
 BOOL game_logfile_exist(Game* game);
 
+char* game_get_description(Game* game);
+
 #endif

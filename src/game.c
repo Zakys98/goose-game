@@ -24,7 +24,7 @@ struct _Game
     T_Command last_cmd;
     Dice *dice;
     FILE *log;
-    char *description;
+    char description[50];
 };
 
 #define N_CALLBACK 11
@@ -166,6 +166,7 @@ STATUS game_create(Game *game)
     game->log = NULL;
     game->last_cmd = NO_CMD;
     game->dice = dice_create(1, 6);
+	memset(game->description, '\0', 50);
 
     return OK;
 }
@@ -386,6 +387,11 @@ int game_get_number_object(Game *game)
     return counter;
 }
 
+char* game_get_description(Game* game) {
+	if (game == NULL || game->description[0] == '\0') return NULL;
+	return game->description;
+}
+
 void game_open_log_file(Game *game, char *filename)
 {
     if (game == NULL || filename == NULL)
@@ -553,6 +559,7 @@ STATUS game_callback_inspect(Game *game)
     char input[20];
     Id player_location;
     Object *obj = NULL;
+	memset(game->description, '\0', 50);
 
     Space *location = game_get_space(game, game_get_player_location(game));
 
@@ -564,8 +571,7 @@ STATUS game_callback_inspect(Game *game)
         if (strcasecmp(input, "s") == 0 || strcasecmp(input, "space") == 0)
         {
             Space *space = game_get_space_by_id(game, game_get_player_location(game));
-
-            printf("%s", space_get_description(space));
+			sscanf(game->description, "space - %s", space_get_description(space));
         }
         else
         {
@@ -576,7 +582,7 @@ STATUS game_callback_inspect(Game *game)
             Space *space = game_get_space_by_id(game, game_get_player_location(game));
             if (space_hasObject(space, object_get_id(obj)) == TRUE)
             {
-                printf("%s", object_get_description(obj));
+				sscanf(game->description, "%s - %s",object_get_name(obj), object_get_description(obj));
                 return OK;
             }
         }
@@ -585,7 +591,7 @@ STATUS game_callback_inspect(Game *game)
         {
             if (player_search_inventory(game->player, game->objects[i]) == TRUE)
             {
-                printf("%s", object_get_description(obj));
+                sscanf(game->description, "%s - %s",object_get_name(obj), object_get_description(obj));
                 return OK;
             }
         }
