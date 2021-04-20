@@ -236,15 +236,15 @@ BOOL cmp_link(Id id1, Id id2, Link* link) {
 	return FALSE;
 }
 
-Link* find_link(Space* space, Id id1, Id id2) {
+Link* complete_links(Space* space, Id id1, Id id2, Id id, char* name, int open) {
 	if (cmp_link(id1, id2, space_get_north(space)) == TRUE) {
-		return space_get_north(space);
+		modify_link(space_get_north(space), id, name, open);
 	} else if (cmp_link(id1, id2, space_get_west(space)) == TRUE) {
-		return space_get_west(space);
+		modify_link(space_get_west(space), id, name, open);
 	} else if (cmp_link(id1, id2, space_get_south(space)) == TRUE) {
-		return space_get_south(space);
+		modify_link(space_get_south(space), id, name, open);
 	} else if (cmp_link(id1, id2, space_get_east(space)) == TRUE) {
-		return space_get_east(space);
+		modify_link(space_get_east(space), id, name, open);
 	}
 	return NULL;
 }
@@ -270,13 +270,8 @@ STATUS game_load_links(Game* game, char* line) {
 	Space* secondSpace = game_get_space(game, secondId);
 	if (firstSpace == NULL || secondSpace == NULL) return ERROR;
 
-	//add link to first space
-	Link* link = find_link(firstSpace, firstId, secondId);
-	if (link != NULL) modify_link(link, id, name, open);
-	
-	//add link to second space
-	link = find_link(secondSpace, firstId, secondId);
-	if (link != NULL) modify_link(link, id, name, open);
+	complete_links(firstSpace, firstId, secondId, id, name, open);
+	complete_links(secondSpace, firstId, secondId, id, name, open);
 
     return OK;
 }
