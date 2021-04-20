@@ -1,12 +1,13 @@
 Next
 Next
 Take hook
+Take key
 Next
 Next
-Left
-Left
-Left
 Right
+Right
+Right
+Left
 Next
 Next
 Back

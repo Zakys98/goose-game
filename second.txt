@@ -1,0 +1,16 @@
+Move south
+Move south
+Take hook
+Take key
+Move south
+Move south
+Move east
+Move east
+Move east
+Move west
+Move south
+Move south
+Move north
+Drop hook
+Roll
+Exit
