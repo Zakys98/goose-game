@@ -98,9 +98,12 @@ BOOL&#160;</td><td class="memItemRight" valign="bottom"><b>link_exist</b> (<a cl
 <tr class="memitem:a423cdcec666ac86b7fcc8c6a6ae78eeb"><td class="memItemLeft" align="right" valign="top"><a id="a423cdcec666ac86b7fcc8c6a6ae78eeb"></a>
 BOOL&#160;</td><td class="memItemRight" valign="bottom"><b>link_not_exist</b> (<a class="el" href="struct__Link.html">Link</a> *l)</td></tr>
 <tr class="separator:a423cdcec666ac86b7fcc8c6a6ae78eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8090d7f529cfd6a2fc5df3dd379fe514"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct__Link.html">Link</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="link_8c.html#a8090d7f529cfd6a2fc5df3dd379fe514">link_create</a> (Id id)</td></tr>
-<tr class="memdesc:a8090d7f529cfd6a2fc5df3dd379fe514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link create.  <a href="link_8c.html#a8090d7f529cfd6a2fc5df3dd379fe514">More...</a><br /></td></tr>
-<tr class="separator:a8090d7f529cfd6a2fc5df3dd379fe514"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf21d03943afcbed370ca720f972482c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct__Link.html">Link</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="link_8c.html#aaf21d03943afcbed370ca720f972482c">link_create</a> ()</td></tr>
+<tr class="memdesc:aaf21d03943afcbed370ca720f972482c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link create.  <a href="link_8c.html#aaf21d03943afcbed370ca720f972482c">More...</a><br /></td></tr>
+<tr class="separator:aaf21d03943afcbed370ca720f972482c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa90399681692e2b062eb72328dafac94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="link_8c.html#aa90399681692e2b062eb72328dafac94">link_set_id</a> (<a class="el" href="struct__Link.html">Link</a> *l, Id id)</td></tr>
+<tr class="memdesc:aa90399681692e2b062eb72328dafac94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link id setter.  <a href="link_8c.html#aa90399681692e2b062eb72328dafac94">More...</a><br /></td></tr>
+<tr class="separator:aa90399681692e2b062eb72328dafac94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1f9ab65f3b10bcf29c95cefdefc95a2"><td class="memItemLeft" align="right" valign="top">Id&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="link_8c.html#ab1f9ab65f3b10bcf29c95cefdefc95a2">link_get_id</a> (<a class="el" href="struct__Link.html">Link</a> *l)</td></tr>
 <tr class="memdesc:ab1f9ab65f3b10bcf29c95cefdefc95a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link id getter.  <a href="link_8c.html#ab1f9ab65f3b10bcf29c95cefdefc95a2">More...</a><br /></td></tr>
 <tr class="separator:ab1f9ab65f3b10bcf29c95cefdefc95a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,8 +145,8 @@ BOOL&#160;</td><td class="memItemRight" valign="bottom"><b>link_not_exist</b> (<
 <dl class="section date"><dt>Date</dt><dd>22-03-2021 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Public License </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a8090d7f529cfd6a2fc5df3dd379fe514"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8090d7f529cfd6a2fc5df3dd379fe514">&#9670;&nbsp;</a></span>link_create()</h2>
+<a id="aaf21d03943afcbed370ca720f972482c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf21d03943afcbed370ca720f972482c">&#9670;&nbsp;</a></span>link_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,7 +154,6 @@ BOOL&#160;</td><td class="memItemRight" valign="bottom"><b>link_not_exist</b> (<
         <tr>
           <td class="memname"><a class="el" href="struct__Link.html">Link</a>* link_create </td>
           <td>(</td>
-          <td class="paramtype">Id&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -410,6 +412,45 @@ BOOL&#160;</td><td class="memItemRight" valign="bottom"><b>link_not_exist</b> (<
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>STATUS ERROR = 0, OK = 1 </dd></dl>
+
+</div>
+</div>
+<a id="aa90399681692e2b062eb72328dafac94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa90399681692e2b062eb72328dafac94">&#9670;&nbsp;</a></span>link_set_id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void link_set_id </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct__Link.html">Link</a> *&#160;</td>
+          <td class="paramname"><em>l</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Id&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Link id setter. </p>
+<dl class="section author"><dt>Author</dt><dd>Eva Moresova </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>19-04-2021</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>pointer to link </td></tr>
+    <tr><td class="paramname">id</td><td>id of link </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

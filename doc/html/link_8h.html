@@ -97,9 +97,12 @@ typedef struct <a class="el" href="struct__Link.html">_Link</a>&#160;</td><td cl
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae5986501818a720e4295dc5e634d27f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct__Link.html">Link</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="link_8h.html#ae5986501818a720e4295dc5e634d27f1">link_create</a> (Id)</td></tr>
-<tr class="memdesc:ae5986501818a720e4295dc5e634d27f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link create.  <a href="link_8h.html#ae5986501818a720e4295dc5e634d27f1">More...</a><br /></td></tr>
-<tr class="separator:ae5986501818a720e4295dc5e634d27f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf21d03943afcbed370ca720f972482c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct__Link.html">Link</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="link_8h.html#aaf21d03943afcbed370ca720f972482c">link_create</a> ()</td></tr>
+<tr class="memdesc:aaf21d03943afcbed370ca720f972482c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link create.  <a href="link_8h.html#aaf21d03943afcbed370ca720f972482c">More...</a><br /></td></tr>
+<tr class="separator:aaf21d03943afcbed370ca720f972482c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa90399681692e2b062eb72328dafac94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="link_8h.html#aa90399681692e2b062eb72328dafac94">link_set_id</a> (<a class="el" href="struct__Link.html">Link</a> *l, Id id)</td></tr>
+<tr class="memdesc:aa90399681692e2b062eb72328dafac94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link id setter.  <a href="link_8h.html#aa90399681692e2b062eb72328dafac94">More...</a><br /></td></tr>
+<tr class="separator:aa90399681692e2b062eb72328dafac94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1f9ab65f3b10bcf29c95cefdefc95a2"><td class="memItemLeft" align="right" valign="top">Id&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="link_8h.html#ab1f9ab65f3b10bcf29c95cefdefc95a2">link_get_id</a> (<a class="el" href="struct__Link.html">Link</a> *l)</td></tr>
 <tr class="memdesc:ab1f9ab65f3b10bcf29c95cefdefc95a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link id getter.  <a href="link_8h.html#ab1f9ab65f3b10bcf29c95cefdefc95a2">More...</a><br /></td></tr>
 <tr class="separator:ab1f9ab65f3b10bcf29c95cefdefc95a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,8 +144,8 @@ Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>22-03-2021 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Public License </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ae5986501818a720e4295dc5e634d27f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5986501818a720e4295dc5e634d27f1">&#9670;&nbsp;</a></span>link_create()</h2>
+<a id="aaf21d03943afcbed370ca720f972482c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf21d03943afcbed370ca720f972482c">&#9670;&nbsp;</a></span>link_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,7 +153,6 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="struct__Link.html">Link</a>* link_create </td>
           <td>(</td>
-          <td class="paramtype">Id&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -409,6 +411,45 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>STATUS ERROR = 0, OK = 1 </dd></dl>
+
+</div>
+</div>
+<a id="aa90399681692e2b062eb72328dafac94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa90399681692e2b062eb72328dafac94">&#9670;&nbsp;</a></span>link_set_id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void link_set_id </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct__Link.html">Link</a> *&#160;</td>
+          <td class="paramname"><em>l</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Id&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Link id setter. </p>
+<dl class="section author"><dt>Author</dt><dd>Eva Moresova </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>19-04-2021</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>pointer to link </td></tr>
+    <tr><td class="paramname">id</td><td>id of link </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

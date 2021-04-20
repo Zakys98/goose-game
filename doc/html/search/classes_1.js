@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dice_151',['dice',['../structdice.html',1,'']]]
+  ['dice_161',['dice',['../structdice.html',1,'']]]
 ];

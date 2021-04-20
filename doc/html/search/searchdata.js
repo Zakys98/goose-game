@@ -1,10 +1,10 @@
 var indexSectionsWithContent =
 {
   0: "_cdgilmopst",
-  1: "_dop",
+  1: "_d",
   2: "cdgilopst",
   3: "dgilmopst",
-  4: "cop",
+  4: "c",
   5: "t"
 };
 
