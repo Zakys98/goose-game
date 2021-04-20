@@ -16,6 +16,7 @@ struct _Space {
     Link* west;
     Set* objects;
     char gdesc[3][8];
+    char description[WORD_SIZE + 1];
 };
 
 Space* space_create(Id id) {
@@ -235,4 +236,26 @@ STATUS space_print(Space* space) {
     }
 
     return OK;
+}
+
+BOOL space_hasObject(Space *space, Id id)
+{
+    Id *objects = space_get_objects(space);
+
+    for(int i=0;i<space_objects_count(space);i++)
+    {
+        if(objects[i]== id)
+        {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+const char *space_get_description(Space *space)
+{
+    if (!space) {
+    return NULL;
+  }
+  return space->description;
 }

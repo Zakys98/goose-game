@@ -40,5 +40,7 @@ char* space_get_gdesc(Space* space, int line);
 Id* space_get_objects(Space* s);
 int space_objects_count(Space* s);
 STATUS space_print(Space* space);
+const char *space_get_description(Space *space);
+BOOL space_hasObject(Space *space, Id id);
 
 #endif
