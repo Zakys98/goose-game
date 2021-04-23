@@ -117,6 +117,42 @@ const char * object_get_description(Object* object) {
   return object->description;
 }
 
+STATUS object_set_movable(Object* object, BOOL bool){
+    if(object == NULL)
+        return ERROR;
+
+    object->movable = bool;
+    return OK;
+}
+
+BOOL object_get_movable(Object* object){
+    return object == NULL ? FALSE : object->movable;
+}
+
+STATUS object_set_dependency(Object* object, Id id){
+    if(object == NULL)
+        return ERROR;
+
+    object->dependency = id;
+    return OK;
+}
+
+Id object_get_dependency(Object* object){
+    return object == NULL ? FALSE : object->dependency;
+}
+
+STATUS object_set_openLink(Object* object, Id id){
+    if(object == NULL)
+        return ERROR;
+
+    object->openLink = id;
+    return OK;
+}
+
+Id object_get_openLink(Object* object){
+    return object == NULL ? FALSE : object->openLink;
+}
+
 STATUS object_set_illuminate(Object* object, BOOL bool){
     if(object == NULL)
         return ERROR;

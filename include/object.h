@@ -143,6 +143,81 @@ STATUS object_set_description(Object *obj, char *description);
 const char * object_get_description(Object* object);
 
 /**
+ * @brief Object movable setter
+ * 
+ * @author Jiri Zak
+ * @date 23-12-2021
+ * 
+ * @param object pointer to Object
+ * @param bool TRUE or FALSE
+ * 
+ * @return STATUS ERROR = 0, OK = 1
+ */
+STATUS object_set_movable(Object* object, BOOL bool);
+
+/**
+ * @brief Object movable getter
+ * 
+ * @author Jiri Zak
+ * @date 23-12-2021
+ * 
+ * @param object pointer to Object
+ * 
+ * @return object movable otherwise FALSE
+ */
+BOOL object_get_movable(Object* object);
+
+/**
+ * @brief Object dependency setter
+ * 
+ * @author Jiri Zak
+ * @date 23-12-2021
+ * 
+ * @param object pointer to Object
+ * @param bool TRUE or FALSE
+ * 
+ * @return STATUS ERROR = 0, OK = 1
+ */
+STATUS object_set_dependency(Object* object, Id id);
+
+/**
+ * @brief Object dependency getter
+ * 
+ * @author Jiri Zak
+ * @date 23-12-2021
+ * 
+ * @param object pointer to Object
+ * 
+ * @return object dependency otherwise NO_ID
+ */
+Id object_get_dependency(Object* object);
+
+/**
+ * @brief Object openLink setter
+ * 
+ * @author Jiri Zak
+ * @date 23-12-2021
+ * 
+ * @param object pointer to Object
+ * @param bool TRUE or FALSE
+ * 
+ * @return STATUS ERROR = 0, OK = 1
+ */
+STATUS object_set_openLink(Object* object, Id id);
+
+/**
+ * @brief Object openLink getter
+ * 
+ * @author Jiri Zak
+ * @date 23-12-2021
+ * 
+ * @param object pointer to Object
+ * 
+ * @return object openLink otherwise NO_ID
+ */
+Id object_get_openLink(Object* object);
+
+/**
  * @brief Object illuminate setter
  * 
  * @author Jiri Zak
@@ -163,7 +238,7 @@ STATUS object_set_illuminate(Object* object, BOOL bool);
  * 
  * @param object pointer to Object
  * 
- * @return object turnedOn otherwise FALSE
+ * @return object iluminate otherwise FALSE
  */
 BOOL object_get_illuminate(Object* object);
 
