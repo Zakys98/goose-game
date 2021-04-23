@@ -28,7 +28,9 @@ char *cmd_to_str[N_CMD][N_CMDT] =
      {"l", "Left"},
      {"r", "Right"},
 	 {"m", "Move"},
-     {"i", "Inspect"}};
+     {"i", "Inspect"},
+     {"ton", "Turn on"},
+     {"tof", "Turn off"}};
 
 T_Command get_user_input() {
     T_Command cmd = NO_CMD;

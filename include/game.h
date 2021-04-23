@@ -106,17 +106,6 @@ Space* game_get_space(Game* game, Id id);
 Id game_get_player_location(Game* game);
 
 /**
- * @brief gets space by id
- *
- * @author Alba Delgado and Eva Moresova
- * @date 20-04-2021
- * 
- * @param game pointer to game and id
- * @return pointer to space with that id
- */
-Space *game_get_space_by_id(Game *game, Id id);
-
-/**
  * @brief object getter with id
  *
  * @author Eva Moresova

@@ -26,7 +26,7 @@ struct _Game {
     char description[50];
 };
 
-#define N_CALLBACK 11
+#define N_CALLBACK 13
 
 /**
    Define the function type for the callbacks
@@ -99,6 +99,10 @@ STATUS game_callback_move(Game *game);
 
 STATUS game_callback_inspect(Game *game);
 
+STATUS game_callback_turn_on(Game *game);
+
+STATUS game_callback_turn_off(Game *game);
+
 static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_unknown,
     game_callback_exit,
@@ -110,23 +114,13 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_left,
     game_callback_right,
     game_callback_move,
-    game_callback_inspect};
+    game_callback_inspect,
+    game_callback_turn_on,
+    game_callback_turn_off};
 
 /**
    Private functions prototypes
 */
-
-/**
- * @brief space getter from position
- *
- * @author Eva Moresova
- * @date 12-02-2021
- * 
- * @param game pointer to game 
- * @param position index of position in position array
- * @return Id of the space at position
- */
-Id game_get_space_id_at(Game *game, int position);
 
 /**
  * @brief player location setter 
@@ -189,14 +183,6 @@ STATUS game_destroy(Game *game) {
     return OK;
 }
 
-Id game_get_space_id_at(Game *game, int position) {
-    if (position < 0 || position >= MAX_SPACES) {
-        return NO_ID;
-    }
-
-    return space_get_id(game->spaces[position]);
-}
-
 Space *game_get_space(Game *game, Id id) {
     if (id == NO_ID) {
         return NULL;
@@ -254,15 +240,6 @@ Object *game_get_object_by_name(Game *game, char *name) {
 
 STATUS game_set_player_location(Game *game, Id s) {
     return player_set_location(game->player, s);
-}
-
-Space *game_get_space_by_id(Game *game, Id id) {
-    for (int i = 0; game->spaces[i] != NULL; i++) {
-        if (space_get_id(game->spaces[i]) == id) {
-            return game->spaces[i];
-        }
-    }
-    return NULL;
 }
 
 Id game_get_player_location(Game *game) {
@@ -486,18 +463,13 @@ STATUS game_callback_move(Game *game) {
 }
 
 STATUS game_callback_inspect(Game *game) {
-    char input[20];
-    Object *obj = NULL;
+    char input[20]; 
     memset(game->description, '\0', 50);
 
-    Space *location = game_get_space(game, game_get_player_location(game));
+    Space *space = game_get_space(game, game_get_player_location(game));
 
     if (scanf("%s", input) > 0) {
-        if (space_objects_count(location) == 0)
-            return ERROR;
-
         if (strcasecmp(input, "s") == 0 || strcasecmp(input, "space") == 0) {
-            Space *space = game_get_space_by_id(game, game_get_player_location(game));
             strcat(game->description, "space - ");
             strcat(game->description, space_get_description(space));
             return OK;
@@ -506,17 +478,7 @@ STATUS game_callback_inspect(Game *game) {
             if (obj == NULL)
                 return ERROR;
 
-            Space *space = game_get_space_by_id(game, game_get_player_location(game));
-            if (space_hasObject(space, object_get_id(obj)) == TRUE) {
-                strcat(game->description, object_get_name(obj));
-                strcat(game->description, " - ");
-                strcat(game->description, object_get_description(obj));
-                return OK;
-            }
-        }
-
-        for (int i = 0; i < player_getnObjects(game->player); i++) {
-            if (player_search_inventory(game->player, game->objects[i]) == TRUE) {
+            if (space_hasObject(space, object_get_id(obj)) == TRUE || player_search_inventory(game->player, obj) == TRUE) {
                 strcat(game->description, object_get_name(obj));
                 strcat(game->description, " - ");
                 strcat(game->description, object_get_description(obj));
@@ -524,5 +486,41 @@ STATUS game_callback_inspect(Game *game) {
             }
         }
     }
+    return ERROR;
+}
+
+STATUS game_callback_turn_on(Game *game) {
+    char input[20];
+
+    if (scanf("%s", input) > 0) {
+        Object *obj = game_get_object_by_name(game, input);
+        if (obj == NULL || object_get_illuminate(obj) == FALSE)
+            return ERROR;
+
+        Space *playerLocation = game_get_space(game, game_get_player_location(game));
+        if (space_hasObject(playerLocation, object_get_id(obj)) == TRUE || player_search_inventory(game->player, obj) == TRUE) {
+            object_set_turnedOn(obj, TRUE);
+            return OK;
+        }
+    }
+
+    return ERROR;
+}
+
+STATUS game_callback_turn_off(Game *game) {
+    char input[20];
+
+    if (scanf("%s", input) > 0) {
+        Object *obj = game_get_object_by_name(game, input);
+        if (obj == NULL || object_get_illuminate(obj) == FALSE)
+            return ERROR;
+
+        Space *playerLocation = game_get_space(game, game_get_player_location(game));
+        if (space_hasObject(playerLocation, object_get_id(obj)) == TRUE || player_search_inventory(game->player, obj) == TRUE) {
+            object_set_turnedOn(obj, FALSE);
+            return OK;
+        }
+    }
+
     return ERROR;
 }
