@@ -1,10 +1,10 @@
 /** 
- * @brief It implements the game reader interface
+ * @brief It implements the game management interface for loading and saving the state of game.
  * 
  * @file game_reader.c
  * @author Eva Moresova
- * @version 3.0 
- * @date 19-04-2021 
+ * @version 4.0 
+ * @date 26-04-2021 
  * @copyright GNU Public License
  */
 
@@ -274,4 +274,27 @@ STATUS game_load_links(Game* game, char* line) {
 	complete_links(secondSpace, firstId, secondId, id, name, open);
 
     return OK;
+}
+struct _Game {
+    Player *player;
+    Object *objects[MAX_OBJECTS];
+    Space *spaces[MAX_SPACES + 1];
+    T_Command last_cmd;
+    Dice *dice;
+    FILE *log;
+    char description[50];
+};
+
+STATUS game_management_save(char* filename, Game* game) {
+	FILE* out = fopen(filename, "w");
+	if (out == NULL) return ERROR;
+
+	fclose(out);
+}
+
+STATUS game_management_load(char* filename) {
+	FILE* in = fopen(filename, "r");
+	if (in == NULL) return ERROR;
+
+	fclose(in);
 }
