@@ -24,6 +24,7 @@ struct _Game {
     Dice *dice;
     FILE *log;
     char description[50];
+    char argument[20]; //Argument used after a command
 };
 
 #define N_CALLBACK 16
@@ -399,6 +400,13 @@ int game_get_number_object(Game *game) {
     return counter;
 }
 
+char *game_get_argument(Game *game) {
+    if (game == NULL)
+        return NULL;
+
+    return game->argument;
+}
+
 char *game_get_description(Game *game) {
     if (game == NULL || game->description[0] == '\0') return NULL;
     return game->description;
@@ -484,6 +492,7 @@ STATUS game_callback_take(Game *game) {
         return ERROR;
 
     if (scanf("%s", input) > 0) {
+        strcpy(game->argument, input);
         if (player_inventory_full(game->player))
             return ERROR;
         
@@ -507,6 +516,7 @@ STATUS game_callback_take(Game *game) {
 STATUS game_callback_drop(Game *game) {
     char input[20];
     if (scanf("%s", input) > 0) {
+        strcpy(game->argument, input);
         Object *obj = game_get_object_by_name(game, input);
         if (obj == NULL)
             return ERROR;
@@ -549,6 +559,7 @@ STATUS game_callback_move(Game *game) {
     if (scanf("%s", input) <= 0)
         return ERROR;
 
+    strcpy(game->argument, input);
     if (strcmp(input, "north") == 0 || strcmp(input, "n") == 0) {
         return game_callback_back(game);
     } else if (strcmp(input, "south") == 0 || strcmp(input, "s") == 0) {
@@ -569,6 +580,7 @@ STATUS game_callback_inspect(Game *game) {
     Space *space = game_get_space(game, game_get_player_location(game));
 
     if (scanf("%s", input) > 0) {
+        strcpy(game->argument, input);
         if (strcasecmp(input, "s") == 0 || strcasecmp(input, "space") == 0) {
             strcat(game->description, "space - ");
             strcat(game->description, space_get_description(space));
@@ -593,6 +605,7 @@ STATUS game_callback_turn_on(Game *game) {
     char input[20];
 
     if (scanf("%s", input) > 0) {
+        strcpy(game->argument, input);
         Object *obj = game_get_object_by_name(game, input);
         if (obj == NULL || object_get_illuminate(obj) == FALSE)
             return ERROR;
@@ -611,6 +624,7 @@ STATUS game_callback_turn_off(Game *game) {
     char input[20];
 
     if (scanf("%s", input) > 0) {
+        strcpy(game->argument, input);
         Object *obj = game_get_object_by_name(game, input);
         if (obj == NULL || object_get_illuminate(obj) == FALSE)
             return ERROR;

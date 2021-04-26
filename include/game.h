@@ -243,6 +243,14 @@ int game_get_number_object(Game* game);
  */
 BOOL game_logfile_exist(Game* game);
 
+/**
+ * @brief Returns the arguement used after some commands (move west for example)
+ * @author Ivan del Horno
+ * @param game pointer to game
+ * @return string of the command
+ */
+char *game_get_argument(Game* game);
+
 char* game_get_description(Game* game);
 
 STATUS game_set_dice(Game* game, Dice* dice);
