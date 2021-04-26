@@ -26,7 +26,7 @@ struct _Game {
     char description[50];
 };
 
-#define N_CALLBACK 13
+#define N_CALLBACK 14
 
 /**
    Define the function type for the callbacks
@@ -103,6 +103,8 @@ STATUS game_callback_turn_on(Game *game);
 
 STATUS game_callback_turn_off(Game *game);
 
+STATUS game_callback_open_link_with_obj(Game *game);
+
 static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_unknown,
     game_callback_exit,
@@ -116,7 +118,8 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_move,
     game_callback_inspect,
     game_callback_turn_on,
-    game_callback_turn_off};
+    game_callback_turn_off,
+    game_callback_open_link_with_obj};
 
 /**
    Private functions prototypes
@@ -133,6 +136,10 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
  * @return STATUS ERROR = 0, OK = 1
  */
 STATUS game_set_player_location(Game *game, Id id);
+
+Link *game_get_link_by_name(Game *game, const char *name);
+
+void game_drop_object(Game *game, Space *space, Object *obj);
 
 /**
    Game interface implementation
@@ -240,6 +247,46 @@ Object *game_get_object_by_name(Game *game, char *name) {
 
 STATUS game_set_player_location(Game *game, Id s) {
     return player_set_location(game->player, s);
+}
+
+Link *game_get_link_by_name(Game *game, const char *name) {
+    if (game == NULL || name == NULL)
+        return NULL;
+    for (int i = 0; i < 101 && game->spaces[i] != NULL; i++) {
+        Link *east = space_get_east(game->spaces[i]);
+        if (east != NULL) {
+            if (strcmp(link_get_name(east), name) == 0)
+                return east;
+        }
+        Link *west = space_get_west(game->spaces[i]);
+        if (west != NULL) {
+            if (strcmp(link_get_name(west), name) == 0)
+                return west;
+        }
+        Link *north = space_get_north(game->spaces[i]);
+        if (north != NULL) {
+            if (strcmp(link_get_name(north), name) == 0)
+                return north;
+        }
+        Link *south = space_get_south(game->spaces[i]);
+        if (south != NULL) {
+            if (strcmp(link_get_name(south), name) == 0)
+                return south;
+        }
+    }
+    return NULL;
+}
+
+void game_drop_object(Game *game, Space *space, Object *obj) {
+    if (game == NULL || space == NULL || obj == NULL)
+        return;
+
+    if (object_get_dependency(obj) != NO_ID) {
+        game_drop_object(game, space, game_get_object(game, object_get_dependency(obj)));
+    }
+
+    space_add_object(space, object_get_id(obj));
+    object_set_location(obj, space_get_id(space));
 }
 
 Id game_get_player_location(Game *game) {
@@ -388,12 +435,17 @@ STATUS game_callback_take(Game *game) {
         return ERROR;
 
     if (scanf("%s", input) > 0) {
-        if (player_inventory_full(game->player)) {
+        if (player_inventory_full(game->player))
             return ERROR;
-        }
+        
         Object *obj = game_get_object_by_name(game, input);
-        if (obj == NULL)
+        if (obj == NULL || object_get_movable(obj) == FALSE)
             return ERROR;
+
+        if(object_get_dependency(obj) != NO_ID){
+            if(inventory_has_id(player_get_inventory(game->player), object_get_dependency(obj)) == FALSE)
+                return ERROR;
+        }
 
         if (space_remove_object(location, object_get_id(obj)) == ERROR)
             return ERROR;
@@ -414,8 +466,7 @@ STATUS game_callback_drop(Game *game) {
         if (player_delete_object(game->player, obj) == ERROR)
             return ERROR;
 
-        space_add_object(s, object_get_id(obj));
-        object_set_location(obj, space_get_id(s));
+        game_drop_object(game, s, obj);
     }
     return OK;
 }
@@ -463,7 +514,7 @@ STATUS game_callback_move(Game *game) {
 }
 
 STATUS game_callback_inspect(Game *game) {
-    char input[20]; 
+    char input[20];
     memset(game->description, '\0', 50);
 
     Space *space = game_get_space(game, game_get_player_location(game));
@@ -521,6 +572,28 @@ STATUS game_callback_turn_off(Game *game) {
             return OK;
         }
     }
+
+    return ERROR;
+}
+
+STATUS game_callback_open_link_with_obj(Game *game) {
+    char input[20] = {0};
+
+    scanf("%s", input);
+    Link *link = game_get_link_by_name(game, input);
+    if (link == NULL || player_get_location(game->player) != link_get_first_space(link))
+        return ERROR;
+
+    scanf("%s", input);
+    if (strcmp(input, "with") != 0)
+        return ERROR;
+
+    scanf("%s", input);
+    Object *object = game_get_object_by_name(game, input);
+    if (object == NULL || player_search_inventory(game->player, object) == FALSE || object_get_openLink(object) != link_get_id(link))
+        return ERROR;
+
+    link_set_opened(link, TRUE);
 
     return ERROR;
 }
