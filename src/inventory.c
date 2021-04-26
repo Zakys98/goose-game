@@ -144,28 +144,23 @@ Id *inventory_get_elements(Inventory *i)
 
 BOOL inventory_has_id(Inventory *i, Id id)
 {
-	int j;
-	Id *ids = NULL;
+	Id *ids = inventory_get_elements(i);
 
-	if (i == NULL || id == NO_ID)
+	if (i == NULL || id == NO_ID || ids == NULL)
 	{
 		return FALSE;
 	}
 
-	ids = inventory_get_elements(i);
-	if (ids == NULL)
-	{
-		return FALSE;
-	}
-
-	for (j = 0; j < i->capacity; j++)
+	for (int j = 0; j < i->capacity; j++)
 	{
 		if (ids[j] == id)
 		{
+			free(ids);
 			return TRUE;
 		}
 	}
 
+	free(ids);
 	return FALSE;
 }
 

@@ -1,5 +1,5 @@
 /** 
- * @brief It defines the die interface
+ * @brief It defines the die interface 
  * 
  * @file die.c
  * @author Jiri Zak

@@ -25,6 +25,11 @@ struct _Obj {
     char name[WORD_SIZE + 1];
 	Id location;
     char description[WORD_SIZE + 1];
+    BOOL movable;
+    Id dependency;
+    Id openLink;
+    BOOL illuminate;
+    BOOL turnedOn;
 };
 
 Object *object_create(Id id) {
@@ -33,6 +38,11 @@ Object *object_create(Id id) {
         return NULL;
     o->id = id;
 	o->location = NO_ID;
+    o->movable = FALSE;
+    o->dependency = NO_ID;
+    o->openLink = NO_ID;
+    o->illuminate = FALSE;
+    o->turnedOn = FALSE;
     memset(o->description, '\0', WORD_SIZE + 1);
     
     return o;
@@ -105,4 +115,64 @@ const char * object_get_description(Object* object) {
     return NULL;
   }
   return object->description;
+}
+
+STATUS object_set_movable(Object* object, BOOL bool){
+    if(object == NULL)
+        return ERROR;
+
+    object->movable = bool;
+    return OK;
+}
+
+BOOL object_get_movable(Object* object){
+    return object == NULL ? FALSE : object->movable;
+}
+
+STATUS object_set_dependency(Object* object, Id id){
+    if(object == NULL)
+        return ERROR;
+
+    object->dependency = id;
+    return OK;
+}
+
+Id object_get_dependency(Object* object){
+    return object == NULL ? FALSE : object->dependency;
+}
+
+STATUS object_set_openLink(Object* object, Id id){
+    if(object == NULL)
+        return ERROR;
+
+    object->openLink = id;
+    return OK;
+}
+
+Id object_get_openLink(Object* object){
+    return object == NULL ? FALSE : object->openLink;
+}
+
+STATUS object_set_illuminate(Object* object, BOOL bool){
+    if(object == NULL)
+        return ERROR;
+
+    object->illuminate = bool;
+    return OK;
+}
+
+BOOL object_get_illuminate(Object* object){
+    return object == NULL ? FALSE : object->illuminate;
+}
+
+STATUS object_set_turnedOn(Object* object, BOOL bool){
+    if(object == NULL)
+        return ERROR;
+
+    object->turnedOn = bool;
+    return OK;
+}
+
+BOOL object_get_turnedOn(Object* object){
+    return object == NULL ? FALSE : object->turnedOn;
 }
