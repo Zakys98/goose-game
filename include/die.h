@@ -74,4 +74,6 @@ void dice_print(Dice *);
 
 STATUS dice_save(FILE*, Dice*);
 
+STATUS dice_set_last_roll(Dice*, int);
+
 #endif

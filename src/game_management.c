@@ -67,7 +67,7 @@ STATUS game_management_load_inventory(Game* game, char* line);
 STATUS game_management_load_dice(Game* game, char* line);
 
 // Implementation
-STATUS game_management_load(Game* game, char* filename) {
+STATUS game_management_load(char* filename, Game* game) {
     FILE* file = NULL;
     char line[WORD_SIZE] = "";
     STATUS status = OK;
@@ -90,9 +90,9 @@ STATUS game_management_load(Game* game, char* filename) {
             game_load_player(game, line);
         } else if (strncmp("#l:", line, 3) == 0) {
             game_load_links(game, line);
-        } else if (strncmp("#i:", line, 3) == 0) {
+        } else if (strncmp("#i", line, 2) == 0) {
 			game_management_load_inventory(game, line);
-		} else if (strncmp("#d:", line, 3) == 0) {
+		} else if (strncmp("#d", line, 2) == 0) {
 			game_management_load_dice(game, line);
 		}
     }
@@ -194,9 +194,21 @@ STATUS game_load_space(Game* game, char* line) {
     return OK;
 }
 
+struct _Obj {
+    Id id;
+    char name[WORD_SIZE + 1];
+	Id location;
+    char description[WORD_SIZE + 1];
+    BOOL movable;
+    Id dependency;
+    Id openLink;
+    BOOL illuminate;
+    BOOL turnedOn;
+};
 STATUS game_load_object(Game* game, char* line) {
     char* toks = NULL;
     char name[WORD_SIZE] = "";
+	char description[4*WORD_SIZE] = "";
     Id id = NO_ID;
     Id space = NO_ID;
 
@@ -204,12 +216,40 @@ STATUS game_load_object(Game* game, char* line) {
     id = atol(toks);
     toks = strtok(NULL, "|");
     strcpy(name, toks);
+	toks = strtok(NULL, "|");
+    strcpy(description, toks);
     toks = strtok(NULL, "|");
     space = atol(toks);
 
     Object* obj = object_create(id);
     object_set_name(obj, name);
     object_set_location(obj, space);
+	object_set_description(obj, description);
+	
+/*	toks = strtok(NULL, "|");
+	id = atol(toks);
+	object_set_dependency(obj, id);
+	toks = strtok(NULL, "|");
+	id = atol(toks);
+	object_set_openLink(obj, id);
+	
+	toks = strtok(NULL, "|");
+	if (atoi(toks) == 1)
+		object_set_movable(obj, TRUE);
+	else
+		object_set_movable(obj, FALSE);
+
+	toks = strtok(NULL, "|");
+	if (atoi(toks) == 1)
+		object_set_illuminate(obj, TRUE);
+	else
+		object_set_illuminate(obj, FALSE);
+
+	toks = strtok(NULL, "|");
+	if (atoi(toks) == 1)
+		object_set_turnedOn(obj, TRUE);
+	else
+		object_set_turnedOn(obj, FALSE);*/
 
     return game_add_object(game, obj);
 }
@@ -314,15 +354,19 @@ STATUS game_management_load_inventory(Game* game, char* line) {
 
 STATUS game_management_load_dice(Game* game, char* line) {
 	char* toks = NULL;
+	int last_roll = -1;
     int min = 0;
 	int max = 0;
 
 	toks = strtok(line + 3, "|");
+	last_roll = atoi(toks);
+	toks = strtok(NULL, "|");
 	min = atoi(toks);
 	toks = strtok(NULL, "|");
 	max = atoi(toks);
 
 	Dice* dice = dice_create(min, max);
+	dice_set_last_roll(dice, last_roll);
 	if (dice != NULL) game_set_dice(game, dice);
 	return OK;
 }

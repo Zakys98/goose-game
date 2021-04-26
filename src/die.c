@@ -64,6 +64,13 @@ int dice_get_last_roll(Dice *d) {
     return dice_exist(d) ? d->last_roll : -1;
 }
 
+STATUS dice_set_last_roll(Dice* d, int roll) {
+	if (!dice_exist(d)) return ERROR;
+
+	d->last_roll = roll;
+	return OK;
+}
+
 void dice_print(Dice *d) {
     if (dice_not_exist(d))
         return;
@@ -73,6 +80,6 @@ void dice_print(Dice *d) {
 STATUS dice_save(FILE* fp, Dice* d) {
 	if (d == NULL || fp == NULL) return ERROR;
 
-	fprintf(fp, "#d|%d|%d\n", d->minimum, d->maximum);
+	fprintf(fp, "#d|%d|%d|%d\n", d->last_roll, d->minimum, d->maximum);
 	return OK;
 }

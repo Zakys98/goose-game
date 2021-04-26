@@ -14,12 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/**
- * Structure for Object
- * Id id
- * char[] name
- * id location 
- */
 struct _Obj {
     Id id;
     char name[WORD_SIZE + 1];
@@ -180,9 +174,9 @@ BOOL object_get_turnedOn(Object* object){
 STATUS object_save(FILE* fp, Object* o) {
 	if (o == NULL || fp == NULL) return ERROR;
 	
-	//TODO add all attributes
-	//#o:1|key|3
-	fprintf(fp, "#o:%ld|%s|%ld\n", o->id, o->name, o->location);
+	//#o:id|name|description|location|dependency|openLink|movable|illuminate|turnedOn
+	fprintf(fp, "#o:%ld|%s|%s|%ld|%ld|%ld|%d|%d|%d\n", 
+	o->id, o->name, o->description, o->location, o->dependency, o->openLink, o->movable, o->illuminate, o->turnedOn);
 
 	return OK;
 } 

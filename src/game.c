@@ -26,7 +26,7 @@ struct _Game {
     char description[50];
 };
 
-#define N_CALLBACK 14
+#define N_CALLBACK 16
 
 /**
    Define the function type for the callbacks
@@ -105,6 +105,10 @@ STATUS game_callback_turn_off(Game *game);
 
 STATUS game_callback_open_link_with_obj(Game *game);
 
+STATUS game_callback_save(Game *game);
+
+STATUS game_callback_load(Game *game);
+
 static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_unknown,
     game_callback_exit,
@@ -119,7 +123,9 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_inspect,
     game_callback_turn_on,
     game_callback_turn_off,
-    game_callback_open_link_with_obj};
+    game_callback_open_link_with_obj,
+	game_callback_save,
+	game_callback_load};
 
 /**
    Private functions prototypes
@@ -171,7 +177,7 @@ STATUS game_create_from_file(Game *game, char *filename) {
     if (game_create(game) == ERROR)
         return ERROR;
 
-    if (game_management_load(game, filename) == ERROR)
+    if (game_management_load(filename, game) == ERROR)
         return ERROR;
 
     return OK;
@@ -188,6 +194,26 @@ STATUS game_destroy(Game *game) {
     free(game);
 
     return OK;
+}
+
+STATUS game_clear(Game* game) {
+	player_destroy(&game->player);
+	for (int i = 0; (i < MAX_SPACES) && (game->spaces[i] != NULL); i++) {
+        space_destroy(game->spaces + i);
+		game->spaces[i] = NULL;
+    }
+	for (int i = 0; (i < MAX_OBJECTS) && (game->objects[i] != NULL); i++) {
+		object_destroy(game->objects + i);
+		game->objects[i] = NULL;
+	}
+	dice_destroy(&game->dice);
+	game->description[0] = '\0';
+
+	if (game_logfile_exist(game)) {
+        fclose(game->log);
+		game->log = NULL;
+	}
+	return OK;
 }
 
 Space *game_get_space(Game *game, Id id) {
@@ -396,20 +422,10 @@ BOOL game_is_over(Game *game) {
     (void)game;
     return FALSE;
 }
-    // Player *player;
-    // Object *objects[MAX_OBJECTS];
-    // Space *spaces[MAX_SPACES + 1];
-    // T_Command last_cmd;
-    // Dice *dice;
-    // FILE *log;
-    // char description[50];
+
 STATUS game_save(FILE* fp, Game* g) {
 	if (g == NULL || fp == NULL) return ERROR;
 
-	for (int i = 0; i < game_get_number_object(g); i++) {
-		object_save(fp, g->objects[i]);
-	}
-	player_save(fp, g->player);
 	for (int i = 0; i < MAX_SPACES; i++) {
 		if (g->spaces[i] != NULL)
 			space_save(fp, g->spaces[i]);
@@ -417,6 +433,10 @@ STATUS game_save(FILE* fp, Game* g) {
 			break;
 	}
 	dice_save(fp, g->dice);
+	for (int i = 0; i < game_get_number_object(g); i++) {
+		object_save(fp, g->objects[i]);
+	}
+	player_save(fp, g->player);
 	return OK;
 }
 
@@ -625,4 +645,24 @@ STATUS game_callback_open_link_with_obj(Game *game) {
     link_set_opened(link, TRUE);
 
     return ERROR;
+}
+
+STATUS game_callback_save(Game *game) {
+	char input[20] = {0};
+    
+	if (scanf("%s", input) > 0) {
+		return game_management_save(input, game);
+	}
+	return ERROR;
+}
+
+STATUS game_callback_load(Game *game) {
+	char input[20] = {0};
+
+	game_clear(game);
+
+	if (scanf("%s", input) > 0) {
+		return game_management_load(input, game);
+	}
+	return ERROR;
 }

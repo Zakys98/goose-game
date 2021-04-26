@@ -54,14 +54,14 @@
 #l:29|Lnk 29|21|25|0|
 #l:30|Lnk 30|8|16|0|
 #l:31|Lnk 31|22|1|0|
-#o:1|key|3
-#o:2|hook|3
-#o:3|cap|7
-#o:4|book|12
-#o:5|lantern|13
-#o:6|mirror|16
-#o:7|hat|20
-#o:8|letter|24
-#o:9|fire|9
-#o:10|torch|11
+#o:1|key|description|3
+#o:2|hook|description|3
+#o:3|cap|description|7
+#o:4|book|description|12
+#o:5|lantern|description|13
+#o:6|mirror|description|16
+#o:7|hat|description|20
+#o:8|letter|description|24
+#o:9|fire|description|9
+#o:10|torch|description|11
 #p:1|ply1|1|2|
