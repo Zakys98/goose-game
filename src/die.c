@@ -69,3 +69,10 @@ void dice_print(Dice *d) {
         return;
     printf("minimum: %d\nmaximum: %d\n last roll: %d\n", d->minimum, d->maximum, d->last_roll);
 }
+
+STATUS dice_save(FILE* fp, Dice* d) {
+	if (d == NULL || fp == NULL) return ERROR;
+
+	fprintf(fp, "#d|%d|%d\n", d->minimum, d->maximum);
+	return OK;
+}

@@ -63,8 +63,11 @@ STATUS game_load_player(Game* game, char* line);
  */
 STATUS game_load_links(Game* game, char* line);
 
+STATUS game_management_load_inventory(Game* game, char* line);
+STATUS game_management_load_dice(Game* game, char* line);
+
 // Implementation
-STATUS game_load_game(Game* game, char* filename) {
+STATUS game_management_load(Game* game, char* filename) {
     FILE* file = NULL;
     char line[WORD_SIZE] = "";
     STATUS status = OK;
@@ -87,7 +90,11 @@ STATUS game_load_game(Game* game, char* filename) {
             game_load_player(game, line);
         } else if (strncmp("#l:", line, 3) == 0) {
             game_load_links(game, line);
-        }
+        } else if (strncmp("#i:", line, 3) == 0) {
+			game_management_load_inventory(game, line);
+		} else if (strncmp("#d:", line, 3) == 0) {
+			game_management_load_dice(game, line);
+		}
     }
 
     if (ferror(file)) {
@@ -97,6 +104,17 @@ STATUS game_load_game(Game* game, char* filename) {
     fclose(file);
 
     return status;
+}
+
+STATUS game_management_save(char* filename, Game* game) {
+	FILE* out = fopen(filename, "w");
+	if (out == NULL) return ERROR;
+	
+	game_save(out, game);
+
+	fflush(out);
+	fclose(out);
+	return OK;
 }
 
 STATUS game_load_space(Game* game, char* line) {
@@ -236,17 +254,19 @@ BOOL cmp_link(Id id1, Id id2, Link* link) {
 	return FALSE;
 }
 
-Link* complete_links(Space* space, Id id1, Id id2, Id id, char* name, int open) {
+void complete_links(Space* space, Id id1, Id id2, Id id, char* name, int open) {
 	if (cmp_link(id1, id2, space_get_north(space)) == TRUE) {
 		modify_link(space_get_north(space), id, name, open);
-	} else if (cmp_link(id1, id2, space_get_west(space)) == TRUE) {
+	}
+	if (cmp_link(id1, id2, space_get_west(space)) == TRUE) {
 		modify_link(space_get_west(space), id, name, open);
-	} else if (cmp_link(id1, id2, space_get_south(space)) == TRUE) {
+	}
+	if (cmp_link(id1, id2, space_get_south(space)) == TRUE) {
 		modify_link(space_get_south(space), id, name, open);
-	} else if (cmp_link(id1, id2, space_get_east(space)) == TRUE) {
+	}
+	if (cmp_link(id1, id2, space_get_east(space)) == TRUE) {
 		modify_link(space_get_east(space), id, name, open);
 	}
-	return NULL;
 }
 
 STATUS game_load_links(Game* game, char* line) {
@@ -257,6 +277,9 @@ STATUS game_load_links(Game* game, char* line) {
 
 	toks = strtok(line + 3, "|");
 	id = atol(toks);
+	// if (id == 31) {
+	// 	printf("hehe");
+	// }
 	toks = strtok(NULL, "|");
 	strcpy(name, toks);
     toks = strtok(NULL, "|");
@@ -275,26 +298,31 @@ STATUS game_load_links(Game* game, char* line) {
 
     return OK;
 }
-struct _Game {
-    Player *player;
-    Object *objects[MAX_OBJECTS];
-    Space *spaces[MAX_SPACES + 1];
-    T_Command last_cmd;
-    Dice *dice;
-    FILE *log;
-    char description[50];
-};
 
-STATUS game_management_save(char* filename, Game* game) {
-	FILE* out = fopen(filename, "w");
-	if (out == NULL) return ERROR;
+STATUS game_management_load_inventory(Game* game, char* line) {
+	char* toks = NULL;
+    Id id = NO_ID;
 
-	fclose(out);
+	toks = strtok(line + 3, "|");
+	while (toks != NULL) {
+		id = atol(toks);
+		player_add_object(game_get_player(game), game_get_object(game, id));
+		toks = strtok(NULL, "|");
+	}
+	return OK;
 }
 
-STATUS game_management_load(char* filename) {
-	FILE* in = fopen(filename, "r");
-	if (in == NULL) return ERROR;
+STATUS game_management_load_dice(Game* game, char* line) {
+	char* toks = NULL;
+    int min = 0;
+	int max = 0;
 
-	fclose(in);
+	toks = strtok(line + 3, "|");
+	min = atoi(toks);
+	toks = strtok(NULL, "|");
+	max = atoi(toks);
+
+	Dice* dice = dice_create(min, max);
+	if (dice != NULL) game_set_dice(game, dice);
+	return OK;
 }

@@ -43,4 +43,5 @@ STATUS space_print(Space* space);
 const char *space_get_description(Space *space);
 BOOL space_hasObject(Space *space, Id id);
 
+STATUS space_save(FILE*, Space*);
 #endif

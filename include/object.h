@@ -13,6 +13,8 @@
 
 #include "types.h"
 
+#include <stdio.h>
+
 #define MAX_OBJECTS 50
 
 typedef struct _Obj Object;
@@ -153,7 +155,7 @@ const char * object_get_description(Object* object);
  * 
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS object_set_movable(Object* object, BOOL bool);
+STATUS object_set_movable(Object*, BOOL);
 
 /**
  * @brief Object movable getter
@@ -228,7 +230,7 @@ Id object_get_openLink(Object* object);
  * 
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS object_set_illuminate(Object* object, BOOL bool);
+STATUS object_set_illuminate(Object*, BOOL);
 
 /**
  * @brief Object illuminate getter
@@ -253,7 +255,7 @@ BOOL object_get_illuminate(Object* object);
  * 
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS object_set_turnedOn(Object* object, BOOL bool);
+STATUS object_set_turnedOn(Object*, BOOL);
 
 /**
  * @brief Object turnedOn getter
@@ -266,5 +268,7 @@ STATUS object_set_turnedOn(Object* object, BOOL bool);
  * @return object turnedOn otherwise FALSE
  */
 BOOL object_get_turnedOn(Object* object);
+
+STATUS object_save(FILE*, Object*);
 
 #endif

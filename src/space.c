@@ -262,3 +262,28 @@ const char *space_get_description(Space *space)
   }
   return space->description;
 }
+
+STATUS space_save(FILE* fp, Space* s) {
+	if (s == NULL || fp == NULL) return ERROR;
+	
+	// if (s->id == 22) {
+	// 	printf("hehe");
+	// }
+
+	//#s:1|Tile 1|-1|-1|2|-1
+	Link* l = space_get_north(s);
+	link_save(fp, l);
+	Id north = link_get_first_space(l) == s->id ? link_get_second_space(l) : link_get_first_space(l);	
+	l = space_get_south(s);
+	link_save(fp, l);
+	Id south = link_get_first_space(l) == s->id ? link_get_second_space(l) : link_get_first_space(l);
+	l = space_get_east(s);
+	link_save(fp, l);
+	Id east = link_get_first_space(l) == s->id ? link_get_second_space(l) : link_get_first_space(l);
+	l = space_get_west(s);
+	link_save(fp, l);
+	Id west = link_get_first_space(l) == s->id ? link_get_second_space(l) : link_get_first_space(l);
+	fprintf(fp, "#s:%ld|%s|%ld|%ld|%ld|%ld|%s|%s|%s\n", s->id, s->name, north, east, south, west, s->gdesc[0], s->gdesc[1], s->gdesc[2]);
+
+	return OK;
+} 

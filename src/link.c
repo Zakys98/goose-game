@@ -124,3 +124,11 @@ BOOL link_get_opened(Link* l) {
 void link_print(Link* l) {
     printf("%ld %s\n", l->id, l->name);
 }
+
+STATUS link_save(FILE* fp, Link* l) {
+	if (l == NULL || fp == NULL) return ERROR;
+	
+	//#l:1|Lnk1|1|2|0|
+	fprintf(fp, "#l:%ld|%s|%ld|%ld|%d|\n", l->id, l->name, l->first, l->second, l->opened);
+	return OK;
+} 

@@ -130,4 +130,6 @@ BOOL inventory_has_id(Inventory *i, Id id);
  */
 int inventory_print(Inventory *inv, FILE *f);
 
+STATUS inventory_save(FILE*, Inventory*);
+
 #endif

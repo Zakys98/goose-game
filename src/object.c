@@ -176,3 +176,13 @@ STATUS object_set_turnedOn(Object* object, BOOL bool){
 BOOL object_get_turnedOn(Object* object){
     return object == NULL ? FALSE : object->turnedOn;
 }
+
+STATUS object_save(FILE* fp, Object* o) {
+	if (o == NULL || fp == NULL) return ERROR;
+	
+	//TODO add all attributes
+	//#o:1|key|3
+	fprintf(fp, "#o:%ld|%s|%ld\n", o->id, o->name, o->location);
+
+	return OK;
+} 

@@ -13,6 +13,8 @@
 
 #include "types.h"
 
+#include <stdio.h>
+
 typedef struct dice Dice;
 
 /**
@@ -69,5 +71,7 @@ int dice_get_last_roll(Dice *);
  * @param d pointer to Dice
  */
 void dice_print(Dice *);
+
+STATUS dice_save(FILE*, Dice*);
 
 #endif

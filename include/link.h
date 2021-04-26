@@ -13,6 +13,8 @@
 
 #include "types.h"
 
+#include <stdio.h>
+
 typedef struct _Link Link;
 
 /**
@@ -160,5 +162,7 @@ BOOL link_get_opened(Link* l);
  * @param l pointer to Link
  */
 void link_print(Link* l);
+
+STATUS link_save(FILE*, Link*);
 
 #endif

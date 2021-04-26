@@ -148,3 +148,14 @@ int player_getnObjects(Player *p){
   }
   return inventory_get_nObjects(p->inventory);
 }
+
+
+STATUS player_save(FILE* fp, Player* p) {
+	if (p == NULL || fp == NULL) return ERROR;
+
+	//#p:1|ply1|1|2|
+	fprintf(fp, "#p:%ld|%s|%ld|%d\n", p->id, p->name, p->location, inventory_get_capacity(p->inventory));
+	inventory_save(fp, p->inventory);
+
+	return OK;
+}

@@ -225,7 +225,7 @@ T_Command game_get_last_command(Game* game);
  * @param filename file to load the spaces from
  * @return STATUS ERROR = 0, OK = 1
  */
-STATUS game_load_game(Game* game, char* filename);
+STATUS game_management_load(Game* game, char* filename);
 
 /**
  * @brief get number of objects
@@ -245,4 +245,6 @@ BOOL game_logfile_exist(Game* game);
 
 char* game_get_description(Game* game);
 
+STATUS game_set_dice(Game* game, Dice* dice);
+STATUS game_save(FILE*, Game*);
 #endif

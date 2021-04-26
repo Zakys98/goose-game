@@ -183,4 +183,6 @@ BOOL player_search_inventory(Player *p, Object *object);
  */
 int player_getnObjects(Player *p);
 
+STATUS player_save(FILE*, Player*);
+
 #endif

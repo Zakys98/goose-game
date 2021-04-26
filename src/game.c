@@ -171,7 +171,7 @@ STATUS game_create_from_file(Game *game, char *filename) {
     if (game_create(game) == ERROR)
         return ERROR;
 
-    if (game_load_game(game, filename) == ERROR)
+    if (game_management_load(game, filename) == ERROR)
         return ERROR;
 
     return OK;
@@ -343,6 +343,12 @@ STATUS game_set_player(Game *game, Player *p) {
     return OK;
 }
 
+STATUS game_set_dice(Game* game, Dice* dice) {
+	if (game == NULL || dice == NULL) return ERROR;
+	game->dice = dice;
+	return OK;
+}
+
 void game_print_data(Game *game) {
     int i = 0;
 
@@ -389,6 +395,29 @@ BOOL game_logfile_exist(Game *game) {
 BOOL game_is_over(Game *game) {
     (void)game;
     return FALSE;
+}
+    // Player *player;
+    // Object *objects[MAX_OBJECTS];
+    // Space *spaces[MAX_SPACES + 1];
+    // T_Command last_cmd;
+    // Dice *dice;
+    // FILE *log;
+    // char description[50];
+STATUS game_save(FILE* fp, Game* g) {
+	if (g == NULL || fp == NULL) return ERROR;
+
+	for (int i = 0; i < game_get_number_object(g); i++) {
+		object_save(fp, g->objects[i]);
+	}
+	player_save(fp, g->player);
+	for (int i = 0; i < MAX_SPACES; i++) {
+		if (g->spaces[i] != NULL)
+			space_save(fp, g->spaces[i]);
+		else
+			break;
+	}
+	dice_save(fp, g->dice);
+	return OK;
 }
 
 /**

@@ -177,3 +177,19 @@ int inventory_print(Inventory *inv, FILE *f)
 	c += set_print(inv->objects, f);
 	return c;
 }
+
+STATUS inventory_save(FILE* fp, Inventory* i) {
+	if (i == NULL || fp == NULL) return ERROR;
+
+	//#i|1|2|3|4...
+	Id* ids = inventory_get_elements(i);
+	if (ids != NULL) {
+		fprintf(fp, "#i");
+		for (int j = 0; j < inventory_get_nObjects(i); j++) {
+			fprintf(fp, "|%ld", ids[j]);
+		}
+		fprintf(fp, "\n");
+		free(ids);
+	}
+	return OK;
+}
