@@ -7,6 +7,12 @@ DOC_DIR := doc
 OBJS := $(OBJ_DIR)/dialogue.o $(OBJ_DIR)/command.o $(OBJ_DIR)/die.o $(OBJ_DIR)/game_loop.o $(OBJ_DIR)/game_management.o $(OBJ_DIR)/game.o $(OBJ_DIR)/graphic_engine.o $(OBJ_DIR)/object.o $(OBJ_DIR)/player.o $(OBJ_DIR)/screen.o $(OBJ_DIR)/set.o $(OBJ_DIR)/space.o $(OBJ_DIR)/inventory.o $(OBJ_DIR)/link.o
 TESTS=set_test space_test die_test link_test inventory_test player_test object_test game_management_test
 
+######################################################################
+# $@ is the item on the left of ':'
+# $< is the first item in the dependency list
+# $^ all the files on the right of ':' (dependencies)
+######################################################################
+
 .PHONY: all clean docs test run_tests
 
 all: $(TARGET)
