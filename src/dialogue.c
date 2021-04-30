@@ -52,6 +52,28 @@ char *dialogue_print(T_Command cmd, STATUS st, Game *game)
     if (st != OK && st != ERROR)
         return NULL;
 
+    // Compares the previous command to the actual one, we dont want to print this if there was no command
+    if (game_get_prev_command(game) == cmd && game_get_prev_command(game) != NO_CMD)
+    {
+        // If they are the same and there is an error, message is shown
+        if (st == ERROR)
+        {
+            result = malloc(sizeof(char) * 300);
+            strcpy(result, "You have done this before without success.");
+            return result;
+        }
+    }
+
+    // If there is an error we keep the command
+    if (st == ERROR)
+    {
+        game_set_prev_command(game, cmd);
+    }
+    else
+    {
+        // If there was no error we set it to NO_CMD so there are no errors when comparing them
+        game_set_prev_command(game, NO_CMD);
+    }
     /* Based on the introduced command, calls the needed function with the needed arguments */
     switch (cmd)
     {
@@ -145,7 +167,7 @@ char *_dialogue_unknown()
     if (!result)
         return NULL;
 
-    strcpy(result, "What was that command?");
+    strcpy(result, "This is not a valid action. Try again.");
     return result;
 }
 char *_dialogue_exit()
