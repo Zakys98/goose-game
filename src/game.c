@@ -24,7 +24,7 @@ struct _Game {
     Dice *dice;
     FILE *log;
     char description[50];
-    char argument[20]; //Argument used after a command
+    char *argument; //Argument used after a command
 };
 
 #define N_CALLBACK 16
@@ -169,6 +169,9 @@ STATUS game_create(Game *game) {
     game->log = NULL;
     game->last_cmd = NO_CMD;
     game->dice = dice_create(1, 6);
+    game->argument = (char *)malloc(sizeof(char)*21);
+    if (game->argument == NULL)
+        return ERROR;
     memset(game->description, '\0', 50);
 
     return OK;
@@ -192,6 +195,7 @@ STATUS game_destroy(Game *game) {
     if (game_logfile_exist(game))
         fclose(game->log);
 
+    free(game->argument);
     free(game);
 
     return OK;

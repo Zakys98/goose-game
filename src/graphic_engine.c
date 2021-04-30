@@ -202,6 +202,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
         //fprintf(game_get_log_file(game), " %s (%s): %s\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
         fprintf(game_get_log_file(game), " %s\n", toprint);
 
+
+    free(toprint);
     /* Dump to the terminal */
     screen_paint();
     printf("prompt:> ");
