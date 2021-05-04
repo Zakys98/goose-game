@@ -103,7 +103,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
     Space *space_act = NULL;
     char str[255];
     T_Command last_cmd = UNKNOWN;
-    extern char *cmd_to_str[N_CMD][N_CMDT];
+    //extern char *cmd_to_str[N_CMD][N_CMDT];
     char *objects = NULL, *toprint = NULL;
 
     /* Paint the in the map area */

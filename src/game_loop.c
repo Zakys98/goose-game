@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../include/game_rules.h"
 #include "../include/graphic_engine.h"
 
 // Prototypes
@@ -99,6 +100,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine) {
         graphic_engine_paint_game(gengine, game, s);
         command = get_user_input();
         s = game_update(game, command);
+        game_rules_random_command(game);
     }
 }
 
