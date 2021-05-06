@@ -146,7 +146,7 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
  */
 STATUS game_set_player_location(Game *game, Id id);
 
-Link *game_get_link_by_name(Game *game, const char *name);
+
 
 void game_drop_object(Game *game, Space *space, Object *obj);
 
@@ -175,6 +175,7 @@ STATUS game_create(Game *game)
     game->log = NULL;
     game->last_cmd = NO_CMD;
     game->prev_cmd = NO_CMD;
+    game->dice = dice_create(1, 6);
     game->argument = (char *)malloc(sizeof(char) * 21);
     if (game->argument == NULL)
         return ERROR;

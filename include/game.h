@@ -263,6 +263,8 @@ char *game_get_argument(Game* game);
 
 char* game_get_description(Game* game);
 
+Link *game_get_link_by_name(Game *game, const char *name);
+
 STATUS game_set_dice(Game* game, Dice* dice);
 STATUS game_save(FILE*, Game*);
 
