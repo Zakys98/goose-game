@@ -650,6 +650,26 @@ STATUS game_callback_right(Game *game)
     return OK;
 }
 
+STATUS game_callback_up(Game *game)
+{
+    Space *location = game_get_space(game, game_get_player_location(game));
+    Id next_location = link_get_second_space(space_get_up(location));
+    if (next_location == NO_ID)
+        return ERROR;
+    game_set_player_location(game, next_location);
+    return OK;
+}
+
+STATUS game_callback_down(Game *game)
+{
+    Space *location = game_get_space(game, game_get_player_location(game));
+    Id next_location = link_get_second_space(space_get_down(location));
+    if (next_location == NO_ID)
+        return ERROR;
+    game_set_player_location(game, next_location);
+    return OK;
+}
+
 STATUS game_callback_move(Game *game)
 {
     char input[20];
@@ -674,6 +694,14 @@ STATUS game_callback_move(Game *game)
     {
         return game_callback_right(game);
     }
+    else if (strcmp(input, "up") == 0 || strcmp(input, "u") == 0)
+    {
+        return game_callback_up(game);
+    }
+    else if (strcmp(input, "down") == 0 || strcmp(input, "d") == 0)
+    {
+        return game_callback_down(game);
+    }
 
     return ERROR;
 }
@@ -690,9 +718,12 @@ STATUS game_callback_inspect(Game *game)
         strcpy(game->argument, input);
         if (strcasecmp(input, "s") == 0 || strcasecmp(input, "space") == 0)
         {
+            if (space_get_illumination(space))
+            {
             strcat(game->description, "space - ");
-            strcat(game->description, space_get_description(space));
+            strcat(game->description, space_get_detailed_description(space));
             return OK;
+            }
         }
         else
         {
