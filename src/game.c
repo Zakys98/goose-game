@@ -175,7 +175,6 @@ STATUS game_create(Game *game)
     game->log = NULL;
     game->last_cmd = NO_CMD;
     game->prev_cmd = NO_CMD;
-    game->dice = dice_create(1, 6);
     game->argument = (char *)malloc(sizeof(char) * 21);
     if (game->argument == NULL)
         return ERROR;
