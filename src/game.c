@@ -530,28 +530,31 @@ STATUS game_save(FILE *fp, Game *g)
 Id choose_direction(Game *game, direction dir){
     Space *location = game_get_space(game, game_get_player_location(game));
     Id direction = NO_ID;
+    Link *l = NULL;
     switch (dir) {
     case NORTH:
-        direction = link_get_second_space(space_get_north(location));
+        l = space_get_north(location);
         break;
     case SOUTH:
-        direction = link_get_second_space(space_get_south(location));
+        l = space_get_south(location);
         break;
     case EAST:
-        direction = link_get_second_space(space_get_east(location));
+        l = space_get_east(location);
         break;
     case WEST:
-        direction = link_get_second_space(space_get_west(location));
+        l = space_get_west(location);
         break;
     case UP:
-        direction = link_get_second_space(space_get_up(location));
+        l = space_get_up(location);
         break;
     case DOWN:
-        direction = link_get_second_space(space_get_down(location));
+        l = space_get_down(location);
         break;
     default:
         break;
     }
+    if(link_get_opened(l) == TRUE)
+        direction = link_get_second_space(l);
     return direction;
 }
 
