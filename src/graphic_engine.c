@@ -144,7 +144,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
             screen_area_puts(ge->map, str);
             sprintf(str, "         |    %s   |", space_get_gdesc(space_act, 2));
             screen_area_puts(ge->map, str);
-            if (objects != NULL)
+            if (objects != NULL && space_get_illumination(space_act) == TRUE)
             {
                 int n = 10 - strlen(objects);
                 printf("%*c", n, ' ');
