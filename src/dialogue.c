@@ -89,13 +89,6 @@ char *dialogue_print(T_Command cmd, STATUS st, Game *game)
         return _dialogue_exit();
         break;
 
-    case NEXT:
-        return _dialogue_next(st);
-
-    case BACK:
-        return _dialogue_back(st);
-        break;
-
     case TAKE:
         return _dialogue_take(st, game);
         break;
@@ -106,14 +99,6 @@ char *dialogue_print(T_Command cmd, STATUS st, Game *game)
 
     case ROLL:
         return _dialogue_roll(st, game);
-        break;
-
-    case LEFT:
-        return _dialogue_left(st);
-        break;
-
-    case RIGHT:
-        return _dialogue_right(st);
         break;
 
     case MOVE:
@@ -358,18 +343,19 @@ char *_dialogue_move(STATUS st, Game *game)
         return NULL;
 
     desc = malloc(sizeof(char) * 300);
-    if (!result)
+    if (!desc)
         return NULL;
 
     arg = game_get_argument(game);
 
     // The same it is done in inspect command
     strcpy(desc, "space - ");
-    strcat(desc, space_get_description(game_get_space(game, game_get_player_location(game))));
-    //strcpy(desc, "temp description");
+    char temp[10] = {0};
+    sprintf(temp,"%ld", space_get_id(game_get_space(game, game_get_player_location(game))));
+    strcat(desc, temp);
+    
     if (desc == NULL)
     {
-        free(desc);
         strcpy(result, "There was an error getting the description of the space");
     }
     if (st == OK)
