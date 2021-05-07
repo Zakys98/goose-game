@@ -178,13 +178,8 @@ char *_dialogue_next(STATUS st)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "You cannot advance to the next space");
-        return result;
-    }
-
-    return NULL;
+    strcpy(result, "You cannot advance to the next space");
+    return result;
 }
 char *_dialogue_back(STATUS st)
 {
@@ -199,12 +194,8 @@ char *_dialogue_back(STATUS st)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "You cannot go to the previous space");
-        return result;
-    }
-    return NULL;
+    strcpy(result, "You cannot go to the previous space");
+    return result;
 }
 char *_dialogue_take(STATUS st, Game *game)
 {
@@ -228,13 +219,9 @@ char *_dialogue_take(STATUS st, Game *game)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "You cannot take that ");
-        strcat(result, arg);
-        return result;
-    }
-    return NULL;
+    strcpy(result, "You cannot take that ");
+    strcat(result, arg);
+    return result;
 }
 char *_dialogue_drop(STATUS st, Game *game)
 {
@@ -258,13 +245,9 @@ char *_dialogue_drop(STATUS st, Game *game)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "You cannot drop that ");
-        strcat(result, arg);
-        return result;
-    }
-    return NULL;
+    strcpy(result, "You cannot drop that ");
+    strcat(result, arg);
+    return result;
 }
 char *_dialogue_roll(STATUS st, Game *game)
 {
@@ -285,12 +268,8 @@ char *_dialogue_roll(STATUS st, Game *game)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "Something went wrong with the dice");
-        return result;
-    }
-    return NULL;
+    strcpy(result, "Something went wrong with the dice");
+    return result;
 }
 char *_dialogue_left(STATUS st)
 {
@@ -305,12 +284,8 @@ char *_dialogue_left(STATUS st)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "You cannot go to the left");
-        return result;
-    }
-    return NULL;
+    strcpy(result, "You cannot go to the left");
+    return result;
 }
 char *_dialogue_right(STATUS st)
 {
@@ -325,12 +300,8 @@ char *_dialogue_right(STATUS st)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "You cannot go to the right");
-        return result;
-    }
-    return NULL;
+    strcpy(result, "You cannot go to the right");
+    return result;
 }
 
 char *_dialogue_move(STATUS st, Game *game)
@@ -363,38 +334,26 @@ char *_dialogue_move(STATUS st, Game *game)
         if (strcmp(arg, "north") == 0 || strcmp(arg, "n") == 0)
         {
             strcpy(result, "You moved to the north. Now you are in ");
-            strcat(result, desc);
-            free(desc);
-            return result;
         }
         else if (strcmp(arg, "south") == 0 || strcmp(arg, "s") == 0)
         {
             strcpy(result, "You moved to the south. Now you are in ");
-            strcat(result, desc);
-            free(desc);
-            return result;
         }
         else if (strcmp(arg, "west") == 0 || strcmp(arg, "w") == 0)
         {
             strcpy(result, "You moved to the west. Now you are in ");
-            strcat(result, desc);
-            free(desc);
-            return result;
         }
         else if (strcmp(arg, "east") == 0 || strcmp(arg, "e") == 0)
         {
             strcpy(result, "You moved to the east. Now you are in ");
-            strcat(result, desc);
-            free(desc);
-            return result;
         }
         else
         {
             strcpy(result, "You moved to somewhere. Now you are in ");
-            strcat(result, desc);
-            free(desc);
-            return result;
         }
+        strcat(result, desc);
+        free(desc);
+        return result;
     }
 
     if (st == ERROR)
@@ -402,33 +361,25 @@ char *_dialogue_move(STATUS st, Game *game)
         if (strcmp(arg, "north") == 0 || strcmp(arg, "n") == 0)
         {
             strcpy(result, "You can't move to the north here");
-            free(desc);
-            return result;
         }
         else if (strcmp(arg, "south") == 0 || strcmp(arg, "s") == 0)
         {
             strcpy(result, "You can't move to the south here");
-            free(desc);
-            return result;
         }
         else if (strcmp(arg, "west") == 0 || strcmp(arg, "w") == 0)
         {
             strcpy(result, "You can't move to the west here");
-            free(desc);
-            return result;
         }
         else if (strcmp(arg, "east") == 0 || strcmp(arg, "e") == 0)
         {
             strcpy(result, "You can't move to the east here");
-            free(desc);
-            return result;
         }
         else
         {
             strcpy(result, "What was that direction?");
-            free(desc);
-            return result;
         }
+        free(desc);
+        return result;
     }
     return NULL;
 }
@@ -446,6 +397,7 @@ char *_dialogue_inspect(STATUS st, Game *game)
     if (desc == NULL)
     {
         strcpy(result, "There was an error inspecting the object");
+        return result;
     }
 
     if (st == OK)
@@ -455,12 +407,8 @@ char *_dialogue_inspect(STATUS st, Game *game)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "You cannot inspect that");
-        return result;
-    }
-    return NULL;
+    strcpy(result, "You cannot inspect that");
+    return result;
 }
 char *_dialogue_turnon(STATUS st)
 {
@@ -475,12 +423,9 @@ char *_dialogue_turnon(STATUS st)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "Couldn't be turnt on");
-        return result;
-    }
-    return NULL;
+    strcpy(result, "Couldn't be turnt on");
+    return result;
+
 }
 char *_dialogue_turnoff(STATUS st)
 {
@@ -495,12 +440,9 @@ char *_dialogue_turnoff(STATUS st)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "Couldn't be turnt off");
-        return result;
-    }
-    return NULL;
+    strcpy(result, "Couldn't be turnt off");
+    return result;
+
 }
 char *_dialogue_open(STATUS st)
 {
@@ -515,10 +457,6 @@ char *_dialogue_open(STATUS st)
         return result;
     }
 
-    if (st == ERROR)
-    {
-        strcpy(result, "Couldn't be turnt opened");
-        return result;
-    }
-    return NULL;
+    strcpy(result, "Couldn't be turnt opened");
+    return result;
 }
