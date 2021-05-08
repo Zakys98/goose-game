@@ -544,6 +544,28 @@ char *game_get_description(Game *game)
     return game->description;
 }
 
+char *game_get_space_description(Game *game)
+{
+    Id location;
+    Space *user_space;
+
+    if (game == NULL)
+        return NULL;
+
+    location = player_get_location(game->player);
+
+    for(int i=0; i < MAX_SPACES; i++)
+    {
+        if(space_get_id(game->spaces[i])== location)
+        {
+            user_space= game->spaces[i];
+            break;
+        }
+    }
+
+    return space_get_description(user_space);
+}
+
 void game_open_log_file(Game *game, char *filename)
 {
     if (game == NULL || filename == NULL)

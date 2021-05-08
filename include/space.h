@@ -24,6 +24,8 @@ Space* space_create(Id id);
 STATUS space_destroy(Space** space);
 Id space_get_id(Space* space);
 STATUS space_set_name(Space* space, char* name);
+STATUS space_set_description(Space *space, char *description);
+STATUS space_set_detailed_description(Space *space, char *detailed_description);
 const char* space_get_name(Space* space);
 STATUS space_set_north(Space* space, Link* l);
 Link* space_get_north(Space* space);

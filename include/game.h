@@ -270,6 +270,8 @@ BOOL game_logfile_exist(Game* game);
  */
 char *game_get_argument(Game* game);
 
+char* game_get_space_description(Game* game);
+
 char* game_get_description(Game* game);
 
 Link *game_get_link_by_name(Game *game, const char *name);

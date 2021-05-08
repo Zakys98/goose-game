@@ -247,6 +247,18 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game)
         }
         free(objectsOfPlayer);
     }
+
+    char *space_description = game_get_space_description(game); 
+
+    if (space_description != NULL)
+    {
+        sprintf(str, " ");
+        screen_area_puts(ge->descript, str);
+        sprintf(str, " Space description:");
+        screen_area_puts(ge->descript, str);
+        sprintf(str, " %s", space_description);
+        screen_area_puts(ge->descript, str);
+    }
     
     char *description = game_get_description(game); 
     
