@@ -244,7 +244,9 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game)
         }
         free(objectsOfPlayer);
     }
-    char *description = game_get_description(game);
+    
+    char *description = game_get_description(game); 
+    
     if (description != NULL)
     {
         sprintf(str, " ");

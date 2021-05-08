@@ -335,6 +335,18 @@ Link *game_get_link_by_name(Game *game, const char *name)
             if (strcmp(link_get_name(south), name) == 0)
                 return south;
         }
+        Link *up = space_get_up(game->spaces[i]);
+        if (up != NULL)
+        {
+            if (strcmp(link_get_name(up), name) == 0)
+                return up;
+        }
+        Link *down = space_get_down(game->spaces[i]);
+        if (down != NULL)
+        {
+            if (strcmp(link_get_name(down), name) == 0)
+                return down;
+        }
     }
     return NULL;
 }
@@ -702,6 +714,8 @@ STATUS game_callback_inspect(Game *game)
         }
         else
         {
+            if (space_get_illumination(space))
+            {
             Object *obj = game_get_object_by_name(game, input);
             if (obj == NULL)
                 return ERROR;
@@ -712,6 +726,7 @@ STATUS game_callback_inspect(Game *game)
                 strcat(game->description, " - ");
                 strcat(game->description, object_get_description(obj));
                 return OK;
+            }
             }
         }
     }
