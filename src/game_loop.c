@@ -94,13 +94,15 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
 
 void game_loop_run(Game *game, Graphic_engine *gengine) {
     T_Command command = NO_CMD;
+    T_Rules rule = NO_RULE;
     STATUS s = ERROR;
 
     while ((command != EXIT) && !game_is_over(game)) {
         graphic_engine_paint_game(gengine, game, s);
         command = get_user_input();
         s = game_update(game, command);
-        game_rules_random_command(game);
+        rule = game_get_last_rule(game);
+        game_rules_random_command(rule, game);
     }
 }
 

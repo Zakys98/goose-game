@@ -102,6 +102,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
     Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID;
     Space *space_act = NULL;
     char str[255];
+    T_Rules last_rule = NO_RULE;
     T_Command last_cmd = UNKNOWN;
     //extern char *cmd_to_str[N_CMD][N_CMDT];
     char *objects = NULL, *toprint = NULL;
@@ -193,7 +194,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
 
     /* Paint in the feedback area */
     last_cmd = game_get_last_command(game);
-    toprint = dialogue_print(last_cmd, s, game);
+    last_rule = game_get_last_rule(game);
+    toprint = dialogue_cmd_print(last_cmd, s, game);
+    strcat(toprint, dialogue_rule_print(last_rule, game));
     sprintf(str, "%s", toprint);
 
     //sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
