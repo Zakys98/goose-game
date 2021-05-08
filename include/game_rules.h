@@ -12,11 +12,12 @@
 #ifndef GAME_RULES_H
 #define GAME_RULES_H
 
-
 #include "types.h"
 #include "game.h"
 
 #include <stdio.h>
+
+// enum for rules type
 
 /**********************************
  *        Public Functions        *
@@ -28,6 +29,6 @@
  * @param game Pointer to the game
  * @return OK if the command was executed correctly, ERROR otherwise
  */
-STATUS game_rules_random_command(Game* game);
+STATUS game_rules_random_command(T_Rules rule, Game *game);
 
 #endif
