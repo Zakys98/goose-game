@@ -42,7 +42,7 @@ char *_dialogue_open(STATUS st);
  ******************************************/
 
 //I need a way of ppassing the input/argument inside here
-char *dialogue_print(T_Command cmd, STATUS st, Game *game)
+char *dialogue_cmd_print(T_Command cmd, STATUS st, Game *game)
 {
     char *result = NULL;
 
@@ -128,6 +128,55 @@ char *dialogue_print(T_Command cmd, STATUS st, Game *game)
         return result;
         break;
     }
+}
+
+char *dialogue_rule_print(T_Rules rule, Game *game)
+{
+    //char *result = NULL;
+
+    if (!game)
+        return "";
+
+    if (rule == NO_RULE)
+        return "";
+
+    switch (rule)
+    {
+    case TAKERULE:
+        return "    Did you pick something?";
+        break;
+    
+    case DROPRULE:
+        return "    Don't drop your things!";
+        break;
+
+    case DIERULE:
+        return "    Oops, you died";
+        break;
+
+    case CLOSERULE:
+        return "    Are this doors open?";
+        break;
+
+    case OPENRULE:
+        return "    Are this doors open?";
+        break;
+
+    case ONRULE:
+        return "    What happened with the light?";
+        break;
+
+    case OFFRULE:
+        return "    What happened with the light?";
+        break;
+
+    default:
+        return "";
+        break;
+    }
+
+
+    return "";
 }
 
 /******************************************
