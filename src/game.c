@@ -29,7 +29,16 @@ struct _Game
     char *argument; //Argument used after a command
 };
 
-#define N_CALLBACK 16
+typedef enum {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST,
+    UP,
+    DOWN
+} direction;
+
+#define N_CALLBACK 12
 
 /**
    Define the function type for the callbacks
@@ -42,8 +51,6 @@ typedef STATUS (*callback_fn)(Game *game);
 
 STATUS game_callback_unknown(Game *game);
 STATUS game_callback_exit(Game *game);
-STATUS game_callback_next(Game *game);
-STATUS game_callback_back(Game *game);
 
 /**
  * @brief take command, object from space, where player is, is taken. 
@@ -78,26 +85,6 @@ STATUS game_callback_drop(Game *game);
  */
 STATUS game_callback_roll(Game *game);
 
-/**
- * @brief callback for left command, player is able to move to left if possible.
- *
- * @author Jiri Zak
- * @date 01-03-2021
- * 
- * @param game pointer to game
- */
-STATUS game_callback_left(Game *game);
-
-/**
- * @brief callback for left command, player is able to move to left if possible.
- *
- * @author Jiri Zak
- * @date 01-03-2021
- * 
- * @param game pointer to game
- */
-STATUS game_callback_right(Game *game);
-
 STATUS game_callback_move(Game *game);
 
 STATUS game_callback_inspect(Game *game);
@@ -115,13 +102,9 @@ STATUS game_callback_load(Game *game);
 static callback_fn game_callback_fn_list[N_CALLBACK] = {
     game_callback_unknown,
     game_callback_exit,
-    game_callback_next,
-    game_callback_back,
     game_callback_take,
     game_callback_drop,
     game_callback_roll,
-    game_callback_left,
-    game_callback_right,
     game_callback_move,
     game_callback_inspect,
     game_callback_turn_on,
@@ -146,7 +129,19 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
  */
 STATUS game_set_player_location(Game *game, Id id);
 
+/**
+ * @brief returns id of next space depends on direction
+ *
+ * @author Jiri Zak
+ * @date 7-05-2021
+ * 
+ * @param game pointer to game
+ * @param direction direction
+ * @return id of space or NO_ID
+ */
+Id choose_direction(Game *game, direction dir);
 
+STATUS game_move(Game *game, direction dir);
 
 void game_drop_object(Game *game, Space *space, Object *obj);
 
@@ -532,6 +527,46 @@ STATUS game_save(FILE *fp, Game *g)
     return OK;
 }
 
+Id choose_direction(Game *game, direction dir){
+    Space *location = game_get_space(game, game_get_player_location(game));
+    Id direction = NO_ID;
+    Link *l = NULL;
+    switch (dir) {
+    case NORTH:
+        l = space_get_north(location);
+        break;
+    case SOUTH:
+        l = space_get_south(location);
+        break;
+    case EAST:
+        l = space_get_east(location);
+        break;
+    case WEST:
+        l = space_get_west(location);
+        break;
+    case UP:
+        l = space_get_up(location);
+        break;
+    case DOWN:
+        l = space_get_down(location);
+        break;
+    default:
+        break;
+    }
+    if(link_get_opened(l) == TRUE)
+        direction = link_get_second_space(l);
+    return direction;
+}
+
+STATUS game_move(Game *game, direction dir)
+{
+    Id next_location = choose_direction(game, dir);
+    if (next_location == NO_ID)
+        return ERROR;
+    game_set_player_location(game, next_location);
+    return OK;
+}
+
 /**
    Callbacks implementation for each action 
 */
@@ -550,26 +585,6 @@ STATUS game_callback_exit(Game *game)
     }
     player_destroy(&game->player);
     dice_destroy(&game->dice);
-    return OK;
-}
-
-STATUS game_callback_next(Game *game)
-{
-    Space *location = game_get_space(game, game_get_player_location(game));
-    Id next_location = link_get_second_space(space_get_south(location));
-    if (next_location == NO_ID)
-        return ERROR;
-    game_set_player_location(game, next_location);
-    return OK;
-}
-
-STATUS game_callback_back(Game *game)
-{
-    Space *location = game_get_space(game, game_get_player_location(game));
-    Id next_location = link_get_second_space(space_get_north(location));
-    if (next_location == NO_ID)
-        return ERROR;
-    game_set_player_location(game, next_location);
     return OK;
 }
 
@@ -630,46 +645,6 @@ STATUS game_callback_roll(Game *game)
     return OK;
 }
 
-STATUS game_callback_left(Game *game)
-{
-    Space *location = game_get_space(game, game_get_player_location(game));
-    Id next_location = link_get_second_space(space_get_west(location));
-    if (next_location == NO_ID)
-        return ERROR;
-    game_set_player_location(game, next_location);
-    return OK;
-}
-
-STATUS game_callback_right(Game *game)
-{
-    Space *location = game_get_space(game, game_get_player_location(game));
-    Id next_location = link_get_second_space(space_get_east(location));
-    if (next_location == NO_ID)
-        return ERROR;
-    game_set_player_location(game, next_location);
-    return OK;
-}
-
-STATUS game_callback_up(Game *game)
-{
-    Space *location = game_get_space(game, game_get_player_location(game));
-    Id next_location = link_get_second_space(space_get_up(location));
-    if (next_location == NO_ID)
-        return ERROR;
-    game_set_player_location(game, next_location);
-    return OK;
-}
-
-STATUS game_callback_down(Game *game)
-{
-    Space *location = game_get_space(game, game_get_player_location(game));
-    Id next_location = link_get_second_space(space_get_down(location));
-    if (next_location == NO_ID)
-        return ERROR;
-    game_set_player_location(game, next_location);
-    return OK;
-}
-
 STATUS game_callback_move(Game *game)
 {
     char input[20];
@@ -680,27 +655,27 @@ STATUS game_callback_move(Game *game)
     strcpy(game->argument, input);
     if (strcmp(input, "north") == 0 || strcmp(input, "n") == 0)
     {
-        return game_callback_back(game);
+        return game_move(game, NORTH);
     }
     else if (strcmp(input, "south") == 0 || strcmp(input, "s") == 0)
     {
-        return game_callback_next(game);
+        return game_move(game, SOUTH);
     }
     else if (strcmp(input, "west") == 0 || strcmp(input, "w") == 0)
     {
-        return game_callback_left(game);
+        return game_move(game, WEST);
     }
     else if (strcmp(input, "east") == 0 || strcmp(input, "e") == 0)
     {
-        return game_callback_right(game);
+        return game_move(game, EAST);
     }
     else if (strcmp(input, "up") == 0 || strcmp(input, "u") == 0)
     {
-        return game_callback_up(game);
+        return game_move(game, UP);
     }
     else if (strcmp(input, "down") == 0 || strcmp(input, "d") == 0)
     {
-        return game_callback_down(game);
+        return game_move(game, DOWN);
     }
 
     return ERROR;
@@ -807,7 +782,7 @@ STATUS game_callback_open_link_with_obj(Game *game)
 
     link_set_opened(link, TRUE);
 
-    return ERROR;
+    return OK;
 }
 
 STATUS game_callback_save(Game *game)
