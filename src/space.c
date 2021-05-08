@@ -99,6 +99,38 @@ STATUS space_set_name(Space *space, char *name)
     return OK;
 }
 
+
+STATUS space_set_description(Space *space, char *description)
+{
+    if (!space || !description)
+    {
+        return ERROR;
+    }
+
+    if (!strcpy(space->description, description))
+    {
+        return ERROR;
+    }
+
+    return OK;
+}
+
+STATUS space_set_detailed_description(Space *space, char *detailed_description)
+{
+    if (!space || !detailed_description)
+    {
+        return ERROR;
+    }
+
+    if (!strcpy(space->detailed_description, detailed_description))
+    {
+        return ERROR;
+    }
+
+    return OK;
+}
+
+
 STATUS space_set_north(Space *space, Link *l)
 {
     if (!space || l == NULL)
