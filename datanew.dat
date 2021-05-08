@@ -1,13 +1,19 @@
-#s:1|Safe |-1|-1|2|-1
-#s:2|Master Bedroom|1|6|3|-1
+#s:1|Safe|-1|-1|2|-1
+#s:2|Master Bedroom|1|6|3|-1|       |   Zzz | (-o-) |
 #s:3|HallUp|2|4|-1|7
 #s:4|Bath|-1|-1|5|3
 #s:5|HiddenRoom|4|-1|-1|-1
 #s:6|GamingRoom|-1|-1|-1|2
-#s:7|Bedroom|-1|3|8|-1
+#s:7|Bedroom|-1|3|8|-1|       |   Zzz | (-o-) |
 #s:8|Balcony|7|-1|-1|-1
 #o:1|Teddy|Just a Teddy Bear|2
 #o:2|Torch|A torch, it might be useful to light places|3
 #o:3|Window|What a beautiful views...|-1
 #o:4|RGB|RGB Lights in a gaming room? Unexpected|6
+#o:5|Book|Imagine how cool must be jumping with a a prachute|6
+#o:6|Soap|Make sure to stay clean|5
+#o:7|Mirror|You see yourself...|4
+#o:8|Clock|4 o'clock|4
+#o:9|Banana|Mmm... Tasty|4
+#o:10|Calculator|There is a 9 in the calculator|7
 #p:1|ply1|2|2|
