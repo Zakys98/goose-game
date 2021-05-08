@@ -34,6 +34,18 @@ typedef enum enum_Command {
     OPEN
 } T_Command;
 
+
+typedef enum enum_rules {
+    NO_RULE = -1,
+    TAKERULE,
+    DIERULE,
+    DROPRULE,
+    CLOSERULE,
+    OPENRULE,
+    ONRULE,
+    OFFRULE
+} T_Rules;
+
 /**
  * @brief scan user input and interpret it to command
  *

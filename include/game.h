@@ -226,6 +226,15 @@ T_Command game_get_last_command(Game* game);
  */
 T_Command game_get_prev_command(Game* game);
 
+/**
+ * @brief Returns the last rule executed
+ * 
+ * @param game pointer to game
+ * @return Rule executed
+ */
+T_Rules game_get_last_rule(Game *game);
+
+
 STATUS game_set_prev_command(Game* game, T_Command cmd);
 
 /**

@@ -23,13 +23,15 @@ struct _Game
     Space *spaces[MAX_SPACES + 1];
     T_Command last_cmd;
     T_Command prev_cmd;
+    T_Rules last_rule;
     Dice *dice;
     FILE *log;
     char description[50];
     char *argument; //Argument used after a command
 };
 
-typedef enum {
+typedef enum
+{
     NORTH,
     SOUTH,
     EAST,
@@ -118,6 +120,13 @@ static callback_fn game_callback_fn_list[N_CALLBACK] = {
 */
 
 /**
+ * @brief Selects a random rule and returns it
+ * 
+ * @return T_Rules 
+ */
+T_Rules game_random_rule();
+
+/**
  * @brief player location setter 
  *
  * @author Eva Moresova
@@ -170,6 +179,7 @@ STATUS game_create(Game *game)
     game->log = NULL;
     game->last_cmd = NO_CMD;
     game->prev_cmd = NO_CMD;
+    game->last_rule = NO_RULE;
     game->dice = dice_create(1, 6);
     game->argument = (char *)malloc(sizeof(char) * 21);
     if (game->argument == NULL)
@@ -373,7 +383,46 @@ Id game_get_player_location(Game *game)
 STATUS game_update(Game *game, T_Command cmd)
 {
     game->last_cmd = cmd;
+    game->last_rule = game_random_rule();
     return (*game_callback_fn_list[cmd])(game);
+}
+
+T_Rules game_get_last_rule(Game *game)
+{
+    return game->last_rule;
+}
+
+T_Rules game_random_rule()
+{
+    Dice *dice = NULL;
+    int num;
+
+    // Create a dice to select the random command
+    dice = dice_create(0, 100);
+    if (!dice)
+        return NO_RULE;
+
+    num = dice_roll(dice);
+    dice_destroy(&dice);
+
+    if (num >= 0 && num < 5)
+        return TAKERULE;
+    else if (num == 5)
+        return DIERULE;
+    else if (num > 5 && num <= 15)
+        return DROPRULE;
+    else if (num > 15 && num <= 20)
+        return CLOSERULE;
+    else if (num > 20 && num <= 25)
+        return OPENRULE;
+    else if (num > 25 && num <= 30)
+        return ONRULE;
+    else if (num > 30 && num <= 35)
+        return OFFRULE;
+    else
+        return NO_RULE;
+
+    return NO_RULE;
 }
 
 T_Command game_get_last_command(Game *game)
@@ -539,11 +588,13 @@ STATUS game_save(FILE *fp, Game *g)
     return OK;
 }
 
-Id choose_direction(Game *game, direction dir){
+Id choose_direction(Game *game, direction dir)
+{
     Space *location = game_get_space(game, game_get_player_location(game));
     Id direction = NO_ID;
     Link *l = NULL;
-    switch (dir) {
+    switch (dir)
+    {
     case NORTH:
         l = space_get_north(location);
         break;
@@ -565,7 +616,7 @@ Id choose_direction(Game *game, direction dir){
     default:
         break;
     }
-    if(link_get_opened(l) == TRUE)
+    if (link_get_opened(l) == TRUE)
         direction = link_get_second_space(l);
     return direction;
 }
@@ -707,9 +758,9 @@ STATUS game_callback_inspect(Game *game)
         {
             if (space_get_illumination(space))
             {
-            strcat(game->description, "space - ");
-            strcat(game->description, space_get_detailed_description(space));
-            return OK;
+                strcat(game->description, "space - ");
+                strcat(game->description, space_get_detailed_description(space));
+                return OK;
             }
         }
         else

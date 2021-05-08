@@ -24,6 +24,15 @@
  * @param st Status of the command (ERROR or OK)
  * @return Returns a pointer to a char where the text to be printed is contained
  */
-char *dialogue_print(T_Command cmd, STATUS st, Game *game);
+char *dialogue_cmd_print(T_Command cmd, STATUS st, Game *game);
+
+/**
+ * @brief Function that returns a dialogue based on the rule executed
+ * 
+ * @param rule 
+ * @param game 
+ * @return char* 
+ */
+char *dialogue_rule_print(T_Rules rule, Game *game);
 
 #endif

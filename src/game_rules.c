@@ -84,90 +84,55 @@ STATUS _game_rules_offlight_room(Game *game);
  *        Public Functions        *
  *********************************/
 
-STATUS game_rules_random_command(Game *game)
+STATUS game_rules_random_command(T_Rules rule, Game *game)
 {
-    Dice *dice = NULL;
-    int num;
+    
 
     if (!game)
         return ERROR;
 
+    if (rule == NO_RULE)
+        return OK;
+
     if (game_get_last_command(game) == EXIT)
         return OK;
 
-    // Create a dice to select the random command
-    dice = dice_create(0, 50);
-    if (!dice)
-        return ERROR;
-
-    num = dice_roll(dice);
-
-    if (num >= 0 && num <= 10)
+    switch (rule)
     {
-        // We could change this to a exact object when we have the story written
-        // Prob: 10/50 = 20%
-
-        dice_destroy(&dice);
+    case TAKERULE:
         return _game_rules_take_first_object(game);
-    }
-    else if (num == 11)
-    {
-        // Randomly moves the player to the beginning aka dies
-        // Prob: 1/50: 2%
-
-        dice_destroy(&dice);
-        return _game_rules_die(game);
-    }
-    else if (num > 11 && num <= 20)
-    {
-        // Drops object from player's inventory
-        // Prob: 9/50: 18%
-
-        dice_destroy(&dice);
+        break;
+    
+    case DROPRULE:
         return _game_rules_drop_first_object(game);
-    }
-    else if (num > 20 && num <= 25)
-    {
-        // Closes Links
-        // Prob: 5/50: 10%
+        break;
 
-        dice_destroy(&dice);
+    case DIERULE:
+        return _game_rules_die(game);
+        break;
+
+    case CLOSERULE:
         return _game_rules_close_link(game);
-    }
-    else if (num > 25 && num <= 30)
-    {
-        // Opens Links
-        // Prob: 5/50: 10%
+        break;
 
-        dice_destroy(&dice);
+    case OPENRULE:
         return _game_rules_open_link(game);
-    }
-    else if (num > 30 && num <= 35)
-    {
-        // Turns on light
-        // Prob: 5/50: 10%
+        break;
 
-        dice_destroy(&dice);
+    case ONRULE:
         return _game_rules_onlight_room(game);
-    }
-    else if (num > 35 && num <= 40)
-    {
-        // Turns off the light
-        // Prob: 5/50: 10%
+        break;
 
-        dice_destroy(&dice);
+    case OFFRULE:
         return _game_rules_offlight_room(game);
-    }
-    else
-    {
-        //Default will be no command so that there is not a random thing ocurring constantly
-        dice_destroy(&dice);
-        return OK;
+        break;
+
+    default:
+    
+        break;
     }
 
-    //Default will be no command so that there is not a random thing ocurring constantly
-    dice_destroy(&dice);
-    return OK;
+    return ERROR;
 }
 
 /******************************************

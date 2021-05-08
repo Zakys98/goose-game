@@ -65,7 +65,7 @@ void screen_paint(){
       /* printf("%s\n", dest); */
       for (i=0; i<COLUMNS; i++){
 	if (dest[i] == BG_CHAR){
-	  printf("\033[0;34;44m%c\033[0m", dest[i]); /* fg:blue(34);bg:blue(44) */
+	  printf("\033[0;35;45m%c\033[0m", dest[i]); /* fg:blue(34);bg:blue(44) */
 	}else{
 	  printf("\033[0;30;47m%c\033[0m", dest[i]); /* fg:black(30);bg:white(47)*/
 	}
