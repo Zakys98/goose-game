@@ -328,11 +328,43 @@ STATUS _game_rules_open_link(Game *game)
 STATUS _game_rules_onlight_room(Game *game)
 {
     //I need to know how does turn on and off work to make these two
-    return OK;
+    // Sets the current room illumination to on
+    BOOL ill;
+    Space *space;
+
+    space = game_get_space(game, game_get_player_location(game));
+    if (!space)
+        return ERROR;
+
+    ill = space_get_illumination(space);
+
+    if (ill == TRUE)
+        return OK;
+
+    else if (ill == FALSE)
+        return space_set_illumination(space, TRUE);
+
+    return ERROR;
 }
 
 STATUS _game_rules_offlight_room(Game *game)
 {
     //I need to know how does turn on and off work to make these two
-    return OK;
+    // Sets the current room illumination to on
+    BOOL ill;
+    Space *space;
+
+    space = game_get_space(game, game_get_player_location(game));
+    if (!space)
+        return ERROR;
+
+    ill = space_get_illumination(space);
+
+    if (ill == FALSE)
+        return OK;
+
+    else if (ill == TRUE)
+        return space_set_illumination(space, FALSE);
+
+    return ERROR;
 }
