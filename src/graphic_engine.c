@@ -52,11 +52,11 @@ Graphic_engine *graphic_engine_create()
     if (ge == NULL)
         return NULL;
 
-    ge->map = screen_area_init(1, 1, 52, 17);
-    ge->descript = screen_area_init(54, 1, 35, 13);
-    ge->banner = screen_area_init(28, 19, 23, 1);
-    ge->help = screen_area_init(1, 20, 88, 2);
-    ge->feedback = screen_area_init(1, 24, 88, 2);
+    ge->map = screen_area_init(1, 1, 54, 19);
+    ge->descript = screen_area_init(56, 1, 35, 13);
+    ge->banner = screen_area_init(28, 21, 23, 1);
+    ge->help = screen_area_init(1, 22, 88, 2);
+    ge->feedback = screen_area_init(1, 26, 88, 2);
 
     return ge;
 }
@@ -120,9 +120,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
         {
             sprintf(str, "         |            %2d|", (int)id_back);
             screen_area_puts(ge->map, str);
+            sprintf(str, "         |%s|", space_get_name(game_get_space(game, id_back)));
+            screen_area_puts(ge->map, str);
             sprintf(str, "         +--------------+");
             screen_area_puts(ge->map, str);
-            sprintf(str, "               ^ %ld", link_get_id(space_get_north(space_act)));
+            sprintf(str, "               ^ %s", link_get_name(space_get_north(space_act)));
             screen_area_puts(ge->map, str);
         }
 
@@ -133,11 +135,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
             if (space_get_east(space_act) == NULL && space_get_west(space_act) == NULL)
                 sprintf(str, "         | >8D        %2d|", (int)id_act);
             else if (space_get_west(space_act) == NULL && space_get_east(space_act) != NULL)
-                sprintf(str, "         | >8D        %2d| --> %ld", (int)id_act, link_get_second_space(space_get_east(space_act)));
+                sprintf(str, "         | >8D        %2d| --> %s", (int)id_act, link_get_name(space_get_east(space_act)));
             else if (space_get_west(space_act) != NULL && space_get_east(space_act) == NULL)
-                sprintf(str, " %3ld <-- | >8D        %2d|", link_get_second_space(space_get_west(space_act)), (int)id_act);
+                sprintf(str, " %s <-- | >8D        %2d|", link_get_name(space_get_west(space_act)), (int)id_act);
             else
-                sprintf(str, " %3ld <-- | >8D        %2d| --> %ld", link_get_second_space(space_get_west(space_act)), (int)id_act, link_get_second_space(space_get_east(space_act)));
+                sprintf(str, " %s <-- | >8D        %2d| --> %s", link_get_name(space_get_west(space_act)), (int)id_act, link_get_name(space_get_east(space_act)));
+            screen_area_puts(ge->map, str);
+            sprintf(str, "         |%s|", space_get_name(space_act));
             screen_area_puts(ge->map, str);
             sprintf(str, "         |    %s   |", space_get_gdesc(space_act, 0));
             screen_area_puts(ge->map, str);
@@ -164,11 +168,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
 
         if (id_next != NO_ID)
         {
-            sprintf(str, "               v %ld", link_get_id(space_get_south(space_act)));
+            sprintf(str, "               v %s", link_get_name(space_get_south(space_act)));
             screen_area_puts(ge->map, str);
             sprintf(str, "         +--------------+");
             screen_area_puts(ge->map, str);
             sprintf(str, "         |            %2d|", (int)id_next);
+            screen_area_puts(ge->map, str);
+            sprintf(str, "         |%s|", space_get_name(game_get_space(game, id_next)));
             screen_area_puts(ge->map, str);
             sprintf(str, "         |    %s   |", space_get_gdesc(game_get_space(game, id_next), 0));
             screen_area_puts(ge->map, str);
@@ -199,7 +205,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
     strcat(toprint, dialogue_rule_print(last_rule, game));
     sprintf(str, "%s", toprint);
 
-    //sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
     screen_area_puts(ge->feedback, str);
     if (game_logfile_exist(game))
         //fprintf(game_get_log_file(game), " %s (%s): %s\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
