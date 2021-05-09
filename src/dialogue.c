@@ -33,8 +33,8 @@ char *_dialogue_left(STATUS st);
 char *_dialogue_right(STATUS st);
 char *_dialogue_move(STATUS st, Game *game);
 char *_dialogue_inspect(STATUS st, Game *game);
-char *_dialogue_turnon(STATUS st);
-char *_dialogue_turnoff(STATUS st);
+char *_dialogue_turnon(STATUS st, Game *game);
+char *_dialogue_turnoff(STATUS st, Game *game);
 char *_dialogue_open(STATUS st);
 
 /******************************************
@@ -110,11 +110,11 @@ char *dialogue_cmd_print(T_Command cmd, STATUS st, Game *game)
         break;
 
     case TURNON:
-        return _dialogue_turnon(st);
+        return _dialogue_turnon(st, game);
         break;
 
     case TURNOFF:
-        return _dialogue_turnoff(st);
+        return _dialogue_turnoff(st, game);
         break;
 
     case OPEN:
@@ -145,7 +145,7 @@ char *dialogue_rule_print(T_Rules rule, Game *game)
     case TAKERULE:
         return "    Did you pick something?";
         break;
-    
+
     case DROPRULE:
         return "    Don't drop your things!";
         break;
@@ -174,7 +174,6 @@ char *dialogue_rule_print(T_Rules rule, Game *game)
         return "";
         break;
     }
-
 
     return "";
 }
@@ -371,9 +370,9 @@ char *_dialogue_move(STATUS st, Game *game)
     // The same it is done in inspect command
     strcpy(desc, "space - ");
     char temp[10] = {0};
-    sprintf(temp,"%ld", space_get_id(game_get_space(game, game_get_player_location(game))));
+    sprintf(temp, "%ld", space_get_id(game_get_space(game, game_get_player_location(game))));
     strcat(desc, temp);
-    
+
     if (desc == NULL)
     {
         strcpy(result, "There was an error getting the description of the space");
@@ -475,39 +474,46 @@ char *_dialogue_inspect(STATUS st, Game *game)
     strcpy(result, "You cannot inspect that");
     return result;
 }
-char *_dialogue_turnon(STATUS st)
+char *_dialogue_turnon(STATUS st, Game *game)
 {
     char *result;
+    char *desc;
     result = malloc(sizeof(char) * 300);
     if (!result)
         return NULL;
 
+    desc = game_get_argument(game);
+
     if (st == OK)
     {
-        strcpy(result, "Turned on");
+        strcpy(result, "Turned on the ");
+        strcat(result, desc);
         return result;
     }
 
     strcpy(result, "Couldn't be turned on");
     return result;
-
 }
-char *_dialogue_turnoff(STATUS st)
+char *_dialogue_turnoff(STATUS st, Game *game)
 {
     char *result;
+    char *desc;
+
     result = malloc(sizeof(char) * 300);
     if (!result)
         return NULL;
 
+    desc = game_get_argument(game);
+
     if (st == OK)
     {
-        strcpy(result, "Turnt off");
+        strcpy(result, "Turned off the");
+        strcat(result, desc);
         return result;
     }
 
-    strcpy(result, "Couldn't be turnt off");
+    strcpy(result, "Couldn't be turned off");
     return result;
-
 }
 char *_dialogue_open(STATUS st)
 {
