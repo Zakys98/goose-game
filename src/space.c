@@ -77,6 +77,10 @@ STATUS space_destroy(Space **space)
         link_destroy(&(*space)->north);
     if ((*space)->south != NULL)
         link_destroy(&(*space)->south);
+    if ((*space)->up != NULL)
+        link_destroy(&(*space)->up);
+    if ((*space)->down != NULL)
+        link_destroy(&(*space)->down);
     set_destroy(&(*space)->objects);
     free(*space);
     *space = NULL;

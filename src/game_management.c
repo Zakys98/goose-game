@@ -353,9 +353,6 @@ STATUS game_load_links(Game* game, char* line) {
 
 	toks = strtok(line + 3, "|");
 	id = atol(toks);
-	// if (id == 31) {
-	// 	printf("hehe");
-	// }
 	toks = strtok(NULL, "|");
 	strcpy(name, toks);
     toks = strtok(NULL, "|");
