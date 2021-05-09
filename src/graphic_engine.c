@@ -161,7 +161,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
                 sprintf(str, "                  |              |");
                 screen_area_puts(ge->map, str);
             }
-            if(objects != NULL)
+            if (objects != NULL)
                 free(objects);
             sprintf(str, "                  +--------------+");
             screen_area_puts(ge->map, str);
@@ -203,14 +203,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
     last_cmd = game_get_last_command(game);
     last_rule = game_get_last_rule(game);
     toprint = dialogue_cmd_print(last_cmd, s, game);
-    strcat(toprint, dialogue_rule_print(last_rule, game));
+    if (game_rules_get(game) == TRUE)
+        strcat(toprint, dialogue_rule_print(last_rule, game));
     sprintf(str, "%s", toprint);
 
     screen_area_puts(ge->feedback, str);
     if (game_logfile_exist(game))
         //fprintf(game_get_log_file(game), " %s (%s): %s\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
         fprintf(game_get_log_file(game), " %s\n", toprint);
-
 
     free(toprint);
     /* Dump to the terminal */
@@ -254,7 +254,7 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game)
         free(objectsOfPlayer);
     }
 
-    char *space_description = game_get_space_description(game); 
+    char *space_description = game_get_space_description(game);
 
     if (space_description != NULL)
     {
@@ -265,9 +265,9 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game)
         sprintf(str, " %s", space_description);
         screen_area_puts(ge->descript, str);
     }
-    
-    char *description = game_get_description(game); 
-    
+
+    char *description = game_get_description(game);
+
     if (description != NULL)
     {
         sprintf(str, " ");

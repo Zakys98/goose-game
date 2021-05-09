@@ -16,6 +16,16 @@
 #include "../include/graphic_engine.h"
 
 // Prototypes
+
+/**
+ * @brief Initialize the game but without the random rules
+ * @author Ivan del Horno
+ * @param game 
+ * @param argc 
+ * @param argv 
+ */
+void game_init_rules(Game *game, int argc, char **argv);
+
 /**
  * @brief initialize game and game engine
  *
@@ -53,18 +63,22 @@ void game_loop_cleanup(Game *game, Graphic_engine *gengine);
 
 void game_init_from_arguments(Game *game, int argc, char **argv);
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     Game *game = game_init();
-    if(game == NULL)
+    if (game == NULL)
         return 1;
     Graphic_engine *gengine;
 
-    if (argc < 2) {
+    if (argc < 2)
+    {
         fprintf(stderr, "Use: %s <game_data_file>\n", argv[0]);
         return 1;
     }
 
-    if (!game_loop_init(game, &gengine, argv[1])) {
+    if (!game_loop_init(game, &gengine, argv[1]))
+    {
+        game_init_rules(game, argc, argv);
         game_init_from_arguments(game, argc, argv);
         game_loop_run(game, gengine);
         game_loop_cleanup(game, gengine);
@@ -73,8 +87,10 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
-    if (game_create_from_file(game, file_name) == ERROR) {
+int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name)
+{
+    if (game_create_from_file(game, file_name) == ERROR)
+    {
         fprintf(stderr, "Error while initializing game.\n");
         Player *pl = game_get_player(game);
         player_destroy(&pl);
@@ -83,7 +99,8 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
         return 1;
     }
 
-    if ((*gengine = graphic_engine_create()) == NULL) {
+    if ((*gengine = graphic_engine_create()) == NULL)
+    {
         fprintf(stderr, "Error while initializing graphic engine.\n");
         game_destroy(game);
         return 1;
@@ -92,29 +109,57 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
     return 0;
 }
 
-void game_loop_run(Game *game, Graphic_engine *gengine) {
+void game_loop_run(Game *game, Graphic_engine *gengine)
+{
     T_Command command = NO_CMD;
     T_Rules rule = NO_RULE;
     STATUS s = ERROR;
+    BOOL b = TRUE;
 
-    while ((command != EXIT) && !game_is_over(game)) {
+    
+
+    while ((command != EXIT) && !game_is_over(game))
+    {
         graphic_engine_paint_game(gengine, game, s);
         command = get_user_input();
         s = game_update(game, command);
-        rule = game_get_last_rule(game);
-        game_rules_random_command(rule, game);
+        b = game_rules_get(game);
+        if (b == TRUE)
+        {
+            rule = game_get_last_rule(game);
+            game_rules_random_command(rule, game);
+        }
     }
 }
 
-void game_loop_cleanup(Game *game, Graphic_engine *gengine) {
+void game_loop_cleanup(Game *game, Graphic_engine *gengine)
+{
     game_destroy(game);
     graphic_engine_destroy(gengine);
 }
 
-void game_init_from_arguments(Game *game, int argc, char **argv) {
-    for (int i = 2; i < argc; i += 2) {
-        if (strcmp(argv[i], "-l") == 0 && argc >= i) {
+void game_init_from_arguments(Game *game, int argc, char **argv)
+{
+    for (int i = 2; i < argc; i += 2)
+    {
+        if (strcmp(argv[i], "-l") == 0 && argc >= i)
+        {
             game_open_log_file(game, argv[i + 1]);
         }
+    }
+}
+
+void game_init_rules(Game *game, int argc, char **argv)
+{
+    if (argc != 3)
+    {
+        game_rules_sel(game, TRUE);
+        return;
+    }
+
+    if (strcmp(argv[2], "-r") == 0)
+    {
+        game_rules_sel(game, FALSE);
+        return;
     }
 }
