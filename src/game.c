@@ -208,6 +208,13 @@ STATUS game_destroy(Game *game)
         space_destroy(game->spaces + i);
     }
 
+    for (int i = 0; i < MAX_OBJECTS && game->objects[i] != NULL; i++)
+    {
+        object_destroy(&game->objects[i]);
+    }
+    player_destroy(&game->player);
+    dice_destroy(&game->dice);
+
     if (game_logfile_exist(game))
         fclose(game->log);
 
@@ -679,12 +686,7 @@ STATUS game_callback_unknown(Game *game)
 
 STATUS game_callback_exit(Game *game)
 {
-    for (int i = 0; i < MAX_OBJECTS && game->objects[i] != NULL; i++)
-    {
-        object_destroy(&game->objects[i]);
-    }
-    player_destroy(&game->player);
-    dice_destroy(&game->dice);
+    (void)game;
     return OK;
 }
 
