@@ -317,47 +317,49 @@ STATUS game_set_player_location(Game *game, Id s)
 
 Link *game_get_link_by_name(Game *game, const char *name)
 {
-    if (game == NULL || name == NULL)
+    if (game == NULL || name == NULL) {
         return NULL;
-    for (int i = 0; i < 101 && game->spaces[i] != NULL; i++)
-    {
-        Link *east = space_get_east(game->spaces[i]);
-        if (east != NULL)
-        {
-            if (strcmp(link_get_name(east), name) == 0)
-                return east;
-        }
-        Link *west = space_get_west(game->spaces[i]);
-        if (west != NULL)
-        {
-            if (strcmp(link_get_name(west), name) == 0)
-                return west;
-        }
-        Link *north = space_get_north(game->spaces[i]);
-        if (north != NULL)
-        {
-            if (strcmp(link_get_name(north), name) == 0)
-                return north;
-        }
-        Link *south = space_get_south(game->spaces[i]);
-        if (south != NULL)
-        {
-            if (strcmp(link_get_name(south), name) == 0)
-                return south;
-        }
-        Link *up = space_get_up(game->spaces[i]);
-        if (up != NULL)
-        {
-            if (strcmp(link_get_name(up), name) == 0)
-                return up;
-        }
-        Link *down = space_get_down(game->spaces[i]);
-        if (down != NULL)
-        {
-            if (strcmp(link_get_name(down), name) == 0)
-                return down;
-        }
-    }
+	}
+
+	Space* s = game_get_space(game, game_get_player_location(game));
+    
+	Link *east = space_get_east(s);
+	if (east != NULL)
+	{
+		if (strcasecmp(link_get_name(east), name) == 0)
+			return east;
+	}
+	Link *west = space_get_west(s);
+	if (west != NULL)
+	{
+		if (strcasecmp(link_get_name(west), name) == 0)
+			return west;
+	}
+	Link *north = space_get_north(s);
+	if (north != NULL)
+	{
+		if (strcasecmp(link_get_name(north), name) == 0)
+			return north;
+	}
+	Link *south = space_get_south(s);
+	if (south != NULL)
+	{
+		if (strcasecmp(link_get_name(south), name) == 0)
+			return south;
+	}
+	Link *up = space_get_up(s);
+	if (up != NULL)
+	{
+		if (strcasecmp(link_get_name(up), name) == 0)
+			return up;
+	}
+	Link *down = space_get_down(s);
+	if (down != NULL)
+	{
+		if (strcasecmp(link_get_name(down), name) == 0)
+			return down;
+	}
+    
     return NULL;
 }
 
@@ -870,7 +872,8 @@ STATUS game_callback_open_link_with_obj(Game *game)
 
     scanf("%s", input);
     Link *link = game_get_link_by_name(game, input);
-    if (link == NULL || player_get_location(game->player) != link_get_first_space(link))
+    if (link == NULL || (player_get_location(game->player) != link_get_first_space(link) &&
+		player_get_location(game->player) != link_get_second_space(link)))
         return ERROR;
 
     scanf("%s", input);
@@ -878,6 +881,12 @@ STATUS game_callback_open_link_with_obj(Game *game)
         return ERROR;
 
     scanf("%s", input);
+
+	if (strcasecmp(link_get_name(link), "SafeDoor") == 0 && strcmp(input, "495") == 0) {
+		link_set_opened(link, TRUE);
+    	return OK;
+	}
+
     Object *object = game_get_object_by_name(game, input);
     if (object == NULL || player_search_inventory(game->player, object) == FALSE || object_get_openLink(object) != link_get_id(link))
         return ERROR;
