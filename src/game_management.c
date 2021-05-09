@@ -224,17 +224,6 @@ STATUS game_load_space(Game* game, char* line) {
     return OK;
 }
 
-struct _Obj {
-    Id id;
-    char name[WORD_SIZE + 1];
-	Id location;
-    char description[WORD_SIZE + 1];
-    BOOL movable;
-    Id dependency;
-    Id openLink;
-    BOOL illuminate;
-    BOOL turnedOn;
-};
 STATUS game_load_object(Game* game, char* line) {
     char* toks = NULL;
     char name[WORD_SIZE] = "";
@@ -252,22 +241,24 @@ STATUS game_load_object(Game* game, char* line) {
     space = atol(toks);
 
     Object* obj = object_create(id);
+    if(obj == NULL)
+        return ERROR;
     object_set_name(obj, name);
     object_set_location(obj, space);
 	object_set_description(obj, description);
 	
-/*	toks = strtok(NULL, "|");
+    toks = strtok(NULL, "|");
+	if (atoi(toks) == 1)
+		object_set_movable(obj, TRUE);
+	else
+		object_set_movable(obj, FALSE);
+
+	toks = strtok(NULL, "|");
 	id = atol(toks);
 	object_set_dependency(obj, id);
 	toks = strtok(NULL, "|");
 	id = atol(toks);
 	object_set_openLink(obj, id);
-	
-	toks = strtok(NULL, "|");
-	if (atoi(toks) == 1)
-		object_set_movable(obj, TRUE);
-	else
-		object_set_movable(obj, FALSE);
 
 	toks = strtok(NULL, "|");
 	if (atoi(toks) == 1)
@@ -279,7 +270,7 @@ STATUS game_load_object(Game* game, char* line) {
 	if (atoi(toks) == 1)
 		object_set_turnedOn(obj, TRUE);
 	else
-		object_set_turnedOn(obj, FALSE);*/
+		object_set_turnedOn(obj, FALSE);
 
     return game_add_object(game, obj);
 }
