@@ -1,0 +1,33 @@
+take torch
+move down
+move south
+take lighter
+turnon torch
+move north
+move east
+take stone
+move south
+drop lighter
+take ladder
+move north
+move west
+move up
+open trapdoor with ladder
+move up
+drop ladder
+take key
+move down
+open BedroomDoor with key
+move north
+open BalconyDoor with stone
+move south
+move south
+move south
+drop stone
+take parachute
+move north
+move north
+move north
+move north
+open Jump with parachute
+move north
