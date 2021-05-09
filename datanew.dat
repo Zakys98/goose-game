@@ -1,49 +1,51 @@
-#s:1|Safe|You are currently in the safe |There could be important stuff |-1|-1|2|-1|-1|-1|0
+#s:1|Safe          |You are currently in the safe |There could be important stuff |-1|-1|2|-1|-1|-1|0
 #s:2|Master bedroom|Salutations you have arrived to   the master bedroom |You can take a nap here |1|3|-1|6|-1|-1|1|       |   Zzz | (-o-) |
-#s:3|Hall|Welcome to the hall |Make yourself at home |8|-1|4|2|7|10|1|     /\|       |     \/|
-#s:4|Bath|You are in the bathroom |It's never too late to   take a shower |3|-1|5|-1|-1|-1|1
-#s:5|Hidden room| You have stepped into the hidden  room |mmmm secrets... |4|-1|-1|-1|-1|-1|0
-#s:6|Gaming room|Bonjour you are in the gaming room |Relax dude it's just a   game dude.  |-1|2|-1|-1|-1|-1|1
-#s:7|Attic|What up homies this is the attic |This a place full of cool stuff |-1|-1|-1|-1|-1|3|0|       |       |     \/|
-#s:8|Bedroom|This is your bedroom |I often come here to play with my legos |9|-1|3|-1|-1|-1|0|       |   Zzz | (-o-) |
-#s:9|Balcony|Wow you are in the balcony |I like the view... You are my best view |-1|-1|8|-1|-1|14|1
-#s:10|Hall|Welcome to the other hall hehe |Just chilling hehe |14|12|11|-1|3|-1|1|     /\|       |       |
-#s:11|Guest room|Greetings you're in the guest room|Visitors may rest here :p|10|-1|-1|-1|-1|-1|1
-#s:12|Kitchen|You are in the kitchen |Imma make a peanut butter jelly sandwich |-1|-1|13|10|-1|-1|1
-#s:13|Utility room|You have entered the utility room |I can tell you have not cleaned in a long time. |12|-1|-1|-1|-1|-1|0
-#s:14|Fin|You won| |-1|-1|-1|-1|-1|-1|1
-#l:1|Lnk1|1|2|1|
-#l:2|Lnk2|2|3|0|
-#l:3|Lnk3|2|6|0|
-#l:4|Lnk4|3|7|1|
-#l:5|Lnk5|3|10|0|
-#l:6|Lnk6|3|4|0|
-#l:7|Lnk7|3|8|1|
-#l:8|Lnk8|8|9|1|
-#l:9|Lnk9|4|5|0|
-#l:10|Lnk10|10|14|1|
-#l:11|Lnk11|10|12|0|
-#l:12|Lnk12|10|11|0|
-#l:13|Lnk13|12|13|0|
-#o:1|Main keys|*Very important keys*|1|1|-1|10|0|0
-#o:2|Teddy|Just a Teddy Bear|2|1|-1|-1|0|0
-#o:2|Torch|A torch, it might be useful to light places|3|1|yes|0|1|0
-#o:3|Window|What a beautiful views...|7|0|-1|-1|0|0
-#o:4|RGB|RGB Lights in a gaming room? Unexpected|6|0|-1|-1|0|0
-#o:5|Book|Imagine how cool must be jumping with a prachute|6|1|-1|-1|0|0
-#o:6|Soap|Make sure to stay clean|5|1|-1|-1|0|0
-#o:7|Mirror|You see yourself...|4|0|-1|-1|0|0
-#o:8|Clock|4 o'clock|4|0|-1|-1|0|0
-#o:9|Banana|Mmm... Tasty|4|1|-1|-1|0|0
-#o:10|Calculator|There is a 9 in the calculator|8|1|-1|-1|0|0
-#O:11|Painting|Parachute painting, looks very fun!|7|0|-1|-1|0|0
-#o:12|Flash light|Seems not to be working..|10|1|16|-1|1|0
-#o:13|Note|My favourite room in the house are: bath, bedroom and kitchen|11|1|-1|-1|0|0
-#o:14|Recipe book|There are 5 recipes in this book, how useful!|12|1|-1|-1|0|0
-#o:15|Stone|I want to break something|12|1|-1|8|0|0
-#o:16|Batteries|Where to put them?|13|1|-1|-1|0|0
-#o:17|Scissors|Snip snip|12|1|-1|-1|0|0
-#o:18|Ladder|Climb to the heavens!|13|1|-1|4|0|0
-#o:19|Knife|Careful, do not hurt yourself|12|1|-1|-1|0|0
-#o:20|Bedroom key|Lets find something to unlock!|7|1|-1|7|0|0
-#p:1|ply1|2|2|
+#s:11|Guest room|Greetings you're in the guest room|Visitors may rest here :p|10|-1|-1|-1|-1|-1|0
+#s:3|Hall          |Welcome to the hall |Make yourself at home |8|-1|4|2|7|10|1|     /\|       |     \/|
+#s:4|Bath          |You are in the bathroom |It's never too late to take a shower |3|-1|5|-1|-1|-1|1
+#s:5|Hidden room   | You have stepped into the hidden  room |mmmm secrets... |4|-1|-1|-1|-1|-1|0
+#s:6|Gaming room   |Bonjour you are in the gaming room |Relax dude it's just a game dude.  |-1|2|-1|-1|-1|-1|1
+#s:7|Attic         |What up homies this is the attic |This a place full of cool stuff |-1|-1|-1|-1|-1|3|0|       |       |     \/|
+#s:8|Bedroom       |This is your bedroom |I often come here to play with my legos |9|-1|3|-1|-1|-1|0|       |   Zzz | (-o-) |
+#s:9|Balcony       |Wow you are in the balcony |I like the view... You are my best view |-1|-1|8|-1|-1|14|1
+#s:10|Hall         |Welcome to the other hall |Just chilling |14|12|11|-1|3|-1|1|     /\|       |       |
+#s:11|Guest room    |Greetings you're in the guest room|Visitors may rest here :p|10|-1|-1|-1|-1|-1|1
+#s:12|Kitchen      |You are in the kitchen |Imma make a peanut butter jelly sandwich |-1|-1|13|10|-1|-1|1
+#s:13|Utility room |You have entered the utility room |I can tell you have not cleaned in a long time. |12|-1|-1|-1|-1|-1|0
+#s:14|Fin          |You won|Congratulations!!!|-1|-1|-1|-1|-1|-1|1
+#l:1|SafeDoor    |1|2|1|
+#l:2|HallDoor    |2|3|0|
+#l:3|GamingDoor  |2|6|0|
+#l:4|TrapDoor    |3|7|1|
+#l:5|Stairs      |3|10|0|
+#l:6|BathroomDoor|3|4|0|
+#l:7|BedroomDoor |3|8|1|
+#l:8|BalconyDoor |8|9|1|
+#l:9|SecretDoor  |4|5|0|
+#l:10|MainDoor   |10|14|1|
+#l:11|KitchenDoor|10|12|0|
+#l:12|GuestDoor  |10|11|0|
+#l:13|UtilityDoor|12|13|0|
+#o:1|keys|*Very important keys*|1|1|-1|10|0|0
+#o:2|torch|A torch, it might be useful to light places|3|1|21|-1|1|0
+#o:3|window|What a beautiful views...|7|0|-1|-1|0|0
+#o:4|rgb|RGB Lights in a gaming room? Unexpected|6|0|-1|-1|0|0
+#o:5|book|Imagine how cool must be jumping with a prachute|6|1|-1|-1|0|0
+#o:6|soap|Make sure to stay clean|5|1|-1|-1|0|0
+#o:7|mirror|You see yourself...|4|0|-1|-1|0|0
+#o:8|clock|4 o'clock|4|0|-1|-1|0|0
+#o:9|banana|Mmm... Tasty|4|1|-1|-1|0|0
+#o:10|calculator|There is a 9 in the calculator|8|1|-1|-1|0|0
+#O:11|painting|Parachute painting, looks very fun!|7|0|-1|-1|0|0
+#o:12|flashlight|Seems not to be working..|10|1|16|-1|1|0
+#o:13|note|My favourite room in the house are: bath, bedroom and kitchen|11|1|-1|-1|0|0
+#o:14|recipes|There are 5 recipes in this book, how useful!|12|1|-1|-1|0|0
+#o:15|stone|I want to break something|12|1|-1|8|0|0
+#o:16|batteries|Where to put them?|13|1|-1|-1|0|0
+#o:17|scissors|Snip snip|13|1|-1|-1|0|0
+#o:18|ladder|Climb to the heavens!|13|1|-1|4|0|0
+#o:19|knife|Careful, do not hurt yourself|12|1|-1|-1|0|0
+#o:20|key|Lets find something to unlock!|7|1|-1|7|0|0
+#o:21|lighter|Fire!|13|1|-1|-1|0|0
+#o:22|teddy|Just a Teddy Bear|2|1|-1|-1|0|0
+#p:1|ply1|10|3|

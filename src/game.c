@@ -654,6 +654,20 @@ STATUS game_move(Game *game, direction dir)
     return OK;
 }
 
+BOOL game_player_has_light(Game* game) {
+	Id* inventory_ids = inventory_get_elements(player_get_inventory(game->player));
+	Object* o = NULL;
+	for (int i = 0; i < inventory_get_nObjects(player_get_inventory(game->player)); i++) {
+		o = game_get_object(game, inventory_ids[i]);
+		if (object_get_illuminate(o) == TRUE && object_get_turnedOn(o) == TRUE) {
+			free(inventory_ids);
+			return TRUE;
+		}
+	}
+	free(inventory_ids);
+	return FALSE;
+}
+
 /**
    Callbacks implementation for each action 
 */
@@ -692,12 +706,6 @@ STATUS game_callback_take(Game *game)
         Object *obj = game_get_object_by_name(game, input);
         if (obj == NULL || object_get_movable(obj) == FALSE)
             return ERROR;
-
-        if (object_get_dependency(obj) != NO_ID)
-        {
-            if (inventory_has_id(player_get_inventory(game->player), object_get_dependency(obj)) == FALSE)
-                return ERROR;
-        }
 
         if (space_remove_object(location, object_get_id(obj)) == ERROR)
             return ERROR;
@@ -819,6 +827,10 @@ STATUS game_callback_turn_on(Game *game)
         if (obj == NULL || object_get_illuminate(obj) == FALSE)
             return ERROR;
 
+		Id dependency = object_get_dependency(obj); 
+		if (dependency != NO_ID && !player_has_object(game->player, dependency))
+			return ERROR;
+
         Space *playerLocation = game_get_space(game, game_get_player_location(game));
         if (space_hasObject(playerLocation, object_get_id(obj)) == TRUE || player_search_inventory(game->player, obj) == TRUE)
         {
@@ -862,7 +874,7 @@ STATUS game_callback_open_link_with_obj(Game *game)
         return ERROR;
 
     scanf("%s", input);
-    if (strcmp(input, "with") != 0)
+    if (strcasecmp(input, "with") != 0)
         return ERROR;
 
     scanf("%s", input);

@@ -185,4 +185,6 @@ int player_getnObjects(Player *p);
 
 STATUS player_save(FILE*, Player*);
 
+BOOL player_has_object(Player* p, Id object);
+
 #endif
