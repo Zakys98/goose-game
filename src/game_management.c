@@ -124,7 +124,8 @@ STATUS game_load_space(Game* game, char* line) {
     memset(first, '\0', 8);
     memset(second, '\0', 8);
     memset(third, '\0', 8);
-    Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
+    Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID, up = NO_ID, down = NO_ID;
+	int illuminated = 0;
     Space* space = NULL;
     Link* link = NULL;
     char description[WORD_SIZE+1];
@@ -147,6 +148,12 @@ STATUS game_load_space(Game* game, char* line) {
     toks = strtok(NULL, "|");
     west = atol(toks);
     toks = strtok(NULL, "|");
+	up = atol(toks);
+    toks = strtok(NULL, "|");
+	down = atol(toks);
+    toks = strtok(NULL, "|");
+	illuminated = atoi(toks);
+    toks = strtok(NULL, "|");
     if (toks != NULL) {
         strncpy(first, toks, 7);
         toks = strtok(NULL, "|");
@@ -160,6 +167,7 @@ STATUS game_load_space(Game* game, char* line) {
         space_set_name(space, name);
         space_set_description(space,description);
         space_set_detailed_description(space,detailed_description);
+		space_set_illumination(space, illuminated);
         if (north != NO_ID) {
             link = link_create();
             if (link == NULL)
@@ -191,6 +199,20 @@ STATUS game_load_space(Game* game, char* line) {
             link_set_first_space(link, id);
             link_set_second_space(link, west);
 			space_set_west(space, link);
+		} if (up != NO_ID) {
+            link = link_create();
+            if (link == NULL)
+                return ERROR;
+            link_set_first_space(link, id);
+            link_set_second_space(link, up);
+			space_set_up(space, link);
+		} if (down != NO_ID) {
+            link = link_create();
+            if (link == NULL)
+                return ERROR;
+            link_set_first_space(link, id);
+            link_set_second_space(link, down);
+			space_set_down(space, link);
 		}
         if (toks != NULL) {
             space_set_gdesc(space, 0, first);

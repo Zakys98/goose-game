@@ -563,7 +563,7 @@ char *game_get_space_description(Game *game)
         }
     }
 
-    return space_get_description(user_space);
+    return (char*)space_get_description(user_space);
 }
 
 void game_open_log_file(Game *game, char *filename)
