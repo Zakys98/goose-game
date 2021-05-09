@@ -151,15 +151,11 @@ void game_init_from_arguments(Game *game, int argc, char **argv)
 
 void game_init_rules(Game *game, int argc, char **argv)
 {
-    if (argc != 3)
+    for (int i = 2; i < argc; i += 2)
     {
-        game_rules_sel(game, TRUE);
-        return;
-    }
-
-    if (strcmp(argv[2], "-r") == 0)
-    {
-        game_rules_sel(game, FALSE);
-        return;
+        if (strcmp(argv[i], "-r") == 0 && argc >= i)
+        {
+            game_rules_sel(game, FALSE);
+        }
     }
 }
