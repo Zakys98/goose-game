@@ -1,6 +1,6 @@
 cc=gcc
 CFLAGS=-std=c11 -pedantic -Wextra -g -Wall
-TARGET=goose
+TARGET=scaperoom
 SRC_DIR := src
 OBJ_DIR := obj
 DOC_DIR := doc

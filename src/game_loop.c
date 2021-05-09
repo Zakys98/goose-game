@@ -156,8 +156,10 @@ void game_init_rules(Game *game, int argc, char **argv)
         if (strcmp(argv[i], "-r") == 0 && argc >= i)
         {
             game_rules_sel(game, FALSE);
+            return;
         }
     }
 
     game_rules_sel(game, TRUE);
+    return;
 }
