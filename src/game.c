@@ -585,7 +585,9 @@ BOOL game_logfile_exist(Game *game)
 
 BOOL game_is_over(Game *game)
 {
-    (void)game;
+    Space *location = game_get_space(game, game_get_player_location(game));
+    if(space_get_id(location) == 14)
+        return TRUE;
     return FALSE;
 }
 
