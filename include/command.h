@@ -12,7 +12,7 @@
 #define COMMAND_H
 
 #define N_CMDT 2
-#define N_CMD 17
+#define N_CMD 13
 
 typedef enum enum_CmdType {
     CMDS,
@@ -24,19 +24,27 @@ typedef enum enum_Command {
     NO_CMD = -1,
     UNKNOWN,
     EXIT,
-    NEXT,
-    BACK,
     TAKE,
     DROP,
     ROLL,
-    LEFT,
-    RIGHT,
     MOVE,
     INSPECT,
     TURNON,
     TURNOFF,
     OPEN
 } T_Command;
+
+
+typedef enum enum_rules {
+    NO_RULE = -1,
+    TAKERULE,
+    DIERULE,
+    DROPRULE,
+    CLOSERULE,
+    OPENRULE,
+    ONRULE,
+    OFFRULE
+} T_Rules;
 
 /**
  * @brief scan user input and interpret it to command

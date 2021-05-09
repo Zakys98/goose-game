@@ -127,11 +127,17 @@ STATUS game_load_space(Game* game, char* line) {
     Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
     Space* space = NULL;
     Link* link = NULL;
+    char description[WORD_SIZE+1];
+    char detailed_description[WORD_SIZE+1];
 
     toks = strtok(line + 3, "|");
     id = atol(toks);
     toks = strtok(NULL, "|");
     strcpy(name, toks);
+    toks = strtok(NULL, "|");
+    strcpy(description, toks);
+    toks = strtok(NULL, "|");
+    strcpy(detailed_description, toks);
     toks = strtok(NULL, "|");
     north = atol(toks);
     toks = strtok(NULL, "|");
@@ -152,6 +158,8 @@ STATUS game_load_space(Game* game, char* line) {
     space = space_create(id);
     if (space != NULL) {
         space_set_name(space, name);
+        space_set_description(space,description);
+        space_set_detailed_description(space,detailed_description);
         if (north != NO_ID) {
             link = link_create();
             if (link == NULL)

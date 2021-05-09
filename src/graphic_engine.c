@@ -102,8 +102,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
     Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID;
     Space *space_act = NULL;
     char str[255];
+    T_Rules last_rule = NO_RULE;
     T_Command last_cmd = UNKNOWN;
-    extern char *cmd_to_str[N_CMD][N_CMDT];
+    //extern char *cmd_to_str[N_CMD][N_CMDT];
     char *objects = NULL, *toprint = NULL;
 
     /* Paint the in the map area */
@@ -144,7 +145,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
             screen_area_puts(ge->map, str);
             sprintf(str, "         |    %s   |", space_get_gdesc(space_act, 2));
             screen_area_puts(ge->map, str);
-            if (objects != NULL)
+            if (objects != NULL && space_get_illumination(space_act) == TRUE)
             {
                 int n = 10 - strlen(objects);
                 printf("%*c", n, ' ');
@@ -188,12 +189,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
     screen_area_clear(ge->help);
     sprintf(str, " The commands you can use are:");
     screen_area_puts(ge->help, str);
-    sprintf(str, "     next or n, back or b, exit or e, take or t, drop or d, roll or rl, left or l, right or r, move or m, inspect or i, turn on, turn off, save, load");
+    sprintf(str, "     exit or e, take or t, drop or d, roll or rl, move or m, inspect or i, turn on, turn off, save, load");
     screen_area_puts(ge->help, str);
 
     /* Paint in the feedback area */
     last_cmd = game_get_last_command(game);
-    toprint = dialogue_print(last_cmd, s, game);
+    last_rule = game_get_last_rule(game);
+    toprint = dialogue_cmd_print(last_cmd, s, game);
+    strcat(toprint, dialogue_rule_print(last_rule, game));
     sprintf(str, "%s", toprint);
 
     //sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
@@ -202,6 +205,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
         //fprintf(game_get_log_file(game), " %s (%s): %s\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], s == OK ? "OK" : "ERROR");
         fprintf(game_get_log_file(game), " %s\n", toprint);
 
+
+    free(toprint);
     /* Dump to the terminal */
     screen_paint();
     printf("prompt:> ");
@@ -242,7 +247,21 @@ void graphic_engine_paint_description_area(Graphic_engine *ge, Game *game)
         }
         free(objectsOfPlayer);
     }
-    char *description = game_get_description(game);
+
+    char *space_description = game_get_space_description(game); 
+
+    if (space_description != NULL)
+    {
+        sprintf(str, " ");
+        screen_area_puts(ge->descript, str);
+        sprintf(str, " Space description:");
+        screen_area_puts(ge->descript, str);
+        sprintf(str, " %s", space_description);
+        screen_area_puts(ge->descript, str);
+    }
+    
+    char *description = game_get_description(game); 
+    
     if (description != NULL)
     {
         sprintf(str, " ");

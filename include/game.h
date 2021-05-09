@@ -219,6 +219,25 @@ STATUS game_set_player(Game* game, Player* p);
 T_Command game_get_last_command(Game* game);
 
 /**
+ * @brief prev command getter
+ * 
+ * @param game pointer to game
+ * @return Previous command used
+ */
+T_Command game_get_prev_command(Game* game);
+
+/**
+ * @brief Returns the last rule executed
+ * 
+ * @param game pointer to game
+ * @return Rule executed
+ */
+T_Rules game_get_last_rule(Game *game);
+
+
+STATUS game_set_prev_command(Game* game, T_Command cmd);
+
+/**
  * @brief loads spaces from a file, implemented in game_reader.c
  * 
  * @param game pointer to game
@@ -251,7 +270,11 @@ BOOL game_logfile_exist(Game* game);
  */
 char *game_get_argument(Game* game);
 
+char* game_get_space_description(Game* game);
+
 char* game_get_description(Game* game);
+
+Link *game_get_link_by_name(Game *game, const char *name);
 
 STATUS game_set_dice(Game* game, Dice* dice);
 STATUS game_save(FILE*, Game*);

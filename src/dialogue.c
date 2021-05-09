@@ -22,17 +22,17 @@
 /* Private definiton for each of the command */
 
 char *_dialogue_nocmd();
-char *_dialogue_unknown(STATUS st);
-char *_dialogue_exit(STATUS st);
+char *_dialogue_unknown();
+char *_dialogue_exit();
 char *_dialogue_next(STATUS st);
 char *_dialogue_back(STATUS st);
-char *_dialogue_take(STATUS st);
-char *_dialogue_drop(STATUS st);
-char *_dialogue_roll(STATUS st);
+char *_dialogue_take(STATUS st, Game *game);
+char *_dialogue_drop(STATUS st, Game *game);
+char *_dialogue_roll(STATUS st, Game *game);
 char *_dialogue_left(STATUS st);
 char *_dialogue_right(STATUS st);
 char *_dialogue_move(STATUS st, Game *game);
-char *_dialogue_inspect(STATUS st);
+char *_dialogue_inspect(STATUS st, Game *game);
 char *_dialogue_turnon(STATUS st);
 char *_dialogue_turnoff(STATUS st);
 char *_dialogue_open(STATUS st);
@@ -42,14 +42,38 @@ char *_dialogue_open(STATUS st);
  ******************************************/
 
 //I need a way of ppassing the input/argument inside here
-char *dialogue_print(T_Command cmd, STATUS st, Game *game)
+char *dialogue_cmd_print(T_Command cmd, STATUS st, Game *game)
 {
+    char *result = NULL;
+
     if (game == NULL)
         return NULL;
 
     if (st != OK && st != ERROR)
         return NULL;
 
+    // Compares the previous command to the actual one, we dont want to print this if there was no command
+    if (game_get_prev_command(game) == cmd && game_get_prev_command(game) != NO_CMD)
+    {
+        // If they are the same and there is an error, message is shown
+        if (st == ERROR)
+        {
+            result = malloc(sizeof(char) * 300);
+            strcpy(result, "You have done this before without success.");
+            return result;
+        }
+    }
+
+    // If there is an error we keep the command
+    if (st == ERROR)
+    {
+        game_set_prev_command(game, cmd);
+    }
+    else
+    {
+        // If there was no error we set it to NO_CMD so there are no errors when comparing them
+        game_set_prev_command(game, NO_CMD);
+    }
     /* Based on the introduced command, calls the needed function with the needed arguments */
     switch (cmd)
     {
@@ -62,34 +86,19 @@ char *dialogue_print(T_Command cmd, STATUS st, Game *game)
         break;
 
     case EXIT:
-        return _dialogue_exit(st);
-        break;
-
-    case NEXT:
-        return _dialogue_next(st);
-
-    case BACK:
-        return _dialogue_back(st);
+        return _dialogue_exit();
         break;
 
     case TAKE:
-        return _dialogue_take(st);
+        return _dialogue_take(st, game);
         break;
 
     case DROP:
-        return _dialogue_drop(st);
+        return _dialogue_drop(st, game);
         break;
 
     case ROLL:
-        return _dialogue_roll(st);
-        break;
-
-    case LEFT:
-        return _dialogue_left(st);
-        break;
-
-    case RIGHT:
-        return _dialogue_right(st);
+        return _dialogue_roll(st, game);
         break;
 
     case MOVE:
@@ -97,7 +106,7 @@ char *dialogue_print(T_Command cmd, STATUS st, Game *game)
         break;
 
     case INSPECT:
-        return _dialogue_inspect(st);
+        return _dialogue_inspect(st, game);
         break;
 
     case TURNON:
@@ -113,9 +122,61 @@ char *dialogue_print(T_Command cmd, STATUS st, Game *game)
         break;
 
     default:
-        return "QUEEEE";
+
+        result = malloc(sizeof(char) * 300);
+        strcpy(result, "QUEEEEEE");
+        return result;
         break;
     }
+}
+
+char *dialogue_rule_print(T_Rules rule, Game *game)
+{
+    //char *result = NULL;
+
+    if (!game)
+        return "";
+
+    if (rule == NO_RULE)
+        return "";
+
+    switch (rule)
+    {
+    case TAKERULE:
+        return "    Did you pick something?";
+        break;
+    
+    case DROPRULE:
+        return "    Don't drop your things!";
+        break;
+
+    case DIERULE:
+        return "    Oops, you died";
+        break;
+
+    case CLOSERULE:
+        return "    Are this doors open?";
+        break;
+
+    case OPENRULE:
+        return "    Are this doors open?";
+        break;
+
+    case ONRULE:
+        return "    What happened with the light?";
+        break;
+
+    case OFFRULE:
+        return "    What happened with the light?";
+        break;
+
+    default:
+        return "";
+        break;
+    }
+
+
+    return "";
 }
 
 /******************************************
@@ -124,72 +185,172 @@ char *dialogue_print(T_Command cmd, STATUS st, Game *game)
 
 char *_dialogue_nocmd()
 {
-    return "Introduce a command:";
+    char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
+
+    strcpy(result, "Introduce a command: ");
+    return result;
 }
 
-char *_dialogue_unknown(STATUS st)
+char *_dialogue_unknown()
 {
-    return "What was the command?";
+    char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
+
+    strcpy(result, "This is not a valid action. Try again.");
+    return result;
 }
-char *_dialogue_exit(STATUS st)
+char *_dialogue_exit()
 {
-    return "Bye!";
+    char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
+
+    strcpy(result, "Bye Bye!");
+    return result;
 }
 char *_dialogue_next(STATUS st)
 {
-    if (st == OK)
-        return "You moved to the next space";
+    char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
 
-    if (st == ERROR)
-        return "You cannot advance to the next space";
+    if (st == OK)
+    {
+        strcpy(result, "You moved to the next space");
+        return result;
+    }
+
+    strcpy(result, "You cannot advance to the next space");
+    return result;
 }
 char *_dialogue_back(STATUS st)
 {
-    if (st == OK)
-        return "You moved to the previous space";
+    char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
 
-    if (st == ERROR)
-        return "You cannot advance to the previous space";
+    if (st == OK)
+    {
+        strcpy(result, "You moved to the previous space");
+        return result;
+    }
+
+    strcpy(result, "You cannot go to the previous space");
+    return result;
 }
-char *_dialogue_take(STATUS st)
+char *_dialogue_take(STATUS st, Game *game)
 {
-    if (st == OK)
-        return "You took an object";
+    char *result;
+    char *arg;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
 
-    if (st == ERROR)
-        return "You cannot take that";
+    arg = game_get_argument(game);
+    if (!arg)
+    {
+        free(result);
+        return NULL;
+    }
+
+    if (st == OK)
+    {
+        strcpy(result, "You took ");
+        strcat(result, arg);
+        return result;
+    }
+
+    strcpy(result, "You cannot take that ");
+    strcat(result, arg);
+    return result;
 }
-char *_dialogue_drop(STATUS st)
+char *_dialogue_drop(STATUS st, Game *game)
 {
-    if (st == OK)
-        return "You droped an object";
+    char *result;
+    char *arg;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
 
-    if (st == ERROR)
-        return "You cannot drop an object";
+    arg = game_get_argument(game);
+    if (!arg)
+    {
+        free(result);
+        return NULL;
+    }
+
+    if (st == OK)
+    {
+        strcpy(result, "You droped ");
+        strcat(result, arg);
+        return result;
+    }
+
+    strcpy(result, "You cannot drop that ");
+    strcat(result, arg);
+    return result;
 }
-char *_dialogue_roll(STATUS st)
+char *_dialogue_roll(STATUS st, Game *game)
 {
-    if (st == OK)
-        return "You rolled the dice";
+    char *result;
+    char num[2];
+    int numero;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
 
-    if (st == ERROR)
-        return "There was an error rolling the dice";
+    numero = (dice_get_last_roll(game_get_dice(game)));
+    sprintf(num, "%d", numero);
+
+    if (st == OK)
+    {
+        strcpy(result, "You rolled dice and got... ");
+        strcat(result, num);
+        return result;
+    }
+
+    strcpy(result, "Something went wrong with the dice");
+    return result;
 }
 char *_dialogue_left(STATUS st)
 {
-    if (st == OK)
-        return "You moved to the left";
+    char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
 
-    if (st == ERROR)
-        return "You cannot move to the left";
+    if (st == OK)
+    {
+        strcpy(result, "You moved to the left");
+        return result;
+    }
+
+    strcpy(result, "You cannot go to the left");
+    return result;
 }
 char *_dialogue_right(STATUS st)
 {
-    if (st == OK)
-        return "You moved to the right";
+    char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
 
-    if (st == ERROR)
-        return "You cannot move to the right";
+    if (st == OK)
+    {
+        strcpy(result, "You moved to the right");
+        return result;
+    }
+
+    strcpy(result, "You cannot go to the right");
+    return result;
 }
 
 char *_dialogue_move(STATUS st, Game *game)
@@ -197,74 +358,154 @@ char *_dialogue_move(STATUS st, Game *game)
     char *arg;
     char *desc;
     char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
+
+    desc = malloc(sizeof(char) * 300);
+    if (!desc)
+        return NULL;
+
     arg = game_get_argument(game);
-    //desc = space_get_description(game_get_space(game, game_get_player_location(game)));
-    strcpy(desc, "temp description");
+
+    // The same it is done in inspect command
+    strcpy(desc, "space - ");
+    char temp[10] = {0};
+    sprintf(temp,"%ld", space_get_id(game_get_space(game, game_get_player_location(game))));
+    strcat(desc, temp);
+    
     if (desc == NULL)
-        return "There was an error getting the description of the space";
+    {
+        strcpy(result, "There was an error getting the description of the space");
+    }
     if (st == OK)
     {
         if (strcmp(arg, "north") == 0 || strcmp(arg, "n") == 0)
         {
             strcpy(result, "You moved to the north. Now you are in ");
-            strcat(result, desc);
-            return result;
         }
         else if (strcmp(arg, "south") == 0 || strcmp(arg, "s") == 0)
         {
-            return "You moved to the south. Now you are in %s", desc;
+            strcpy(result, "You moved to the south. Now you are in ");
         }
         else if (strcmp(arg, "west") == 0 || strcmp(arg, "w") == 0)
         {
-            return "You moved to the west. Now you are in %s", desc;
+            strcpy(result, "You moved to the west. Now you are in ");
         }
         else if (strcmp(arg, "east") == 0 || strcmp(arg, "e") == 0)
         {
-            return "You moved to the east. Now you are in %s", desc;
+            strcpy(result, "You moved to the east. Now you are in ");
         }
         else
         {
-            return "You moved somewhere. Now you are in %s", desc;
+            strcpy(result, "You moved to somewhere. Now you are in ");
         }
+        strcat(result, desc);
+        free(desc);
+        return result;
     }
 
     if (st == ERROR)
     {
         if (strcmp(arg, "north") == 0 || strcmp(arg, "n") == 0)
         {
-            return "You cannot move to the north here";
+            strcpy(result, "You can't move to the north here");
         }
         else if (strcmp(arg, "south") == 0 || strcmp(arg, "s") == 0)
         {
-            return "You cannot move to the south here";
+            strcpy(result, "You can't move to the south here");
         }
         else if (strcmp(arg, "west") == 0 || strcmp(arg, "w") == 0)
         {
-            return "You cannot move to the west here";
+            strcpy(result, "You can't move to the west here");
         }
         else if (strcmp(arg, "east") == 0 || strcmp(arg, "e") == 0)
         {
-            return "You cannot move to the east here";
+            strcpy(result, "You can't move to the east here");
         }
         else
         {
-            return "You cannot move here";
+            strcpy(result, "What was that direction?");
         }
+        free(desc);
+        return result;
     }
+    return NULL;
 }
-char *_dialogue_inspect(STATUS st)
+char *_dialogue_inspect(STATUS st, Game *game)
 {
-    return "TEST";
+    char *desc;
+    char *result;
+
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
+
+    desc = game_get_description(game);
+
+    if (desc == NULL)
+    {
+        strcpy(result, "There was an error inspecting the object");
+        return result;
+    }
+
+    if (st == OK)
+    {
+        strcpy(result, "Inspecting ");
+        strcat(result, desc);
+        return result;
+    }
+
+    strcpy(result, "You cannot inspect that");
+    return result;
 }
 char *_dialogue_turnon(STATUS st)
 {
-    return "TEST";
+    char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
+
+    if (st == OK)
+    {
+        strcpy(result, "Turnt on");
+        return result;
+    }
+
+    strcpy(result, "Couldn't be turnt on");
+    return result;
+
 }
 char *_dialogue_turnoff(STATUS st)
 {
-    return "TEST";
+    char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
+
+    if (st == OK)
+    {
+        strcpy(result, "Turnt off");
+        return result;
+    }
+
+    strcpy(result, "Couldn't be turnt off");
+    return result;
+
 }
 char *_dialogue_open(STATUS st)
 {
-    return "TEST";
+    char *result;
+    result = malloc(sizeof(char) * 300);
+    if (!result)
+        return NULL;
+
+    if (st == OK)
+    {
+        strcpy(result, "Opened");
+        return result;
+    }
+
+    strcpy(result, "Couldn't be turnt opened");
+    return result;
 }
