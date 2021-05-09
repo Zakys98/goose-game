@@ -158,4 +158,6 @@ void game_init_rules(Game *game, int argc, char **argv)
             game_rules_sel(game, FALSE);
         }
     }
+
+    game_rules_sel(game, TRUE);
 }
