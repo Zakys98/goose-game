@@ -28,6 +28,7 @@ struct _Game
     FILE *log;
     char description[50];
     char *argument; //Argument used after a command
+    BOOL rules;
 };
 
 typedef enum
@@ -918,4 +919,14 @@ STATUS game_callback_load(Game *game)
         return game_management_load(input, game);
     }
     return ERROR;
+}
+
+void game_rules_sel(Game *game, BOOL bul)
+{
+    game->rules = bul;
+}
+
+BOOL game_rules_get(Game *game)
+{
+    return game->rules;
 }

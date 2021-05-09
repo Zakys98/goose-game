@@ -283,4 +283,20 @@ STATUS game_management_save(char* filename, Game* game);
 
 BOOL game_player_has_light(Game* game);
 
+/**
+ * @brief TRUE = random rules, FALSE = NO random rules
+ * 
+ * @param game 
+ * @param bul 
+ */
+void game_rules_sel(Game *game, BOOL bul);
+
+/**
+ * @brief Returns the rules mode
+ * 
+ * @param game 
+ * @return BOOL 
+ */
+BOOL game_rules_get(Game *game);
+
 #endif
