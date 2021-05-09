@@ -827,6 +827,10 @@ STATUS game_callback_turn_on(Game *game)
         if (obj == NULL || object_get_illuminate(obj) == FALSE)
             return ERROR;
 
+		Id dependency = object_get_dependency(obj); 
+		if (dependency != NO_ID && !player_has_object(game->player, dependency))
+			return ERROR;
+
         Space *playerLocation = game_get_space(game, game_get_player_location(game));
         if (space_hasObject(playerLocation, object_get_id(obj)) == TRUE || player_search_inventory(game->player, obj) == TRUE)
         {
@@ -870,7 +874,7 @@ STATUS game_callback_open_link_with_obj(Game *game)
         return ERROR;
 
     scanf("%s", input);
-    if (strcmp(input, "with") != 0)
+    if (strcasecmp(input, "with") != 0)
         return ERROR;
 
     scanf("%s", input);

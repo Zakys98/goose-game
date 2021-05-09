@@ -468,11 +468,11 @@ char *_dialogue_turnon(STATUS st)
 
     if (st == OK)
     {
-        strcpy(result, "Turnt on");
+        strcpy(result, "Turned on");
         return result;
     }
 
-    strcpy(result, "Couldn't be turnt on");
+    strcpy(result, "Couldn't be turned on");
     return result;
 
 }

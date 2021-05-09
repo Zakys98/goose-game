@@ -125,6 +125,10 @@ STATUS player_delete_object(Player *p, Object *o)
     return inventory_del_id(p->inventory, object_get_id(o));
 }
 
+BOOL player_has_object(Player* p, Id object) {
+	return inventory_has_id(p->inventory, object);
+}
+
 BOOL player_inventory_full(Player *p)
 {
     if (p == NULL)

@@ -26,26 +26,26 @@
 #l:11|KitchenDoor|10|12|0|
 #l:12|GuestDoor  |10|11|0|
 #l:13|UtilityDoor|12|13|0|
-#o:1|Main keys|*Very important keys*|1|1|-1|10|0|0
-#o:2|Torch|A torch, it might be useful to light places|3|1|21|-1|1|0
-#o:3|Window|What a beautiful views...|7|0|-1|-1|0|0
-#o:4|RGB|RGB Lights in a gaming room? Unexpected|6|0|-1|-1|0|0
-#o:5|Book|Imagine how cool must be jumping with a prachute|6|1|-1|-1|0|0
-#o:6|Soap|Make sure to stay clean|5|1|-1|-1|0|0
-#o:7|Mirror|You see yourself...|4|0|-1|-1|0|0
-#o:8|Clock|4 o'clock|4|0|-1|-1|0|0
-#o:9|Banana|Mmm... Tasty|4|1|-1|-1|0|0
-#o:10|Calculator|There is a 9 in the calculator|8|1|-1|-1|0|0
-#O:11|Painting|Parachute painting, looks very fun!|7|0|-1|-1|0|0
-#o:12|Flashlight|Seems not to be working..|10|1|16|-1|1|1
-#o:13|Note|My favourite room in the house are: bath, bedroom and kitchen|11|1|-1|-1|0|0
-#o:14|Recipe book|There are 5 recipes in this book, how useful!|12|1|-1|-1|0|0
-#o:15|Stone|I want to break something|12|1|-1|8|0|0
-#o:16|Batteries|Where to put them?|13|1|-1|-1|0|0
-#o:17|Scissors|Snip snip|13|1|-1|-1|0|0
-#o:18|Ladder|Climb to the heavens!|13|1|-1|4|0|0
-#o:19|Knife|Careful, do not hurt yourself|12|1|-1|-1|0|0
-#o:20|Bedroom key|Lets find something to unlock!|7|1|-1|7|0|0
-#o:21|Lighter|Fire!|13|1|-1|-1|0|0
-#o:22|Teddy|Just a Teddy Bear|2|1|-1|-1|0|0
+#o:1|keys|*Very important keys*|1|1|-1|10|0|0
+#o:2|torch|A torch, it might be useful to light places|3|1|21|-1|1|0
+#o:3|window|What a beautiful views...|7|0|-1|-1|0|0
+#o:4|rgb|RGB Lights in a gaming room? Unexpected|6|0|-1|-1|0|0
+#o:5|book|Imagine how cool must be jumping with a prachute|6|1|-1|-1|0|0
+#o:6|soap|Make sure to stay clean|5|1|-1|-1|0|0
+#o:7|mirror|You see yourself...|4|0|-1|-1|0|0
+#o:8|clock|4 o'clock|4|0|-1|-1|0|0
+#o:9|banana|Mmm... Tasty|4|1|-1|-1|0|0
+#o:10|calculator|There is a 9 in the calculator|8|1|-1|-1|0|0
+#O:11|painting|Parachute painting, looks very fun!|7|0|-1|-1|0|0
+#o:12|flashlight|Seems not to be working..|10|1|16|-1|1|0
+#o:13|note|My favourite room in the house are: bath, bedroom and kitchen|11|1|-1|-1|0|0
+#o:14|recipes|There are 5 recipes in this book, how useful!|12|1|-1|-1|0|0
+#o:15|stone|I want to break something|12|1|-1|8|0|0
+#o:16|batteries|Where to put them?|13|1|-1|-1|0|0
+#o:17|scissors|Snip snip|13|1|-1|-1|0|0
+#o:18|ladder|Climb to the heavens!|13|1|-1|4|0|0
+#o:19|knife|Careful, do not hurt yourself|12|1|-1|-1|0|0
+#o:20|key|Lets find something to unlock!|7|1|-1|7|0|0
+#o:21|lighter|Fire!|13|1|-1|-1|0|0
+#o:22|teddy|Just a Teddy Bear|2|1|-1|-1|0|0
 #p:1|ply1|10|3|
