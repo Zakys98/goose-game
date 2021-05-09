@@ -49,22 +49,6 @@ STATUS _game_rules_die(Game *game);
 STATUS _game_rules_drop_first_object(Game *game);
 
 /**
- * @brief Suddenly closes the links at a specific room
- * 
- * @param game Pointer to game
- * @return STATUS 
- */
-STATUS _game_rules_close_link(Game *game);
-
-/**
- * @brief Suddenly closes the links at a specific room
- * 
- * @param game Pointer to game
- * @return STATUS 
- */
-STATUS _game_rules_open_link(Game *game);
-
-/**
  * @brief Suddenly turns on the light of current/specific room
  * 
  * @param game Pointer to game
@@ -86,7 +70,6 @@ STATUS _game_rules_offlight_room(Game *game);
 
 STATUS game_rules_random_command(T_Rules rule, Game *game)
 {
-    
 
     if (!game)
         return ERROR;
@@ -102,21 +85,13 @@ STATUS game_rules_random_command(T_Rules rule, Game *game)
     case TAKERULE:
         return _game_rules_take_first_object(game);
         break;
-    
+
     case DROPRULE:
         return _game_rules_drop_first_object(game);
         break;
 
     case DIERULE:
         return _game_rules_die(game);
-        break;
-
-    case CLOSERULE:
-        return _game_rules_close_link(game);
-        break;
-
-    case OPENRULE:
-        return _game_rules_open_link(game);
         break;
 
     case ONRULE:
@@ -128,7 +103,7 @@ STATUS game_rules_random_command(T_Rules rule, Game *game)
         break;
 
     default:
-    
+
         break;
     }
 
@@ -268,26 +243,6 @@ STATUS _game_rules_drop_first_object(Game *game)
     }
 
     return ERROR;
-}
-
-STATUS _game_rules_close_link(Game *game)
-{
-    // We must set this to a custom room after we write the data with the story.
-    Link *link = game_get_link_by_name(game, "Link1");
-    if (!link)
-        return ERROR;
-
-    return link_set_opened(link, FALSE);
-}
-
-STATUS _game_rules_open_link(Game *game)
-{
-    // We must set this to a custom room after we write the data with the story.
-    Link *link = game_get_link_by_name(game, "Link1");
-    if (!link)
-        return ERROR;
-
-    return link_set_opened(link, TRUE);
 }
 
 STATUS _game_rules_onlight_room(Game *game)

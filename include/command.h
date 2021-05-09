@@ -40,8 +40,6 @@ typedef enum enum_rules {
     TAKERULE,
     DIERULE,
     DROPRULE,
-    CLOSERULE,
-    OPENRULE,
     ONRULE,
     OFFRULE
 } T_Rules;

@@ -154,14 +154,6 @@ char *dialogue_rule_print(T_Rules rule, Game *game)
         return "    Oops, you died";
         break;
 
-    case CLOSERULE:
-        return "    Are this doors open?";
-        break;
-
-    case OPENRULE:
-        return "    Are this doors open?";
-        break;
-
     case ONRULE:
         return "    What happened with the light?";
         break;
