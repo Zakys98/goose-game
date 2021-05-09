@@ -1,6 +1,5 @@
 #s:1|Safe          |You are currently in the safe |There could be important stuff |-1|-1|2|-1|-1|-1|0
 #s:2|Master bedroom|Salutations you have arrived to   the master bedroom |You can take a nap here |1|3|-1|6|-1|-1|1|       |   Zzz | (-o-) |
-#s:11|Guest room|Greetings you're in the guest room|Visitors may rest here :p|10|-1|-1|-1|-1|-1|0
 #s:3|Hall          |Welcome to the hall |Make yourself at home |8|-1|4|2|7|10|1|     /\|       |     \/|
 #s:4|Bath          |You are in the bathroom |It's never too late to take a shower |3|-1|5|-1|-1|-1|1
 #s:5|Hidden room   | You have stepped into the hidden  room |mmmm secrets... |4|-1|-1|-1|-1|-1|0
@@ -48,4 +47,4 @@
 #o:20|key|Lets find something to unlock!|7|1|-1|7|0|0
 #o:21|lighter|Fire!|13|1|-1|-1|0|0
 #o:22|teddy|Just a Teddy Bear|2|1|-1|-1|0|0
-#p:1|ply1|10|3|
+#p:1|ply1|2|3|
