@@ -51,6 +51,6 @@ STATUS space_print(Space* space);
 const char *space_get_description(Space *space);
 const char *space_get_detailed_description(Space *space);
 BOOL space_hasObject(Space *space, Id id);
-
+Link* space_get_link_by_name(Space* s, char* name);
 STATUS space_save(FILE*, Space*);
 #endif

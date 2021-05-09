@@ -358,7 +358,7 @@ STATUS game_load_links(Game* game, char* line) {
 	if (firstSpace == NULL || secondSpace == NULL) return ERROR;
 
 	complete_links(firstSpace, firstId, secondId, id, name, open);
-	complete_links(secondSpace, firstId, secondId, id, name, open);
+	complete_links(secondSpace, secondId, firstId, id, name, open);
 
     return OK;
 }

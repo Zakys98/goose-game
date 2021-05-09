@@ -866,14 +866,19 @@ STATUS game_callback_turn_off(Game *game)
     return ERROR;
 }
 
+void open_link(Game* game, Link* link) {
+	link_set_opened(link, TRUE);
+	Space* s = game_get_space(game, link_get_second_space(link));
+	link_set_opened(space_get_link_by_name(s, link_get_name(link)), TRUE);
+}
+
 STATUS game_callback_open_link_with_obj(Game *game)
 {
     char input[20] = {0};
 
     scanf("%s", input);
     Link *link = game_get_link_by_name(game, input);
-    if (link == NULL || (player_get_location(game->player) != link_get_first_space(link) &&
-		player_get_location(game->player) != link_get_second_space(link)))
+    if (link == NULL || player_get_location(game->player) != link_get_first_space(link))
         return ERROR;
 
     scanf("%s", input);
@@ -883,7 +888,7 @@ STATUS game_callback_open_link_with_obj(Game *game)
     scanf("%s", input);
 
 	if (strcasecmp(link_get_name(link), "SafeDoor") == 0 && strcmp(input, "495") == 0) {
-		link_set_opened(link, TRUE);
+		open_link(game, link);
     	return OK;
 	}
 
@@ -891,8 +896,7 @@ STATUS game_callback_open_link_with_obj(Game *game)
     if (object == NULL || player_search_inventory(game->player, object) == FALSE || object_get_openLink(object) != link_get_id(link))
         return ERROR;
 
-    link_set_opened(link, TRUE);
-
+    open_link(game, link);
     return OK;
 }
 

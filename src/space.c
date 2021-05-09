@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 
 #include "../include/set.h"
 
@@ -460,14 +461,32 @@ const char *space_get_detailed_description(Space *space)
     return space->detailed_description;
 }
 
+Link* space_get_link_by_name(Space* s, char* name) {
+	if (strcasecmp(link_get_name(s->north), name) == 0)
+		return s->north;
+	
+	if (strcasecmp(link_get_name(s->east), name) == 0)
+		return s->east;
+
+	if (strcasecmp(link_get_name(s->south), name) == 0)
+		return s->south;
+
+	if (strcasecmp(link_get_name(s->west), name) == 0)
+		return s->west;
+
+	if (strcasecmp(link_get_name(s->up), name) == 0)
+		return s->up;
+	
+	if (strcasecmp(link_get_name(s->down), name) == 0)
+		return s->down;
+
+	return NULL;
+}
+
 STATUS space_save(FILE *fp, Space *s)
 {
     if (s == NULL || fp == NULL)
         return ERROR;
-
-    // if (s->id == 22) {
-    // 	printf("hehe");
-    // }
 
     //#s:1|Tile 1|-1|-1|2|-1
     Link *l = space_get_north(s);
