@@ -2,14 +2,14 @@
 #s:2|Master bedroom|Salutations you have arrived to   the master bedroom |You can take a nap here |1|3|-1|6|-1|-1|1|       |   Zzz | (-o-) |
 #s:11|Guest room|Greetings you're in the guest room|Visitors may rest here :p|10|-1|-1|-1|-1|-1|0
 #s:3|Hall          |Welcome to the hall |Make yourself at home |8|-1|4|2|7|10|1|     /\|       |     \/|
-#s:4|Bath          |You are in the bathroom |It's never too late to   take a shower |3|-1|5|-1|-1|-1|1
+#s:4|Bath          |You are in the bathroom |It's never too late to take a shower |3|-1|5|-1|-1|-1|1
 #s:5|Hidden room   | You have stepped into the hidden  room |mmmm secrets... |4|-1|-1|-1|-1|-1|0
 #s:6|Gaming room   |Bonjour you are in the gaming room |Relax dude it's just a game dude.  |-1|2|-1|-1|-1|-1|1
 #s:7|Attic         |What up homies this is the attic |This a place full of cool stuff |-1|-1|-1|-1|-1|3|0|       |       |     \/|
 #s:8|Bedroom       |This is your bedroom |I often come here to play with my legos |9|-1|3|-1|-1|-1|0|       |   Zzz | (-o-) |
 #s:9|Balcony       |Wow you are in the balcony |I like the view... You are my best view |-1|-1|8|-1|-1|14|1
-#s:10|Hall         |Welcome to the other hall hehe |Just chilling hehe |14|12|11|-1|3|-1|1|     /\|       |       |
-#s:11|Guest room   |Greetings you're in the guest room|Visitors may rest here :p|10|-1|-1|-1|-1|-1|1
+#s:10|Hall         |Welcome to the other hall |Just chilling |14|12|11|-1|3|-1|1|     /\|       |       |
+#s:11|Guest room    |Greetings you're in the guest room|Visitors may rest here :p|10|-1|-1|-1|-1|-1|1
 #s:12|Kitchen      |You are in the kitchen |Imma make a peanut butter jelly sandwich |-1|-1|13|10|-1|-1|1
 #s:13|Utility room |You have entered the utility room |I can tell you have not cleaned in a long time. |12|-1|-1|-1|-1|-1|0
 #s:14|Fin          |You won|Congratulations!!!|-1|-1|-1|-1|-1|-1|1
