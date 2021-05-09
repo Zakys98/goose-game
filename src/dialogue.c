@@ -396,6 +396,14 @@ char *_dialogue_move(STATUS st, Game *game)
         {
             strcpy(result, "You moved to the east. Now you are in ");
         }
+        else if (strcmp(arg, "up") == 0 || strcmp(arg, "u") == 0)
+        {
+            strcpy(result, "You went up the stairs. Now you are in ");
+        }
+        else if (strcmp(arg, "down") == 0 || strcmp(arg, "d") == 0)
+        {
+            strcpy(result, "You went down the stairs. Now you are in ");
+        }
         else
         {
             strcpy(result, "You moved to somewhere. Now you are in ");
@@ -409,19 +417,27 @@ char *_dialogue_move(STATUS st, Game *game)
     {
         if (strcmp(arg, "north") == 0 || strcmp(arg, "n") == 0)
         {
-            strcpy(result, "You can't move to the north here");
+            strcpy(result, "You can't move to the north here, maybe it is closed");
         }
         else if (strcmp(arg, "south") == 0 || strcmp(arg, "s") == 0)
         {
-            strcpy(result, "You can't move to the south here");
+            strcpy(result, "You can't move to the south here, maybe it is closed");
         }
         else if (strcmp(arg, "west") == 0 || strcmp(arg, "w") == 0)
         {
-            strcpy(result, "You can't move to the west here");
+            strcpy(result, "You can't move to the west here, maybe it is closed");
         }
         else if (strcmp(arg, "east") == 0 || strcmp(arg, "e") == 0)
         {
-            strcpy(result, "You can't move to the east here");
+            strcpy(result, "You can't move to the east here, maybe it is closed");
+        }
+        else if (strcmp(arg, "up") == 0 || strcmp(arg, "u") == 0)
+        {
+            strcpy(result, "You can't go up here, maybe it is closed");
+        }
+        else if (strcmp(arg, "down") == 0 || strcmp(arg, "d") == 0)
+        {
+            strcpy(result, "You can't go down here, maybe it is closed");
         }
         else
         {

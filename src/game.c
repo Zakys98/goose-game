@@ -411,15 +411,15 @@ T_Rules game_random_rule()
         return TAKERULE;
     else if (num == 5)
         return DIERULE;
-    else if (num > 5 && num <= 15)
+    else if (num > 5 && num <= 10)
         return DROPRULE;
-    else if (num > 15 && num <= 20)
+    else if (num > 10 && num <= 15)
         return CLOSERULE;
-    else if (num > 20 && num <= 25)
+    else if (num > 15 && num <= 20)
         return OPENRULE;
-    else if (num > 25 && num <= 30)
+    else if (num > 20 && num <= 25)
         return ONRULE;
-    else if (num > 30 && num <= 35)
+    else if (num > 25 && num <= 30)
         return OFFRULE;
     else
         return NO_RULE;

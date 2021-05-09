@@ -219,7 +219,7 @@ STATUS _game_rules_die(Game *game)
     if (!player)
         return ERROR;
 
-    return player_set_location(player, 1);
+    return player_set_location(player, 2);
 }
 
 STATUS _game_rules_drop_first_object(Game *game)
