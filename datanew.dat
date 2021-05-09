@@ -8,7 +8,7 @@
 #s:8|Bedroom|This is your bedroom |I often come here to play with my legos |9|-1|3|-1|-1|-1|0|       |   Zzz | (-o-) |
 #s:9|Balcony|Wow you are in the balcony |I like the view... You are my best view |-1|-1|8|-1|-1|14|1
 #s:10|Hall|Welcome to the other hall hehe |Just chilling hehe |14|12|11|-1|3|-1|1|     /\|       |       |
-#s:11|Guest room|Greetings you're in the guest room|Visitors may rest here :p|10|-1|-1|-1|-1|-1|1
+#s:11|Guest room|Greetings you're in the guest room|Visitors may rest here :p|10|-1|-1|-1|-1|-1|0
 #s:12|Kitchen|You are in the kitchen |Imma make a peanut butter jelly sandwich |-1|-1|13|10|-1|-1|1
 #s:13|Utility room|You have entered the utility room |I can tell you have not cleaned in a long time. |12|-1|-1|-1|-1|-1|0
 #s:14|Fin|You won|Congratulations!!!|-1|-1|-1|-1|-1|-1|1
@@ -36,7 +36,7 @@
 #o:9|Banana|Mmm... Tasty|4|1|-1|-1|0|0
 #o:10|Calculator|There is a 9 in the calculator|8|1|-1|-1|0|0
 #O:11|Painting|Parachute painting, looks very fun!|7|0|-1|-1|0|0
-#o:12|Flash light|Seems not to be working..|10|1|16|-1|1|0
+#o:12|Flashlight|Seems not to be working..|10|1|16|-1|1|1
 #o:13|Note|My favourite room in the house are: bath, bedroom and kitchen|11|1|-1|-1|0|0
 #o:14|Recipe book|There are 5 recipes in this book, how useful!|12|1|-1|-1|0|0
 #o:15|Stone|I want to break something|12|1|-1|8|0|0

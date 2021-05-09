@@ -281,4 +281,6 @@ STATUS game_save(FILE*, Game*);
 
 STATUS game_management_save(char* filename, Game* game);
 
+BOOL game_player_has_light(Game* game);
+
 #endif
