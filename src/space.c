@@ -462,23 +462,29 @@ const char *space_get_detailed_description(Space *space)
 }
 
 Link* space_get_link_by_name(Space* s, char* name) {
-	if (strcasecmp(link_get_name(s->north), name) == 0)
-		return s->north;
+    if(s->north != NULL)
+	    if (strcasecmp(link_get_name(s->north), name) == 0)
+		    return s->north;
 	
-	if (strcasecmp(link_get_name(s->east), name) == 0)
-		return s->east;
+    if(s->east != NULL)
+	    if (strcasecmp(link_get_name(s->east), name) == 0)
+		    return s->east;
 
-	if (strcasecmp(link_get_name(s->south), name) == 0)
-		return s->south;
+    if(s->south != NULL)
+	    if (strcasecmp(link_get_name(s->south), name) == 0)
+		    return s->south;
 
-	if (strcasecmp(link_get_name(s->west), name) == 0)
-		return s->west;
+    if(s->west != NULL)
+	    if (strcasecmp(link_get_name(s->west), name) == 0)
+		    return s->west;
 
-	if (strcasecmp(link_get_name(s->up), name) == 0)
-		return s->up;
+    if(s->up != NULL)
+	    if (strcasecmp(link_get_name(s->up), name) == 0)
+		    return s->up;
 	
-	if (strcasecmp(link_get_name(s->down), name) == 0)
-		return s->down;
+    if(s->down != NULL)
+	    if (strcasecmp(link_get_name(s->down), name) == 0)
+		    return s->down;
 
 	return NULL;
 }

@@ -869,7 +869,7 @@ STATUS game_callback_turn_off(Game *game)
 void open_link(Game* game, Link* link) {
 	link_set_opened(link, TRUE);
 	Space* s = game_get_space(game, link_get_second_space(link));
-	link_set_opened(space_get_link_by_name(s, link_get_name(link)), TRUE);
+	link_set_opened(space_get_link_by_name(s, (char *)link_get_name(link)), TRUE);
 }
 
 STATUS game_callback_open_link_with_obj(Game *game)
