@@ -1,7 +1,7 @@
 .vscode
 *.o
 doc/*
-goose
+escaperoom
 set_test
 space_test
 die_test
