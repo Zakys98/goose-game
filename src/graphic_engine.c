@@ -153,7 +153,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, STATUS s)
             {
                 int n = 10 - strlen(objects);
                 printf("%*c", n, ' ');
-                sprintf(str, "         | %s%*c   |", objects, n, ' ');
+                sprintf(str, "         |%s%*c   |", objects, n, ' ');
                 screen_area_puts(ge->map, str);
                 free(objects);
             }
