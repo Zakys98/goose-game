@@ -507,7 +507,7 @@ char *_dialogue_turnoff(STATUS st, Game *game)
 
     if (st == OK)
     {
-        strcpy(result, "Turned off the");
+        strcpy(result, "Turned off the ");
         strcat(result, desc);
         return result;
     }
@@ -528,6 +528,6 @@ char *_dialogue_open(STATUS st)
         return result;
     }
 
-    strcpy(result, "Couldn't be turnt opened");
+    strcpy(result, "Couldn't be opened");
     return result;
 }
