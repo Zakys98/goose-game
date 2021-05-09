@@ -25,14 +25,25 @@
 #l:11|Lnk11|10|12|0|
 #l:12|Lnk12|10|11|0|
 #l:13|Lnk13|12|13|0|
-#o:1|Teddy|Just a Teddy Bear|2
-#o:2|Torch|A torch, it might be useful to light places|3
-#o:3|Window|What a beautiful views...|-1
-#o:4|RGB|RGB Lights in a gaming room? Unexpected|6
-#o:5|Book|Imagine how cool must be jumping with a a prachute|6
-#o:6|Soap|Make sure to stay clean|5
-#o:7|Mirror|You see yourself...|4
-#o:8|Clock|4 o'clock|4
-#o:9|Banana|Mmm... Tasty|4
-#o:10|Calculator|There is a 9 in the calculator|7
+#o:1|Main keys|*Very important keys*|1|1|-1|10|0|0
+#o:2|Teddy|Just a Teddy Bear|2|1|-1|-1|0|0
+#o:2|Torch|A torch, it might be useful to light places|3|1|yes|0|1|0
+#o:3|Window|What a beautiful views...|7|0|-1|-1|0|0
+#o:4|RGB|RGB Lights in a gaming room? Unexpected|6|0|-1|-1|0|0
+#o:5|Book|Imagine how cool must be jumping with a prachute|6|1|-1|-1|0|0
+#o:6|Soap|Make sure to stay clean|5|1|-1|-1|0|0
+#o:7|Mirror|You see yourself...|4|0|-1|-1|0|0
+#o:8|Clock|4 o'clock|4|0|-1|-1|0|0
+#o:9|Banana|Mmm... Tasty|4|1|-1|-1|0|0
+#o:10|Calculator|There is a 9 in the calculator|8|1|-1|-1|0|0
+#O:11|Painting|Parachute painting, looks very fun!|7|0|-1|-1|0|0
+#o:12|Flash light|Seems not to be working..|10|1|16|-1|1|0
+#o:13|Note|My favourite room in the house are: bath, bedroom and kitchen|11|1|-1|-1|0|0
+#o:14|Recipe book|There are 5 recipes in this book, how useful!|12|1|-1|-1|0|0
+#o:15|Stone|I want to break something|12|1|-1|8|0|0
+#o:16|Batteries|Where to put them?|13|1|-1|-1|0|0
+#o:17|Scissors|Snip snip|12|1|-1|-1|0|0
+#o:18|Ladder|Climb to the heavens!|13|1|-1|4|0|0
+#o:19|Knife|Careful, do not hurt yourself|12|1|-1|-1|0|0
+#o:20|Bedroom key|Lets find something to unlock!|7|1|-1|7|0|0
 #p:1|ply1|2|2|
