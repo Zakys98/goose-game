@@ -12,19 +12,19 @@
 #s:12|Kitchen      |You are in the kitchen |Imma make a peanut butter jelly sandwich |-1|-1|13|10|-1|-1|1
 #s:13|Utility room |You have entered the utility room |I can tell you have not cleaned in a long time. |12|-1|-1|-1|-1|-1|0
 #s:14|Fin          |You won|Congratulations!!!|-1|-1|-1|-1|-1|-1|1
-#l:1|        Safe door|1|2|1|
-#l:2|       Hall door |2|3|0|
-#l:3| Gaming room door|2|6|0|
-#l:4|        Trap door|3|7|1|
-#l:5|           Stairs|3|10|0|
-#l:6|    Bathroom door|3|4|0|
-#l:7|     Bedroom door|3|8|1|
-#l:8|     Balcony door|8|9|1|
-#l:9|      Secret door|4|5|0|
-#l:10|        Main door|10|14|1|
-#l:11|     Kitchen door|10|12|0|
-#l:12|  Guest room door|10|11|0|
-#l:13|Utility room door|12|13|0|
+#l:1|SafeDoor    |1|2|1|
+#l:2|HallDoor    |2|3|0|
+#l:3|GamingDoor  |2|6|0|
+#l:4|TrapDoor    |3|7|1|
+#l:5|Stairs      |3|10|0|
+#l:6|BathroomDoor|3|4|0|
+#l:7|BedroomDoor |3|8|1|
+#l:8|BalconyDoor |8|9|1|
+#l:9|SecretDoor  |4|5|0|
+#l:10|MainDoor   |10|14|1|
+#l:11|KitchenDoor|10|12|0|
+#l:12|GuestDoor  |10|11|0|
+#l:13|UtilityDoor|12|13|0|
 #o:1|Main keys|*Very important keys*|1|1|-1|10|0|0
 #o:2|Torch|A torch, it might be useful to light places|3|1|21|-1|1|0
 #o:3|Window|What a beautiful views...|7|0|-1|-1|0|0
@@ -47,4 +47,4 @@
 #o:20|Bedroom key|Lets find something to unlock!|7|1|-1|7|0|0
 #o:21|Lighter|Fire!|13|1|-1|-1|0|0
 #o:22|Teddy|Just a Teddy Bear|2|1|-1|-1|0|0
-#p:1|ply1|10|3|
+#p:1|ply1|3|3|
