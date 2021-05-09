@@ -337,6 +337,12 @@ void complete_links(Space* space, Id id1, Id id2, Id id, char* name, int open) {
 	if (cmp_link(id1, id2, space_get_east(space)) == TRUE) {
 		modify_link(space_get_east(space), id, name, open);
 	}
+    if (cmp_link(id1, id2, space_get_up(space)) == TRUE) {
+		modify_link(space_get_up(space), id, name, open);
+	}
+    if (cmp_link(id1, id2, space_get_down(space)) == TRUE) {
+		modify_link(space_get_down(space), id, name, open);
+	}
 }
 
 STATUS game_load_links(Game* game, char* line) {
